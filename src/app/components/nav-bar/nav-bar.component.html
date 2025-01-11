@@ -1,11 +1,18 @@
-<div class="nav-bar-con">
-    <div class="logo-section">
 
+<div class="nav-bar-container">
+    <div class="nav-content">
+        <div class="logo-section">
+        </div>
+            @if (navItems && navItems.length >0) {
+                <ul>
+                    @for (nav of navItems; track $index) {
+                        <li [ngClass]="{'active-item': nav.active}" (click)="selectedItem(nav)">
+                            <i class="{{nav.icon}}"></i>
+                            {{nav.name}}
+                        </li>                        
+                    }
+                </ul>
+            }
     </div>
-    <div class="link-section">
-        <ul>
-            <li>Movie</li>
-            <li>Tv</li>
-        </ul>
-    </div>
+    
 </div>

@@ -1,0 +1,31 @@
+
+@import '../../../themes/theme.scss';
+
+.input-container{
+    position: relative;
+    display: flex;
+    padding: 10px 10px;
+    align-items: center;
+    gap: 10px; 
+    border-radius: 10px;
+    background-color: $black-20;
+
+    i{
+        font-size: 22px;
+        color:$app-secondary;
+    }
+    input {
+        flex: 1;
+        padding: 8px 0;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        background: transparent;
+        border-bottom: 2px solid $app-secondary;
+        transition: border-color 0.3s ease;
+    
+        &:focus {
+        border-color: $neon-purple;
+        }
+    } 
+}

@@ -1,0 +1,32 @@
+
+@import '../../../themes/theme.scss';
+
+.segmented-control-component{
+    display: flex;
+    width: 100%;
+    padding: 8px;
+    background: $black-20;
+    width: fit-content;
+    border-radius: 10px;
+    border-bottom: 5px solid black;
+    border-right: 2.5px solid black;  
+    .segment{
+        padding: 8px 32px;
+        font-size: 16px;
+        font-weight: 500;
+        color: $app-secondary;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 0.5px;
+        &:hover{
+            background-color:$app-primary;
+            color: $white;
+            transition: all 0.3s ease;
+        }
+    }
+    
+    .active-item{
+        background-color:$app-primary;
+        color: $white;
+    }
+}
