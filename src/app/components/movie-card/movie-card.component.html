@@ -1,5 +1,7 @@
+@if(config){
 <div class="movie-card-container">
-    <div class="image-container">
-        
+    <div [style.backgorund-image]="'url('+config.img+')'" class="image-container">
     </div>
+    <div class="name">{{config.movieName}}</div>
 </div>
+}

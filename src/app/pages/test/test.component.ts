@@ -4,10 +4,12 @@ import { SegmentedControlComponent } from "../../components/segmented-control/se
 import{ SegmentedControlConfig } from "../../interfaces/ui-config/segmented-control-component.interfaces";
 import { InputComponent } from "../../components/input/input.component";
 import { RateChipComponent} from "../../components/rate-chip/rate-chip.component";
+import { MovieCardComponent } from "../../components/movie-card/movie-card.component";
+import { MovieCardConfig } from '../../interfaces/ui-config/movie-card-config.interfaces';
 
 @Component({
   selector: 'app-test',
-  imports: [NavBarComponent, SegmentedControlComponent, InputComponent, RateChipComponent],
+  imports: [NavBarComponent, SegmentedControlComponent, InputComponent, RateChipComponent, MovieCardComponent],
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss'
 })
@@ -25,4 +27,9 @@ export class TestComponent {
       name:'Mismo Genero',
       active: false
     }]
+  movieCard: MovieCardConfig []= [{
+    img:'https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg',
+    rate:7.28,
+    movieName:'PELI1'
+  }]
 }

@@ -1,0 +1,20 @@
+@import '../../../themes/theme.scss';
+
+.movie-card-container{
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    background: $app-primary;
+    border: 2px solid black;
+    border-radius: 15px;
+    .image-container{
+        width: 100%;
+        height: 430px;
+    }
+    .name{
+        color: $white;
+        margin-bottom: 20px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+}
