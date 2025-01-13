@@ -1,0 +1,17 @@
+.movies-section {
+    display: flex;
+    column-gap: 20px;
+    .movie-card-container{
+        width: calc(100%/2);
+    }
+}
+@media (max-width: 768px) {
+    .movies-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        .movie-card-container{
+            width: calc(100%);
+        }
+    }
+}

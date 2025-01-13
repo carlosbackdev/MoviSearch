@@ -1,15 +1,14 @@
 @import '../../../themes/theme.scss';
 
 .nav-bar-container{
-    margin-top: 15px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     .nav-content{
         display: flex;
         justify-content: space-between;
-        width: 65%;
-        padding: 20px 0px;
+        width: 70%;
+        padding: 15px 0px;
         padding-left: 10px;
         padding-right: 10px;
         box-shadow: 0 11px 6px -7px #5d5fe5 ;
@@ -63,4 +62,27 @@
 
     }
 }
+@media (max-width: 768px){
+    .nav-bar-container{
+        .nav-content{
+            width: 100%;
+            padding: 13px;
+        }
+    
+        .logo-section{
+            width: 30px;
+            height: 30px;
+        }
+        ul{
+            gap: 20px;        
+            li{
+                font-size: 15px;                
+                i{
+                color: $app-secondary;
+                font-size: 0.8rem;
+                }
+            }    
+        }
+    }
 
+}

@@ -10,6 +10,7 @@
     border-radius: 10px;
     border-bottom: 5px solid black;
     border-right: 2.5px solid black;  
+    margin-top: 14px;
     .segment{
         padding: 8px 32px;
         font-size: 16px;
@@ -29,4 +30,15 @@
         background-color:$app-primary;
         color: $white;
     }
+}
+@media (max-width: 768px){
+    .segmented-control-component{
+        margin: auto;
+        margin-top: 12px;        
+        .segment{
+            padding: 6px 20px;
+            font-size: 13px;        
+        }
+    }
+
 }

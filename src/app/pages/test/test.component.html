@@ -2,4 +2,8 @@
 <app-segmented-control [config]="segments"></app-segmented-control>
 <app-input></app-input>
 <app-rate-chip [rate]="6.9" [placeDecimals]="2"></app-rate-chip>
-<app-movie-card></app-movie-card>
+<div class="movies-section">
+    @for(item of movieCard; track $index){
+        <div class="movie-card-container"><app-movie-card [config]="item"></app-movie-card></div>
+    }
+</div>

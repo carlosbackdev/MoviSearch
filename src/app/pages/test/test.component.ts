@@ -28,8 +28,20 @@ export class TestComponent {
       active: false
     }]
   movieCard: MovieCardConfig []= [{
-    img:'https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg',
+    img:'https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg',
     rate:7.28,
-    movieName:'PELI1'
+    movieName:'PELI1' 
+  },{
+    img:'https://image.tmdb.org/t/p/original/wigZBAmNrIhxp2FNGOROUAeHvdh.jpg',
+    rate:6.28,
+    movieName:'PELI2' 
+  },{
+    img:'https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg',
+    rate:6.28,
+    movieName:'PELI3' 
+  },{
+    img:'https://image.tmdb.org/t/p/original/wigZBAmNrIhxp2FNGOROUAeHvdh.jpg',
+    rate:6.28,
+    movieName:'PELI4' 
   }]
 }
