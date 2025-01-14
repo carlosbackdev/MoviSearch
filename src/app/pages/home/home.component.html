@@ -7,8 +7,8 @@
             <app-input></app-input>
         </div>
         <div class="movie-cards-section">
-            @for (item of [];track $index){
-                <app-movie-card></app-movie-card>
+            @for (item of movieCards;track $index){
+                <app-movie-card [config]="item"></app-movie-card>
             }
         </div>
     </div>
