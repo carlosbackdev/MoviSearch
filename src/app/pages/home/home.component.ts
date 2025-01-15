@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit{
         this.movieCards = res.result.map((item: TrendsResult)=> {
           return {
             img: Endpoints.image +`/w500/${item.backdrop_path}`,
-            movieName: item.original_title
+            movieName: item.original_title,
             rate: item.vote_average
           } as MovieCardConfig
         })
