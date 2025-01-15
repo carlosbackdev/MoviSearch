@@ -9,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class RateChipComponent implements OnInit {
   @Input() rate: number = 0;
   @Input() placeDecimals: number=0;
-  actualNumber: String=''
+  actualNumber: String='';
 
   ngOnInit(): void {
     this.actualNumber = this.rate.toFixed(this.placeDecimals);

@@ -1,0 +1,17 @@
+.movies-cards-section {
+    display: flex;
+    column-gap: 20px;
+    .movies-cards-container{
+        width: calc(100%/2);
+    }
+}
+@media (max-width: 768px) {
+    .movies-cards-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        .movies-cards-container{
+            width: calc(100%);
+        }
+    }
+}

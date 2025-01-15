@@ -4,7 +4,7 @@ import { MovieCardComponent } from '../../components/movie-card/movie-card.compo
 import { GenericHttpService } from '../../services/generic-http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Endpoints } from '../../endpoints/Endpoints';
-import { TrendData, TrendsResult } from '../../interfaces/models/data.response';
+import { TrendData, TrendsResult } from '../../interfaces/models/trends.interface';
 import { MovieCardConfig } from '../../interfaces/ui-config/movie-card-config.interfaces';
 
 @Component({
@@ -21,21 +21,27 @@ export class HomeComponent implements OnInit{
   constructor (private genericHttpService: GenericHttpService){}
   ngOnInit(): void {
     this.genericHttpService.httpGet(Endpoints.trends)
-    .subscribe({
-      next: (res: TrendData) =>{
-        console.log(res.result)
+      .subscribe({
+        next: (res: TrendData) => {
+          console.log('Respuesta de la API:', res);
+          if (res && res.results) {
+            console.log(res.results);
 
-        this.movieCards = res.result.map((item: TrendsResult)=> {
-          return {
-            img: Endpoints.image +`/w500/${item.backdrop_path}`,
-            movieName: item.original_title,
-            rate: item.vote_average
-          } as MovieCardConfig
-        })
-      },
-      error: (error:any) =>{
-        console.error(error)
-      }
+            this.movieCards = res.results.map((item: TrendsResult) => {
+              return {
+                img: Endpoints.imagen + `/w500/${item.backdrop_path}`,
+                movieName: item.original_title,
+                rate: item.vote_average
+              } as MovieCardConfig;
+            });
+          } else {
+            console.error('La respuesta no contiene el campo result');
+            this.movieCards = []; // Inicializa movieCards como un array vacío
+          }
+        },
+        error: (error: any) => {
+          console.error(error);
+        }
     })
   }
 }

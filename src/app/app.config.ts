@@ -4,5 +4,5 @@ import { routes } from './app.routes';
 import { GenericHttpService } from '../app/services/generic-http.service';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), GenericHttpService]
+  providers: [provideRouter(routes)],
 };

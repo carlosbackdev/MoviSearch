@@ -4,5 +4,5 @@ export class Endpoints{
     static movieId = (movie_id: string) =>`movie/${movie_id}`
     static serieId = (series_id: string) =>`movie/${series_id}`
     static trends: string = 'trending/all/day?language=en-US'
-    static image: string = 'https://image.tmdb.org/t/p/'
+    static imagen: string = 'https://image.tmdb.org/t/p/'
 }

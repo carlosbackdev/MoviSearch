@@ -6,9 +6,9 @@
         <div class="search-section">
             <app-input></app-input>
         </div>
-        <div class="movie-cards-section">
+        <div class="movies-cards-section">
             @for (item of movieCards;track $index){
-                <app-movie-card [config]="item"></app-movie-card>
+                <div class="movies-cards-container"><app-movie-card [config]="item"></app-movie-card></div>
             }
         </div>
     </div>

@@ -1,6 +1,6 @@
 export interface TrendData{
     page: number
-    result: TrendsResult []
+    results: TrendsResult []
     total_pages:number
     total_results:number 
 }
