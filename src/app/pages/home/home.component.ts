@@ -29,14 +29,14 @@ export class HomeComponent implements OnInit{
 
             this.movieCards = res.results.map((item: TrendsResult) => {
               return {
-                img: Endpoints.imagen + `/w500/${item.backdrop_path}`,
-                movieName: item.original_title,
+                img: Endpoints.imagen + `/w500/${item.poster_path}`,
+                movieName: item.title || (item.name  !== undefined? item.name:""),
                 rate: item.vote_average
               } as MovieCardConfig;
             });
           } else {
             console.error('La respuesta no contiene el campo result');
-            this.movieCards = []; // Inicializa movieCards como un array vacío
+            this.movieCards = []; 
           }
         },
         error: (error: any) => {
