@@ -7,9 +7,14 @@
     background: $black-20;
     border: 2px solid black;
     border-radius: 15px;
+    cursor: pointer;
+    &:hover{
+        background: rgba($neon-purple, 0.6);
+        transition: background 0.4s ease;
+    }
     .image-container{
         width: 100%;
-        height: 490px;
+        height: 533px;
         border-radius: 10px;
         background-size: cover;
         background-position: center;
@@ -22,6 +27,7 @@
         font-size: 18px;
         font-weight: bold;
         text-align: center;
+        overflow-wrap: anywhere;
     }
 }
 @media (max-width: 768px) {

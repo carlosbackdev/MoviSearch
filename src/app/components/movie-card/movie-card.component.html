@@ -1,5 +1,5 @@
 @if(config){
-<div class="movie-card-container">
+<div (click) ="config.onClick ? config.onClick(): null" class="movie-card-container">
     <div [style.background-image]="'url('+config.img+')'" class="image-container">
         <app-rate-chip [rate]="config.rate" [placeDecimals]="1"></app-rate-chip>
     </div>

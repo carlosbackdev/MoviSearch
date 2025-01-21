@@ -7,13 +7,29 @@
     .nav-content{
         display: flex;
         justify-content: space-between;
-        width: 70%;
+        width: 85.5%;
         padding: 15px 0px;
         padding-left: 10px;
         padding-right: 10px;
         box-shadow: 0 11px 6px -7px #5d5fe5 ;
+        .title{
+            display: flex;
+            flex-direction: row;
+            margin: auto;
+            margin-left: 15px;
+            .h2color1{
+                color: $neon-purple;
+            }
+            .h2color2{
+                color:$app-primary;
+            }
+            .h2{
+                margin-bottom: 0px;
+                font-weight: bold;
+                line-height: 1;
+            }
+        }
     }
-
     .logo-section{
         width: 45px;
         height: 45px;
@@ -67,6 +83,9 @@
         .nav-content{
             width: 100%;
             padding: 13px;
+            .title{
+                display: none;
+            }
         }
     
         .logo-section{

@@ -1,23 +1,81 @@
-.movies-cards-section {
-    display: grid;
-    column-gap: 10px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows:auto;
-    width: 90%;
-    margin: auto;
-    .movies-cards-container{
-        width: 100%;
-        margin-top: 10px;
-    }
+@import '../../../themes/theme.scss';
+
+.home-container{
+    .home-content{
+        width: 85%;
+        margin: auto;
+        .search-section{
+            margin-top: 40px;
+        }
+        .title-container{
+            text-align: center;            
+            .title{
+                font-size: 50px;
+                color: $white;
+                font-weight: bold;
+                margin-bottom: 0px;
+                margin-top: 5px;
+                margin-left: 3px;
+                .results{
+                    font-size: 20px;
+                    color: $white;
+                    font-weight: lighter;
+                }
+            }
+        }
+        .movies-cards-section {
+            display: grid;
+            margin: auto;
+            margin-top: 25px;
+            column-gap: 10px;
+            row-gap: 22px;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows:auto;
+            
+        }
+    } 
 }
 @media (max-width: 768px) {
-    .movies-cards-section {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        .movies-cards-container{
-            width: calc(100%);
-            margin-top: 0px;
+.home-container{
+    .home-content{
+            width: 98%;
+            .search-section{
+                margin-top: 12px;
+            }
+            .title-container{          
+                .title{
+                    font-size: 25px;
+                    color: $white;
+                    margin-bottom: 0px;
+                    margin-top: 0px;
+                    margin-left: 0px;
+                    .results{
+                        font-size: 11px;
+                    }
+                }
+            }
+            .movies-cards-section {
+                margin-top: 10px;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                column-gap: 3px;
+                row-gap: 8px;
+            }
         }
     }
+}
+.segmented-control-section{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+@media (max-width: 768px) {
+    .segmented-control-section{
+        display: block;
+        margin-top: 5px;
+    }
+    
+}
+.search-section{
+    
 }

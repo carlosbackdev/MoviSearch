@@ -27,7 +27,7 @@ export class TestComponent {
       name:'Mismo Genero',
       active: false
     }]
-  movieCard: MovieCardConfig []= [{
+    movieCard: MovieCardConfig []= [{
     img:'https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg',
     rate:7.28,
     movieName:'PELI1' 
