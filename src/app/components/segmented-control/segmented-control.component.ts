@@ -13,6 +13,11 @@ export class SegmentedControlComponent {
   @Input() config: SegmentedControlConfig[] =[] ; 
 
   selectedItem(segment: SegmentedControlConfig){
+  
+    if (segment.onClick){
+      segment.onClick();
+    }
+
     this.config.map((item: SegmentedControlConfig) => {
       item.active = segment.name === item.name;
     })

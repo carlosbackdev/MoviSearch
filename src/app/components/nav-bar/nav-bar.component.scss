@@ -17,6 +17,7 @@
             flex-direction: row;
             margin: auto;
             margin-left: 15px;
+            cursor: pointer;
             .h2color1{
                 color: $neon-purple;
             }
@@ -35,6 +36,7 @@
         height: 45px;
         background-image: url(../../../assets/images/letra-m.png);       
         background-size: cover;
+        cursor: pointer;
     }
     ul{
         display: flex;
