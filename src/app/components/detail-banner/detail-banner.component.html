@@ -1,0 +1,9 @@
+
+@if(config){
+    <div [style.background-image]="'url('+config.img+')'" class="detail-banner-container">
+        <div class="title-container">
+            <p><span (click)="open(config.path)">{{config.pageName}}</span></p>
+            <h1 class="title">{{config.title}}</h1>
+        </div>
+    </div>
+}
