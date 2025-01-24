@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import { MovieResult, MoviesData } from '../../interfaces/models/movies.interface';
 import { SerieResult, SeriesData } from '../../interfaces/models/series.interface';
 import { RateChipComponent } from '../../components/rate-chip/rate-chip.component';
+import { MovieTranslationsResponse } from '../../interfaces/models/movieTranslate.interface';
+import { SeriesTranslations } from '../../interfaces/models/serieTranslate.interface';
 
 @Component({
   selector: 'app-home',
@@ -54,103 +56,181 @@ export class HomeComponent implements OnInit{
     this.getTrends() 
   }
 
-  getTrends(){
-    this.genericHttpService.httpGet(Endpoints.trends)
-    .subscribe({
-      next: (res: TrendData) => {
-        console.log('Respuesta de la API:', res);
-        if (res && res.results) {
-          console.log(res.results);
-
-          this.movieCards = res.results.map((item: TrendsResult) => {
-            return {
-              img: Endpoints.imagen + `/w500/${item.poster_path}`,
-              movieName: item.title || (item.name  !== undefined? item.name:""), // si quiero filra por pelicula debo usar el filto y quitar(item.name  !== undefined? item.name:"")
-              rate: item.vote_average,
-              onClick: () =>{
-                console.log("click: ", item)
-                if (item.media_type=="movie"){
-                  this.router.navigateByUrl(`movie/${item.id}`)
-                }else{                    
-                    if (item.media_type=="tv"){
-                      this.router.navigateByUrl(`serie/${item.id}`)
+  getTrends() {
+    this.genericHttpService.tmdbGet(Endpoints.trends)
+      .subscribe({
+        next: (res: TrendData) => {
+          console.log('Respuesta de la API:', res);
+          if (res && res.results) {
+            console.log(res.results);
+  
+            this.movieCards = [];
+            res.results.forEach((item: TrendsResult) => {
+              let movieName = item.media_type === 'tv' ? item.name : item.title;
+              
+              const endpoint = item.media_type === 'movie' ? Endpoints.movieTranslate(item.id.toString()) : Endpoints.serieTranslate(item.id.toString());
+  
+              this.genericHttpService.tmdbGet(endpoint)
+                .subscribe({
+                  next: (translationRes: MovieTranslationsResponse) => {
+                    if (item.media_type === 'movie') {
+                      // Para películas, manejamos las traducciones
+                      const spanishTranslation = translationRes.translations.find(
+                        (t) => t.iso_639_1 === 'es'
+                      );
+                      const mexicanTranslation = spanishTranslation || translationRes.translations.find(
+                        (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
+                      );
+                      movieName = spanishTranslation?.data.title || mexicanTranslation?.data.title || movieName;
+                    } else if (item.media_type === 'tv') {
+                      // Para series, manejamos las traducciones
+                      const spanishTranslation = translationRes.translations.find(
+                        (t) => t.iso_639_1 === 'es'
+                      );
+                      const mexicanTranslation = spanishTranslation || translationRes.translations.find(
+                        (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
+                      );
+                      movieName = spanishTranslation?.data.title || mexicanTranslation?.data.title || movieName;
+                    }
+  
+                    this.movieCards.push({
+                      img: Endpoints.imagen + `/w500/${item.poster_path}`,
+                      tipo: item.media_type,
+                      movieName: movieName, 
+                      rate: item.vote_average,
+                      id: item.id,  
+                      onClick: () => {
+                        console.log("click: ", item);
+                        if (item.media_type === 'movie') {
+                          this.router.navigateByUrl(`movie/${item.id}`);
+                        } else if (item.media_type === 'tv') {
+                          this.router.navigateByUrl(`serie/${item.id}`);
+                        }
+                      }
+                    } as MovieCardConfig);
+                  },
+                  error: (err: any) => {
+                    console.error('Error al obtener la traducción de la película/serie:', err);
                   }
-                }
-              }
-            } as MovieCardConfig
-          }).filter((item => item.movieName))
-        } else {
-          console.error('La respuesta no contiene el campo result');
-          this.movieCards = []; 
+                });
+            });
+  
+          } else {
+            console.error('La respuesta no contiene el campo result');
+            this.movieCards = [];
+          }
+        },
+        error: (error: any) => {
+          console.error(error);
         }
-      },
-      error: (error: any) => {
-        console.error(error);
-      }
-  })
-
+      });
   }
+  
 
-  getMovies(){
-    this.genericHttpService.httpGet(Endpoints.movies)
-    .subscribe({
-      next: (res: MoviesData) => {
-        console.log('Respuesta de la API:', res);
-        if (res && res.results) {
-          console.log(res.results);
+  getMovies() {
+    this.genericHttpService.tmdbGet(Endpoints.movies)
+      .subscribe({
+        next: (res: MoviesData) => {
+          console.log('Respuesta de la API:', res);
+          if (res && res.results) {
+            console.log(res.results);
 
-          this.movieCards = res.results.map((item: MovieResult) => {
-            return {
-              img: Endpoints.imagen + `/w500/${item.poster_path}`,
-              movieName: item.title,
-              rate: item.vote_average,
-              onClick: () =>{
-                  this.router.navigateByUrl(`movie/${item.id}`)
-              }
-            } as MovieCardConfig
-          }).filter((item => item.movieName))
-        } else {
-          console.error('La respuesta no contiene el campo result');
-          this.movieCards = []; 
+            this.movieCards = [];
+            res.results.forEach((item: MovieResult) => {
+              this.genericHttpService.tmdbGet(Endpoints.movieTranslate(item.id.toString()))
+                .subscribe({
+                  next: (translationRes: MovieTranslationsResponse) => {
+                    const spanishTranslation = translationRes.translations.find(
+                      (t) => t.iso_639_1 === 'es'
+                    );
+                      const mexicanTranslation = spanishTranslation || translationRes.translations.find(
+                      (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
+                    );
+  
+                    const movieName = spanishTranslation?.data.title || mexicanTranslation?.data.title || item.title;
+  
+                  
+                    this.movieCards.push({
+                      img: Endpoints.imagen + `/w500/${item.poster_path}`,
+                      movieName: movieName,
+                      rate: item.vote_average,
+                      id: item.id,  
+                      onClick: () => {
+                        this.router.navigateByUrl(`movie/${item.id}`);
+                      }
+                    } as MovieCardConfig);
+                  },
+                  error: (err: any) => {
+                    console.error('Error al obtener la traducción de la película:', err);
+                  }
+                });
+            });
+  
+          } else {
+            console.error('La respuesta no contiene el campo result');
+            this.movieCards = [];
+          }
+        },
+        error: (error: any) => {
+          console.error('Error al obtener las películas:', error);
         }
-      },
-      error: (error: any) => {
-        console.error(error);
-      }
-  })
+      });
   }
+  
 
-  getSeries(){
-    this.genericHttpService.httpGet(Endpoints.series)
-    .subscribe({
-      next: (res: SeriesData) => {
-        console.log('Respuesta de la API:', res);
-        if (res && res.results) {
-          console.log(res.results);
-
-          this.movieCards = res.results.map((item: SerieResult) => {
-            return {
-              img: Endpoints.imagen + `/w500/${item.poster_path}`,
-              movieName: item.name,
-              rate: item.vote_average,
-              onClick: () =>{
-                console.log("click: ", item)
-
-                  this.router.navigateByUrl(`serie/${item.id}`)
-
-              }
-            } as MovieCardConfig
-          }).filter((item => item.movieName))
-        } else {
-          console.error('La respuesta no contiene el campo result');
-          this.movieCards = []; 
+  getSeries() {
+    this.genericHttpService.tmdbGet(Endpoints.series)
+      .subscribe({
+        next: (res: SeriesData) => {
+          console.log('Respuesta de la API:', res);
+          if (res && res.results) {
+            console.log(res.results);
+            this.movieCards = [];
+            res.results.forEach((item: SerieResult) => {
+              this.genericHttpService.tmdbGet(Endpoints.serieTranslate(item.id.toString()))
+                .subscribe({
+                  next: (translationRes: any) => { 
+                    if (translationRes && translationRes.translations) {
+                      const spanishTranslation = translationRes.translations.find(
+                        (t: any) => t.iso_639_1 === 'es'
+                      );
+  
+                      const mexicanTranslation = spanishTranslation || translationRes.translations.find(
+                        (t: any) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
+                      );
+  
+                      const seriesName = spanishTranslation?.data.name || mexicanTranslation?.data.name || item.name;
+  
+                      this.movieCards.push({
+                        img: Endpoints.imagen + `/w500/${item.poster_path}`,
+                        movieName: seriesName,
+                        rate: item.vote_average,
+                        id: item.id,  
+                        onClick: () => {
+                          console.log("click: ", item);
+                          this.router.navigateByUrl(`serie/${item.id}`);
+                        }
+                      } as MovieCardConfig);
+                    } else {
+                      console.error('No se encontraron traducciones para la serie:', item.name);
+                    }
+                  },
+                  error: (err: any) => {
+                    console.error('Error al obtener la traducción de la serie:', err);
+                  }
+                });
+            });
+  
+          } else {
+            console.error('La respuesta no contiene el campo result');
+            this.movieCards = [];
+          }
+        },
+        error: (error: any) => {
+          console.error('Error al obtener las series:', error);
         }
-      },
-      error: (error: any) => {
-        console.error(error);
-      }
-  })
-    
+      });
   }
+  
 
 }

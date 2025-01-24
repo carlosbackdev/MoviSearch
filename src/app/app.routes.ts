@@ -17,10 +17,10 @@ export const routes: Routes = [
         path: 'test', 
         component: TestComponent
     },{
-        path: 'movie/:series_id',
+        path: 'movie/:movie_id',
         component: DetailComponent
     },{
-        path: 'serie/:movie_id',
+        path: 'serie/:serie_id',
         component: DetailComponent
     }
 
