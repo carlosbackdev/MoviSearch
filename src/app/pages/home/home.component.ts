@@ -14,18 +14,21 @@ import { SerieResult, SeriesData } from '../../interfaces/models/series.interfac
 import { RateChipComponent } from '../../components/rate-chip/rate-chip.component';
 import { MovieTranslationsResponse } from '../../interfaces/models/movieTranslate.interface';
 import { SeriesTranslations } from '../../interfaces/models/serieTranslate.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   providers: [GenericHttpService],
-  imports: [InputComponent, MovieCardComponent, HttpClientModule, SegmentedControlComponent],
+  imports: [InputComponent, MovieCardComponent, HttpClientModule, SegmentedControlComponent,CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit{
   title: string ='Tendencias'
   movieCards: MovieCardConfig [] =[];
+  carouselImages: string[] = [];
+  currentImageIndex = 0;
     segments: SegmentedControlConfig[] = [
       {
       name:'Todas',
@@ -41,6 +44,22 @@ export class HomeComponent implements OnInit{
       }]
   constructor (private genericHttpService: GenericHttpService, private router: Router ){}
   ngOnInit(): void {
+        this.startCarousel();
+  }
+
+  startCarousel(): void {
+    setTimeout(() => {
+      this.currentImageIndex =
+        (this.currentImageIndex + 1) % this.carouselImages.length;
+      this.updateCarouselImages();
+    }, 100);  
+  
+    setInterval(() => {
+      this.currentImageIndex =
+        (this.currentImageIndex + 1) % this.carouselImages.length;
+      this.updateCarouselImages();
+    }, 4500);
+
     this.segments.map((item: SegmentedControlConfig) => {
       item.onClick = () => {
         this.title= item.name
@@ -49,11 +68,24 @@ export class HomeComponent implements OnInit{
         }else if (item.name.toLowerCase().includes('series')){
           this.getSeries();
         }else{
-          this.getTrends();
         }
       }
     })
     this.getTrends() 
+  }
+  updateCarouselImages(): void {
+    const images = document.querySelectorAll('.carousel-item');
+    images.forEach((image, index) => {
+      image.classList.remove('active', 'next', 'previous');
+  
+      if (index === this.currentImageIndex) {
+        image.classList.add('active');
+      } else if (index === (this.currentImageIndex - 1 + this.carouselImages.length) % this.carouselImages.length) {
+        image.classList.add('previous');
+      } else if (index === (this.currentImageIndex + 1) % this.carouselImages.length) {
+        image.classList.add('next');
+      }
+    });
   }
 
   getTrends() {
@@ -63,7 +95,7 @@ export class HomeComponent implements OnInit{
           console.log('Respuesta de la API:', res);
           if (res && res.results) {
             console.log(res.results);
-  
+            this.carouselImages = [];
             this.movieCards = [];
             res.results.forEach((item: TrendsResult) => {
               let movieName = item.media_type === 'tv' ? item.name : item.title;
@@ -91,6 +123,11 @@ export class HomeComponent implements OnInit{
                         (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
                       );
                       movieName = spanishTranslation?.data.title || mexicanTranslation?.data.title || movieName;
+                    }
+                    if (item.backdrop_path) {
+                      this.carouselImages.push(Endpoints.imagen + `/original/${item.backdrop_path}`);
+                    } else {
+                      console.log('Imagen de fondo no disponible para el item:', item);
                     }
   
                     this.movieCards.push({

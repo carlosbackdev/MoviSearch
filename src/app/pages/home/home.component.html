@@ -1,9 +1,13 @@
 <div class="home-container">
     <div class="home-content">
-
         <div class="search-section">
-            <app-input></app-input>
-        </div>
+            <div class="imagen-container">
+                    <div class="carousel-item" *ngFor="let image of carouselImages">
+                      <img [src]="image" alt="" />
+                    </div>           
+                </div>       
+            <app-input class="input"></app-input>
+          </div>        
         <div class="segmented-control-section">
             <div class="title-container">
                 <p class="title">
