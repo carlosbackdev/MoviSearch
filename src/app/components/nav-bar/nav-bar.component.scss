@@ -18,6 +18,7 @@
             margin: auto;
             margin-left: 15px;
             cursor: pointer;
+            font-family: $font-head;
             .h2color1{
                 color: $neon-purple;
             }
@@ -50,7 +51,7 @@
             display: flex;
             list-style: none;
             color: $app-secondary;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             cursor: pointer;
             align-items: center;
             gap:6px;
@@ -97,7 +98,7 @@
         ul{
             gap: 20px;        
             li{
-                font-size: 15px;                
+                font-size: 17px;                
                 i{
                 color: $app-secondary;
                 font-size: 0.8rem;

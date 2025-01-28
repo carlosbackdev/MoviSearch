@@ -104,25 +104,23 @@ export class HomeComponent implements OnInit{
   
               this.genericHttpService.tmdbGet(endpoint)
                 .subscribe({
-                  next: (translationRes: MovieTranslationsResponse) => {
+                  next: (translationRes: MovieTranslationsResponse ) => {
                     if (item.media_type === 'movie') {
-                      // Para películas, manejamos las traducciones
                       const spanishTranslation = translationRes.translations.find(
-                        (t) => t.iso_639_1 === 'es'
+                        (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'ES'
                       );
                       const mexicanTranslation = spanishTranslation || translationRes.translations.find(
                         (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
                       );
                       movieName = spanishTranslation?.data.title || mexicanTranslation?.data.title || movieName;
                     } else if (item.media_type === 'tv') {
-                      // Para series, manejamos las traducciones
                       const spanishTranslation = translationRes.translations.find(
-                        (t) => t.iso_639_1 === 'es'
+                        (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'ES'
                       );
                       const mexicanTranslation = spanishTranslation || translationRes.translations.find(
                         (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
                       );
-                      movieName = spanishTranslation?.data.title || mexicanTranslation?.data.title || movieName;
+                      movieName = spanishTranslation?.data.name || mexicanTranslation?.data.title || movieName;
                     }
                     if (item.backdrop_path) {
                       this.carouselImages.push(Endpoints.imagen + `/original/${item.backdrop_path}`);
@@ -178,7 +176,7 @@ export class HomeComponent implements OnInit{
                 .subscribe({
                   next: (translationRes: MovieTranslationsResponse) => {
                     const spanishTranslation = translationRes.translations.find(
-                      (t) => t.iso_639_1 === 'es'
+                      (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'ES'
                     );
                       const mexicanTranslation = spanishTranslation || translationRes.translations.find(
                       (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
@@ -229,7 +227,7 @@ export class HomeComponent implements OnInit{
                   next: (translationRes: any) => { 
                     if (translationRes && translationRes.translations) {
                       const spanishTranslation = translationRes.translations.find(
-                        (t: any) => t.iso_639_1 === 'es'
+                        (t: any) => t.iso_639_1 === 'es'&& t.iso_3166_1 === 'ES'
                       );
   
                       const mexicanTranslation = spanishTranslation || translationRes.translations.find(

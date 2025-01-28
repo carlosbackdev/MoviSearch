@@ -3,7 +3,8 @@ export interface MovieTranslationData {
     overview: string;   
     runtime: number;    
     tagline: string;    
-    title: string;      
+    title: string;  
+    name?: string;
   }
   
   export interface MovieTranslation {
