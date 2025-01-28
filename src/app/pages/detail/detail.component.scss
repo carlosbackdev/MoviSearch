@@ -1,5 +1,4 @@
-
-.detail-container{
+.detail-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,10 +6,113 @@
     height: 100%;
     margin-top: 30px;
 
-    .detail-content{
+    .detail-content {
         display: block;
         width: 85%;
         text-align: -webkit-center;
         height: 100%;
+
+        .detail-section {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start; /* Alineación al inicio para mejor distribución */
+            width: 100%;
+            margin-top: 20px;
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.9)); /* Gradiente oscuro */
+            border-radius: 20px; /* Bordes más redondeados */
+            padding: 30px; /* Más espacio interno */
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6); /* Sombra más pronunciada */
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+
+            .image-section {
+                width: 300px; /* Más grande */
+                height: 450px; /* Más alto */
+                background-size: cover;
+                background-position: center;
+                border-radius: 15px;
+                margin-right: 30px; /* Espacio entre la imagen y la información */
+                border: 3px solid rgba(255, 255, 255, 0.2); /* Borde más grueso */
+                box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Sombra para la imagen */
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+                &:hover {
+                    transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+                    box-shadow: 0px 8px 25px rgba(0, 216, 255, 0.6); /* Sombra con color al hover */
+                }
+            }
+
+            .info-section {
+                width: 70%; /* Más espacio para la información */
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start; /* Alineación a la izquierda */
+                color: #fff;
+                font-family: 'Arial', sans-serif;
+
+                .title {
+                    font-size: 32px; /* Más grande */
+                    font-weight: bold;
+                    margin-bottom: 20px;
+                    color: #00d8ff;
+                    text-shadow: 0px 4px 10px rgba(0, 216, 255, 0.8); /* Brillo más intenso */
+                    letter-spacing: 1px; /* Espaciado entre letras */
+                }
+
+                .overview {
+                    font-size: 18px; /* Más grande */
+                    line-height: 1.8; /* Más espacio entre líneas */
+                    text-align: left; /* Alineación a la izquierda */
+                    margin-bottom: 30px;
+                    color: #ddd;
+                    background: rgba(255, 255, 255, 0.05); /* Fondo sutil para el texto */
+                    padding: 20px;
+                    border-radius: 10px;
+                    border-left: 4px solid #00d8ff; /* Borde lateral destacado */
+                }
+
+                .info-box {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Cuadrícula flexible */
+                    gap: 25px; /* Más espacio entre cajas */
+                    width: 100%;
+
+                    .box {
+                        background: rgba(255, 255, 255, 0.1);
+                        border-radius: 15px; /* Bordes más redondeados */
+                        padding: 25px; /* Más espacio interno */
+                        text-align: left; /* Alineación a la izquierda */
+                        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
+                        transition: transform 0.3s ease, box-shadow 0.3s ease;
+                        cursor: pointer;
+
+                        &:hover {
+                            transform: translateY(-10px); /* Efecto de levitación */
+                            box-shadow: 0px 8px 20px rgba(0, 216, 255, 0.6); /* Sombra con color al hover */
+                        }
+
+                        .box-title {
+                            font-size: 20px; /* Más grande */
+                            font-weight: bold;
+                            margin-bottom: 15px;
+                            color: #ffd700;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px; /* Espacio entre icono y texto */
+
+                            .box-icon {
+                                font-size: 24px;
+                                color: #00d8ff; /* Color destacado */
+                            }
+                        }
+
+                        .box-description {
+                            font-size: 16px; /* Más grande */
+                            color: #ccc;
+                            line-height: 1.6; /* Más espacio entre líneas */
+                        }
+                    }
+                }
+            }
+        }
     }
 }

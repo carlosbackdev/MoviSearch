@@ -44,7 +44,18 @@ export class HomeComponent implements OnInit{
       }]
   constructor (private genericHttpService: GenericHttpService, private router: Router ){}
   ngOnInit(): void {
-        this.startCarousel();
+        this.getTrends();
+        this.segments.map((item: SegmentedControlConfig) => {
+          item.onClick = () => {
+            this.title= item.name
+            if (item.name.toLowerCase().includes('películas')){
+              this.getMovies();
+            }else if (item.name.toLowerCase().includes('series')){
+              this.getSeries();
+            }else{
+            }
+          }
+        })
   }
 
   startCarousel(): void {
@@ -60,18 +71,6 @@ export class HomeComponent implements OnInit{
       this.updateCarouselImages();
     }, 4500);
 
-    this.segments.map((item: SegmentedControlConfig) => {
-      item.onClick = () => {
-        this.title= item.name
-        if (item.name.toLowerCase().includes('películas')){
-          this.getMovies();
-        }else if (item.name.toLowerCase().includes('series')){
-          this.getSeries();
-        }else{
-        }
-      }
-    })
-    this.getTrends() 
   }
   updateCarouselImages(): void {
     const images = document.querySelectorAll('.carousel-item');
@@ -87,6 +86,7 @@ export class HomeComponent implements OnInit{
       }
     });
   }
+  itemsProcessed: number = 0;
 
   getTrends() {
     this.genericHttpService.tmdbGet(Endpoints.trends)
@@ -143,6 +143,10 @@ export class HomeComponent implements OnInit{
                         }
                       }
                     } as MovieCardConfig);
+                    this.itemsProcessed++;
+                    if (this.itemsProcessed === res.results.length) {
+                      this.startCarousel();
+                    }
                   },
                   error: (err: any) => {
                     console.error('Error al obtener la traducción de la película/serie:', err);

@@ -3,18 +3,23 @@
     <app-detail-banner [config]="BannerConfig"> </app-detail-banner> 
     @if(config){
         <div class="detail-section">
-            <div class="image-section">
+            <div [style.background-image]="'url('+config.img+')'" class="image-section">
     
             </div>
             <div class="info-section">
-                <div class="title"></div>
-                <div class="overview"></div>
-                <app-rate-chip></app-rate-chip>
+                @if(config.subtitle){
+                    <div class="title">{{config.subtitle}}</div>
+                }
+
+                <div class="overview">
+                    {{config.description}}
+                </div>
+                <app-rate-chip [rate]="config.rate" [placeDecimals]="2"></app-rate-chip>
                 <div class="info-box">
-                    @for (item of []; track $index){
+                    @for (item of config.detailCards; track $index){
                         <div class="box">
-                            <div class="box-title"></div>
-                            <div class="box-descripcion"></div>
+                            <div class="box-title">{{item.title}}</div>
+                            <div class="box-descripcion">{{item.description}}</div>
                         </div>
                     }
                 </div>

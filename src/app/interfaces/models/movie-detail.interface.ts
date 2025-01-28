@@ -20,11 +20,17 @@ export interface Genre {
     iso_639_1: string;
     name: string;
   }
+  export interface BelongsToCollection {
+    id: number;
+    name: string;
+    poster_path: string | null;
+    backdrop_path: string | null;
+  }
   
   export interface Movie {
     adult: boolean;
     backdrop_path: string | null;
-    belongs_to_collection: string | null;
+    belongs_to_collection:  BelongsToCollection | null;
     budget: number;
     genres: Genre[];
     homepage: string;

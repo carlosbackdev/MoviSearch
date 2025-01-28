@@ -1,7 +1,8 @@
 export interface DetailConfig{
     img: string;
+    description:string;
     subtitle?: string;
-    rate: string;
+    rate: number;
     detailCards: DetailCard[]
 }
 export interface DetailCard{
