@@ -20,6 +20,7 @@ import { Genre, Movie } from '../../interfaces/models/movie-detail.interface';
 export class DetailComponent {
   BannerConfig!: DetailBannerConfig;
   config!: DetailConfig;
+  movieId!: number;
   constructor( private genericService: GenericHttpService,
     private activatedRoute: ActivatedRoute) {}
   ngOnInit(): void{
@@ -28,6 +29,7 @@ export class DetailComponent {
       console.log("Params: ", paramMap);
       const movieId = paramMap.get('movie_id');
       const serieId = paramMap.get('serie_id');
+      this.movieId = movieId || '';
 
       if (movieId){
         this.getMovieById(movieId);
@@ -36,6 +38,10 @@ export class DetailComponent {
       }
 
     }) 
+  }
+
+  onAddClick(): void {
+    console.log('ID:', this.movieId); 
   }
 
   getMovieById(id: string) {
@@ -81,21 +87,23 @@ export class DetailComponent {
             })
             this.config = {
               img: Endpoints.imagen + `/w500/${posterPath}`,
-              subtitle: translatedTitle,
+              subtitle: res.production_companies[0].name,
               description: translatedOverview,
+              titleDescription: 'Resumen',
               rate: res.vote_average,
+              logo: Endpoints.imagen + `/w500/${res.production_companies[0].logo_path}`,
               detailCards: [{
                 title:'Tipo',
-                description: 'Pelicula'
+                description: 'Película'
               },{
                 title:'Año de Lanzamiento',
                 description: res.release_date
               },{
                 title:'Duración',
-                description: res.runtime.toString()
+                description: res.runtime.toString() + ' minutos'
               },{
                 title:'Generos',
-                description: result
+                description: res.genres.map((genre: Genre) => genre.name).join(' | '),
               }
             ]
             }
@@ -114,6 +122,7 @@ export class DetailComponent {
   getSerieById(id: string) {
     this.genericService.tmdbGet(Endpoints.serieId(id)).subscribe({
       next: (res: any) => {
+        console.log(res)
         this.genericService.tmdbGet(Endpoints.serieTranslate(id)).subscribe({
           next: (translationRes: any) => {
           const spanishSpainTranslation = translationRes.translations.find(

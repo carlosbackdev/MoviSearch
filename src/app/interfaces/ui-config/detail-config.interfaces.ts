@@ -4,6 +4,8 @@ export interface DetailConfig{
     subtitle?: string;
     rate: number;
     detailCards: DetailCard[]
+    titleDescription: string;
+    logo:string;
 }
 export interface DetailCard{
     title:string;

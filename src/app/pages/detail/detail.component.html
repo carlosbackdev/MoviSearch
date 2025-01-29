@@ -4,22 +4,25 @@
     @if(config){
         <div class="detail-section">
             <div [style.background-image]="'url('+config.img+')'" class="image-section">
-    
+                <app-rate-chip [rate]="config.rate" [placeDecimals]="2" class="rate"></app-rate-chip>
+                <button class="button" title="Añadir a lista" type="button"><i class="bi bi-plus-square-fill" (click)="onAddClick()"></i></button>
             </div>
             <div class="info-section">
                 @if(config.subtitle){
                     <div class="title">{{config.subtitle}}</div>
+                    <span> <div [style.background-image]="'url('+config.logo+')'" class="logo-productor" style="display: none;"></div></span>
                 }
-
-                <div class="overview">
-                    {{config.description}}
+                <div class="container-overview">
+                    <div class="description-title">{{config.titleDescription}}</div>
+                    <div class="overview">
+                        <p>{{config.description}}</p>
+                    </div>
                 </div>
-                <app-rate-chip [rate]="config.rate" [placeDecimals]="2"></app-rate-chip>
                 <div class="info-box">
                     @for (item of config.detailCards; track $index){
                         <div class="box">
                             <div class="box-title">{{item.title}}</div>
-                            <div class="box-descripcion">{{item.description}}</div>
+                            <div class="box-description">{{item.description}}</div>
                         </div>
                     }
                 </div>

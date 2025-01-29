@@ -141,7 +141,9 @@ export class HomeComponent implements OnInit{
                         } else if (item.media_type === 'tv') {
                           this.router.navigateByUrl(`serie/${item.id}`);
                         }
-                      }
+                      },onAddClick: () => { 
+                        console.log("Añadir: ",  item.id); 
+                      } 
                     } as MovieCardConfig);
                     this.itemsProcessed++;
                     if (this.itemsProcessed === res.results.length) {
@@ -196,7 +198,9 @@ export class HomeComponent implements OnInit{
                       id: item.id,  
                       onClick: () => {
                         this.router.navigateByUrl(`movie/${item.id}`);
-                      }
+                      },onAddClick: () => { 
+                        console.log("Añadir: ",  item.id); 
+                      } 
                     } as MovieCardConfig);
                   },
                   error: (err: any) => {
@@ -248,7 +252,9 @@ export class HomeComponent implements OnInit{
                         onClick: () => {
                           console.log("click: ", item);
                           this.router.navigateByUrl(`serie/${item.id}`);
-                        }
+                        },onAddClick: () => { 
+                          console.log("Añadir: ",  item.id); 
+                        } 
                       } as MovieCardConfig);
                     } else {
                       console.error('No se encontraron traducciones para la serie:', item.name);

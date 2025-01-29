@@ -5,7 +5,7 @@ export interface Genre {
   
   export interface ProductionCompany {
     id: number;
-    logo_path: string | null;
+    logo_path: string 
     name: string;
     origin_country: string;
   }

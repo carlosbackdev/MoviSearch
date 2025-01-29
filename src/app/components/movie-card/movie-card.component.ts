@@ -9,6 +9,12 @@ import { RateChipComponent } from "../rate-chip/rate-chip.component";
   styleUrl: './movie-card.component.scss'
 })
 export class MovieCardComponent {
-  @Input() config!: MovieCardConfig
+  @Input() config!: any
 
+  onAddClick(event: Event) {
+    event.stopPropagation(); 
+    if (this.config.onAddClick) {
+      this.config.onAddClick();
+    }
+  }
 }
