@@ -22,6 +22,10 @@
             color: $neon-purple;
         }
     }
+    button{
+        all: unset;
+        cursor: pointer;
+    }
     input {
         flex: 1;
         padding: 8px 0;
@@ -35,4 +39,17 @@
         border-color: $neon-purple;
         }
     } 
+    span{
+        margin-right: 10px;
+        font-size: 19px;
+        color:rgba($input, 0.9);
+        transition: color 0.3s ease; 
+    }&:focus-within {
+        span{
+            color: $neon-purple;
+        }
+    }&
+    span:hover{
+        color: $neon-purple;
+    }
 }

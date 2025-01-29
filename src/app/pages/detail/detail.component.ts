@@ -150,6 +150,35 @@ export class DetailComponent {
               path: 'home',
               title: translatedTitle,
             };
+            let result='';
+            res.genres.map ((item: Genre, index: number) => {
+              result += item.name + ' ' +(index === res.genres.length - 1  ? '' : ',')
+            })
+            this.config = {
+              img: Endpoints.imagen + `/w500/${res.poster_path}`,
+              subtitle: res.production_companies[0].name,
+              description: translatedOverview,
+              titleDescription: 'Resumen',
+              rate: res.vote_average,
+              logo: Endpoints.imagen + `/w500/${res.production_companies[0].logo_path}`,
+              detailCards: [{
+                title:'Tipo',
+                description: 'Película'
+              },{
+                title:'Año de Lanzamiento',
+                description: res.first_air_date
+              },{
+                title:'Temporadas',
+                description: res.number_of_seasons
+              },{
+                title:'Creada por',
+                description: res.created_by[0].name
+              },{
+                title:'Generos',
+                description: res.genres.map((genre: Genre) => genre.name).join(' | '),
+              }
+            ]
+            }
           },
           error: (err: any) => {
             console.error('Error al obtener la traducción de la serie:', err);

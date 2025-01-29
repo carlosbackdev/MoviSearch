@@ -53,11 +53,11 @@ export class HomeComponent implements OnInit{
             }else if (item.name.toLowerCase().includes('series')){
               this.getSeries();
             }else{
+              this.getTrends();
             }
           }
         })
   }
-
   startCarousel(): void {
     setTimeout(() => {
       this.currentImageIndex =
@@ -147,7 +147,7 @@ export class HomeComponent implements OnInit{
                     } as MovieCardConfig);
                     this.itemsProcessed++;
                     if (this.itemsProcessed === res.results.length) {
-                      this.startCarousel();
+                        this.startCarousel();                     
                     }
                   },
                   error: (err: any) => {
