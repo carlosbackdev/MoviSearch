@@ -163,7 +163,7 @@ export class DetailComponent {
               logo: Endpoints.imagen + `/w500/${res.production_companies[0].logo_path}`,
               detailCards: [{
                 title:'Tipo',
-                description: 'Película'
+                description: 'Serie'
               },{
                 title:'Año de Lanzamiento',
                 description: res.first_air_date

@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 })
 export class NavBarComponent {
   navItems: NavItemConfig[] = [{
-    name: 'Peliculas',
-    path: 'movie',
+    name: 'Descubrir',
+    path: 'home',
     icon:'bi bi-film',
     active: true
   },
@@ -25,17 +25,19 @@ export class NavBarComponent {
   ,
   {
     name: 'Contacto',
-    path: 'contac',
+    path: 'contact',
     icon:'bi bi-send-fill',
     active: false
   }]
 
   constructor(private router: Router){}
   selectedItem(nav: NavItemConfig){
-    this.navItems.map((item: NavItemConfig) => {
+    this.navItems.forEach((item: NavItemConfig) => {
       item.active = nav.name === item.name;
-    })
+    });
+    this.router.navigateByUrl(nav.path);
   }
+  
   homePage(){
     this.router.navigateByUrl('')
   }

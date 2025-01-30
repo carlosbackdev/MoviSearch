@@ -6,12 +6,14 @@
                       <img [src]="image" alt="" />
                     </div>           
                 </div>       
-            <app-input class="input"></app-input>
+            <app-input class="input" (searchEvent)="onSearchInput($event)"
+            (searchSubmit)="searchProcesator($event)">                
+            </app-input>
           </div>        
         <div class="segmented-control-section">
             <div class="title-container">
                 <p class="title">
-                    {{title}} <span class="results">{{movieCards.length}} Resultados</span>
+                    {{title}} <span class="results">{{length}} Resultados</span>
                 </p>
             </div>
             <app-segmented-control [config]="segments"></app-segmented-control>
