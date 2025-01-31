@@ -6,6 +6,11 @@ export interface DetailConfig{
     detailCards: DetailCard[]
     titleDescription: string;
     logo:string;
+    watchProviders?: {
+        flatrate: any[];
+        rent: any[];
+        buy: any[];
+      };
 }
 export interface DetailCard{
     title:string;

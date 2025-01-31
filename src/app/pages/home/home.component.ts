@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { InputComponent } from '../../components/input/input.component';
 import { MovieCardComponent } from '../../components/movie-card/movie-card.component';
 import { GenericHttpService } from '../../services/generic-http.service';
@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit{
       }]
   constructor (private genericHttpService: GenericHttpService, private router: Router ){}
   ngOnInit(): void {
+    this.resetCarousel();
         this.getTrends();
         this.segments.map((item: SegmentedControlConfig) => {
           item.onClick = () => {
@@ -57,29 +58,40 @@ export class HomeComponent implements OnInit{
               this.getMovies();
             }else if (item.name.toLowerCase().includes('series')){
               this.getSeries();
-            }else{
+            }else if (item.name.toLowerCase().includes('todas')){
               this.getTrends();
             }
           }
         })
   }
+    ngOnDestroy(): void {
+    this.stopCarousel();
+  }
+  resetCarousel(): void {
+    this.currentImageIndex = 0;
+    this.isCarouselStarted = false;
+    this.isTrendsLoaded = false;
+    this.carouselImages = [];
+    this.stopCarousel(); 
+  }
+
+  stopCarousel(): void {
+    if (this.carouselInterval) {
+      clearInterval(this.carouselInterval);
+      this.carouselInterval = null;
+    }
+  }
   startCarousel(): void {
-        if (this.isCarouselStarted) {
-          return;
-        }
-        this.isCarouselStarted = true;
-    setTimeout(() => {
-      this.currentImageIndex =
-        (this.currentImageIndex + 1) % this.carouselImages.length;
-      this.updateCarouselImages();
-    }, 100);  
-  
-    setInterval(() => {
-      this.currentImageIndex =
-        (this.currentImageIndex + 1) % this.carouselImages.length;
+    if (this.isCarouselStarted) {
+      return;
+    }
+    this.isCarouselStarted = true;
+    this.currentImageIndex = (this.currentImageIndex + 1) % this.carouselImages.length;
+    this.updateCarouselImages();
+    this.carouselInterval = setInterval(() => {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.carouselImages.length;
       this.updateCarouselImages();
     }, 4500);
-
   }
   updateCarouselImages(): void {
     const images = document.querySelectorAll('.carousel-item');
@@ -94,12 +106,6 @@ export class HomeComponent implements OnInit{
         image.classList.add('next');
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.carouselInterval) {
-      clearInterval(this.carouselInterval);
-    }
   }
 
 

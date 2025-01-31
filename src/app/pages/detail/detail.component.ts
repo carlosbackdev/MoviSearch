@@ -8,6 +8,7 @@ import { DetailBannerConfig } from '../../interfaces/ui-config/detail-banner-con
 import { RateChipComponent } from "../../components/rate-chip/rate-chip.component";
 import { DetailConfig } from '../../interfaces/ui-config/detail-config.interfaces';
 import { Genre, Movie } from '../../interfaces/models/movie-detail.interface';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-detail',
@@ -19,10 +20,13 @@ import { Genre, Movie } from '../../interfaces/models/movie-detail.interface';
 })
 export class DetailComponent {
   BannerConfig!: DetailBannerConfig;
-  config!: DetailConfig;
+  config: any = {
+    watchProviders: {}
+  };
   movieId!: number;
   constructor( private genericService: GenericHttpService,
-    private activatedRoute: ActivatedRoute) {}
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef) {}
   ngOnInit(): void{
 
     this.activatedRoute.paramMap.subscribe((paramMap: any) => {
@@ -66,14 +70,12 @@ export class DetailComponent {
               spanishGlobalTranslation || 
               spanishMexicanTranslation;
   
-            const translatedTitle = translation?.data.title || res.original_title;
-            const translatedTagline = translation?.data.tagline || res.tagline;
-            const translatedOverview = translation?.data.overview || res.overview;
+            const translatedTitle = translation?.data?.title || res.original_title;
+            const translatedTagline = translation?.data?.tagline || res.tagline;
+            const translatedOverview = translation?.data?.overview || res.overview;
 
-            const backdropPath =
-            res.backdrop_path || res.belongs_to_collection?.backdrop_path;          
-            const posterPath =
-            res.belongs_to_collection?.poster_path || res.poster_path;
+            const backdropPath = res.backdrop_path || res.belongs_to_collection?.backdrop_path || '';
+            const posterPath = res.belongs_to_collection?.poster_path || res.poster_path || '';
             
             this.BannerConfig = {
               img: Endpoints.imagen + `/original/${backdropPath}`,
@@ -87,11 +89,11 @@ export class DetailComponent {
             })
             this.config = {
               img: Endpoints.imagen + `/w500/${posterPath}`,
-              subtitle: res.production_companies[0].name,
+              subtitle: res.production_companies?.[0]?.name || 'Desconocido',
               description: translatedOverview,
               titleDescription: 'Resumen',
               rate: res.vote_average,
-              logo: Endpoints.imagen + `/w500/${res.production_companies[0].logo_path}`,
+              logo: Endpoints.imagen + `/w500/${res.production_companies?.[0]?.logo_path || ''}`,
               detailCards: [{
                 title:'Tipo',
                 description: 'Película'
@@ -102,11 +104,12 @@ export class DetailComponent {
                 title:'Duración',
                 description: res.runtime.toString() + ' minutos'
               },{
-                title:'Generos',
+                title:'Géneros',
                 description: res.genres.map((genre: Genre) => genre.name).join(' | '),
-              }
-            ]
-            }
+              }],
+              watchProviders: undefined
+            };
+            this.getMovieWatchProviders(id);
           },
           error: (err: any) => {
             console.error('Error al obtener la traducción de la película:', err);
@@ -140,9 +143,9 @@ export class DetailComponent {
             spanishGlobalTranslation || 
             spanishMexicanTranslation;
 
-          const translatedTitle = translation?.data.name || res.name;
-          const translatedTagline = translation?.data.tagline || res.tagline;
-          const translatedOverview = translation?.data.overview || res.overview;
+          const translatedTitle = translation?.data?.name || res.name;
+          const translatedTagline = translation?.data?.tagline || res.tagline;
+          const translatedOverview = translation?.data?.overview || res.overview;
 
             this.BannerConfig = {
               img: Endpoints.imagen + `/original/${res.backdrop_path}`,
@@ -156,11 +159,11 @@ export class DetailComponent {
             })
             this.config = {
               img: Endpoints.imagen + `/w500/${res.poster_path}`,
-              subtitle: res.production_companies[0].name,
+              subtitle: res.production_companies?.[0]?.name || 'Desconocido',
               description: translatedOverview,
               titleDescription: 'Resumen',
               rate: res.vote_average,
-              logo: Endpoints.imagen + `/w500/${res.production_companies[0].logo_path}`,
+              logo: Endpoints.imagen + `/w500/${res.production_companies?.[0]?.logo_path || ''}`,
               detailCards: [{
                 title:'Tipo',
                 description: 'Serie'
@@ -172,13 +175,12 @@ export class DetailComponent {
                 description: res.number_of_seasons
               },{
                 title:'Creada por',
-                description: res.created_by[0].name
+                description: res.created_by?.[0]?.name || 'Desconocido',
               },{
-                title:'Generos',
+                title:'Géneros',
                 description: res.genres.map((genre: Genre) => genre.name).join(' | '),
-              }
-            ]
-            }
+              }],watchProviders: undefined
+            };this.getSerieWatchProviders(id);
           },
           error: (err: any) => {
             console.error('Error al obtener la traducción de la serie:', err);
@@ -190,7 +192,45 @@ export class DetailComponent {
       }
     });
   }
-  
 
+  getMovieWatchProviders(movieId: string): void {
+    this.genericService.tmdbGet(Endpoints.movieWatchProviders(movieId)).subscribe({
+      next: (res: any) => {
+        console.log('Proveedores de la película:', res);
+        if (res.results?.ES || res.results?.US) {
+          const providers = res.results.ES || res.results?.US;
+          this.config.watchProviders = {
+            flatrate: providers.flatrate || [],
+            rent: providers.rent || [],
+            buy: providers.buy || [],
+          };
+          this.cdr.detectChanges(); 
+        }
+      },
+      error: (err: any) => {
+        console.error('Error al obtener los proveedores de la película:', err);
+      }
+    });
+  }
+  
+  getSerieWatchProviders(serieId: string): void {
+    this.genericService.tmdbGet(Endpoints.serieWatchProviders(serieId)).subscribe({
+      next: (res: any) => {
+        console.log('Proveedores de la serie:', res);
+        if (res.results?.ES || res.results?.US) {
+          const providers = res.results.ES || res.results?.US;
+          this.config.watchProviders = {
+            flatrate: providers.flatrate || [],
+            rent: providers.rent || [],
+            buy: providers.buy || [],
+          };
+          this.cdr.detectChanges(); 
+        }
+      },
+      error: (err: any) => {
+        console.error('Error al obtener los proveedores de la serie:', err);
+      }
+    });
+  }
 
 }
