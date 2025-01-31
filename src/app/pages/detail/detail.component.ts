@@ -43,6 +43,10 @@ export class DetailComponent {
 
     }) 
   }
+  formatProviderName(name: string): string {
+    return name.replace(/\s+/g, '').toLowerCase();
+  }
+
 
   onAddClick(): void {
     console.log('ID:', this.movieId); 
@@ -232,5 +236,6 @@ export class DetailComponent {
       }
     });
   }
+  
 
 }
