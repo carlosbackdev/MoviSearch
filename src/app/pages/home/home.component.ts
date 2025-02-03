@@ -15,12 +15,15 @@ import { RateChipComponent } from '../../components/rate-chip/rate-chip.componen
 import { MovieTranslationsResponse } from '../../interfaces/models/movieTranslate.interface';
 import { SeriesTranslations } from '../../interfaces/models/serieTranslate.interface';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { AuthModalComponent } from '../../components/auth-modal/auth-modal.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   providers: [GenericHttpService],
-  imports: [InputComponent, MovieCardComponent, HttpClientModule, SegmentedControlComponent,CommonModule],
+  imports: [InputComponent, MovieCardComponent, HttpClientModule, SegmentedControlComponent,CommonModule, AuthModalComponent, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -34,6 +37,8 @@ export class HomeComponent implements OnInit{
   isTrendsLoaded: boolean = false; 
   isCarouselStarted: boolean = false; 
   carouselInterval: any;
+  showLoginModal: boolean = false;
+  
     segments: SegmentedControlConfig[] = [
       {
       name:'Todas',
@@ -47,7 +52,9 @@ export class HomeComponent implements OnInit{
         name:'Series',
         active: false,
       }]
-  constructor (private genericHttpService: GenericHttpService, private router: Router ){}
+  constructor (private genericHttpService: GenericHttpService, private router: Router,
+    private authService: AuthService
+   ){}
   ngOnInit(): void {
     this.resetCarousel();
         this.getTrends();
@@ -168,7 +175,12 @@ export class HomeComponent implements OnInit{
                           this.router.navigateByUrl(`serie/${item.id}`);
                         }
                       },onAddClick: () => { 
-                        console.log("Añadir: ",  item.id); 
+                        if (this.authService.isAuthenticated()) {
+                          console.log("Película añadida:", item.id);
+                        } else {
+                          console.log("Usuario no autenticado, mostrando modal de login");
+                          this.showLoginModal = true;
+                        }
                       } 
                     } as MovieCardConfig);
                     this.length=this.movieCards.length;

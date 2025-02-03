@@ -23,5 +23,9 @@
                 <div class="movies-cards-container"><app-movie-card [config]="item"></app-movie-card></div>
             }
         </div>
+        <app-auth-modal
+            [showModal]="showLoginModal"
+            (closeModal)="showLoginModal = false">
+        </app-auth-modal>
     </div>
 </div>

@@ -1,0 +1,21 @@
+<div class="modal-backdrop" *ngIf="showModal" (click)="close()"></div>
+
+<div class="modal-container" *ngIf="showModal" (click)="$event.stopPropagation()">
+
+  <div class="modal-content">
+    <button class="close-btn" (click)="close()">✖</button>
+    
+    <h2>{{ isLoginMode ? 'Iniciar Sesión' : 'Registro' }}</h2>
+
+    <form (submit)="onSubmit()">
+      <input type="email" [(ngModel)]="user.email" name="email" placeholder="Correo" required />
+      <input type="password" [(ngModel)]="user.password" name="password" placeholder="Contraseña" required />
+      
+      <button type="submit">{{ isLoginMode ? 'Entrar' : 'Registrarse' }}</button>
+    </form>
+
+    <p (click)="switchMode()" class="switch-text">
+      {{ isLoginMode ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión' }}
+    </p>
+  </div>
+</div>

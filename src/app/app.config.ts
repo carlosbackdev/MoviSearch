@@ -1,8 +1,11 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 import { routes } from './app.routes';
-import { GenericHttpService } from '../app/services/generic-http.service';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes)],
+  providers: [
+    provideRouter(routes),
+    importProvidersFrom(HttpClientModule) // Asegura que HttpClient esté disponible
+  ],
 };
