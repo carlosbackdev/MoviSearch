@@ -241,7 +241,12 @@ export class HomeComponent implements OnInit{
                       onClick: () => {
                         this.router.navigateByUrl(`movie/${item.id}`);
                       },onAddClick: () => { 
-                        console.log("Añadir: ",  item.id); 
+                        if (this.authService.isAuthenticated()) {
+                          console.log("Película añadida:", item.id);
+                        } else {
+                          console.log("Usuario no autenticado, mostrando modal de login");
+                          this.showLoginModal = true;
+                        }
                       } 
                     } as MovieCardConfig);
                     this.length=this.movieCards.length;
@@ -296,7 +301,12 @@ export class HomeComponent implements OnInit{
                           console.log("click: ", item);
                           this.router.navigateByUrl(`serie/${item.id}`);
                         },onAddClick: () => { 
-                          console.log("Añadir: ",  item.id); 
+                          if (this.authService.isAuthenticated()) {
+                            console.log("Película añadida:", item.id);
+                          } else {
+                            console.log("Usuario no autenticado, mostrando modal de login");
+                            this.showLoginModal = true;
+                          }
                         } 
                       } as MovieCardConfig);
                       this.length=this.movieCards.length;
@@ -340,8 +350,13 @@ export class HomeComponent implements OnInit{
                   onClick: () => {
                     this.router.navigateByUrl(`movie/${item.id}`);
                   },
-                  onAddClick: () => {
-                    console.log("Añadir: ", item.id);
+                  onAddClick: () => { 
+                    if (this.authService.isAuthenticated()) {
+                      console.log("Película añadida:", item.id);
+                    } else {
+                      console.log("Usuario no autenticado, mostrando modal de login");
+                      this.showLoginModal = true;
+                    }
                   }
                 } as MovieCardConfig));
                 this.title ='Encontradas'
@@ -379,9 +394,13 @@ export class HomeComponent implements OnInit{
                 id: item.id,
                 onClick: () => {
                   this.router.navigateByUrl(`movie/${item.id}`);
-                },
-                onAddClick: () => {
-                  console.log("Añadir: ", item.id);
+                },onAddClick: () => { 
+                  if (this.authService.isAuthenticated()) {
+                    console.log("Película añadida:", item.id);
+                  } else {
+                    console.log("Usuario no autenticado, mostrando modal de login");
+                    this.showLoginModal = true;
+                  }
                 }
               } as MovieCardConfig));
               this.length=this.movieCards.length;

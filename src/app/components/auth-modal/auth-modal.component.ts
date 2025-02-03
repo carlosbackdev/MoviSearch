@@ -14,14 +14,15 @@ export class AuthModalComponent {
   @Input() showModal: boolean = false;
   @Output() closeModal = new EventEmitter<void>();
 
+  errorMessage: string = '';
   isLoginMode: boolean = true;
-  user = { email: '', password: '' };
+  user = { username: '', email: '', password: '' }; // Incluir username
 
   constructor(private authService: AuthService) {}
 
   switchMode() {
     this.isLoginMode = !this.isLoginMode;
-    this.user = { email: '', password: '' }; // Reinicia los campos
+    this.user = { username: '', email: '', password: '' }; // Reinicia los campos
   }
 
   close() {
@@ -51,7 +52,17 @@ export class AuthModalComponent {
             this.switchMode();  // Cambiar a modo de login
           }
         },
-        (error) => console.error('Error al registrarse', error)
+        (error) => {
+          console.error('Error al registrarse', error);
+          // Asumimos que el error contiene un mensaje indicando "email" o "username"
+          if (error.error === 'email') {
+            this.errorMessage = 'El correo electrónico ya está registrado.';
+          } else if (error.error === 'username') {
+            this.errorMessage = 'El nombre de usuario ya está registrado.';
+          } else {
+            this.errorMessage = 'Error desconocido. Por favor, inténtalo de nuevo.';
+          }
+        }        
       );
     }
   }
