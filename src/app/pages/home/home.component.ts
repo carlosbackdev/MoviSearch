@@ -55,10 +55,10 @@ export class HomeComponent implements OnInit{
   constructor (private genericHttpService: GenericHttpService, private router: Router,
     private authService: AuthService
    ){}
-  ngOnInit(): void {
+  ngOnInit(): void { 
     this.resetCarousel();
-        this.getTrends();
-        this.segments.map((item: SegmentedControlConfig) => {
+    this.getTrends();
+    this.segments.map((item: SegmentedControlConfig) => {
           item.onClick = () => {
             this.title= item.name
             if (item.name.toLowerCase().includes('películas')){
@@ -341,28 +341,52 @@ export class HomeComponent implements OnInit{
         this.genericHttpService.tmdbGet(Endpoints.searchMovies(lowerCaseQuery))
           .subscribe({
             next: (res: MoviesData) => {
+              console.log('Respuesta de la API:', res);
               if (res && res.results) {
-                this.movieCards = res.results.map((item: MovieResult) => ({
-                  img: Endpoints.imagen + `/w500/${item.poster_path}`,
-                  movieName: item.title,
-                  rate: item.vote_average,
-                  id: item.id,
-                  onClick: () => {
-                    this.router.navigateByUrl(`movie/${item.id}`);
-                  },
-                  onAddClick: () => { 
-                    if (this.authService.isAuthenticated()) {
-                      console.log("Película añadida:", item.id);
-                    } else {
-                      console.log("Usuario no autenticado, mostrando modal de login");
-                      this.showLoginModal = true;
-                    }
-                  }
-                } as MovieCardConfig));
-                this.title ='Encontradas'
-                this.length=this.movieCards.length;
+                console.log(res.results);
+    
+                this.movieCards = [];
+                res.results.forEach((item: MovieResult) => {
+                  this.genericHttpService.tmdbGet(Endpoints.movieTranslate(item.id.toString()))
+                    .subscribe({
+                      next: (translationRes: MovieTranslationsResponse) => {
+                        const spanishTranslation = translationRes.translations.find(
+                          (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'ES'
+                        );
+                          const mexicanTranslation = spanishTranslation || translationRes.translations.find(
+                          (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
+                        );
+      
+                        const movieName = spanishTranslation?.data.title || mexicanTranslation?.data.title || item.title;
+      
+                      
+                        this.movieCards.push({
+                          img: Endpoints.imagen + `/w500/${item.poster_path}`,
+                          movieName: movieName,
+                          rate: item.vote_average,
+                          id: item.id,  
+                          onClick: () => {
+                            this.router.navigateByUrl(`movie/${item.id}`);
+                          },onAddClick: () => { 
+                            if (this.authService.isAuthenticated()) {
+                              console.log("Película añadida:", item.id);
+                            } else {
+                              console.log("Usuario no autenticado, mostrando modal de login");
+                              this.showLoginModal = true;
+                            }
+                          } 
+                        } as MovieCardConfig);
+                        this.length=this.movieCards.length;
+                      },
+                      error: (err: any) => {
+                        console.error('Error al obtener la traducción de la película:', err);
+                      }
+                    });
+                });
+      
               } else {
-                console.error("No se encontraron resultados.");
+                console.error('La respuesta no contiene el campo result');
+                this.movieCards = [];
               }
             },
             error: (error: any) => {

@@ -4,6 +4,8 @@ import { TestComponent } from './pages/test/test.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { ListComponent } from './pages/list/list.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { authGuard } from './guards/auth.guard';
+
 
 export const routes: Routes = [
     {
@@ -13,11 +15,12 @@ export const routes: Routes = [
     }, 
     {
         path: 'home', 
-        component: HomeComponent
+        component: HomeComponent,
     }, 
     {
         path: 'list', 
-        component: ListComponent
+        component: ListComponent,
+        canActivate: [authGuard],
     }, 
     {
         path: 'contact', 

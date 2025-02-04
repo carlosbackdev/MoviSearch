@@ -1,5 +1,5 @@
 
-<div class="nav-bar-container">
+<nav class="nav-bar-container">
     <div class="nav-content">
         <div (click)="homePage()" class="logo-section">
         </div>
@@ -16,4 +16,8 @@
             }
     </div>
     
-</div>
+</nav>
+<app-auth-modal
+    [showModal]="showLoginModal"
+    (closeModal)="showLoginModal = false">
+</app-auth-modal>

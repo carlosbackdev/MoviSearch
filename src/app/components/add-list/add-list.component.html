@@ -1,0 +1,23 @@
+<div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <h2>Añadir Película a una Lista</h2>
+  
+      <div>
+        <input [(ngModel)]="newListName" placeholder="Nombre de la lista" />
+        <button (click)="createList()">Crear Lista</button>
+      </div>
+  
+      <!-- Listas existentes -->
+      <div *ngIf="userLists.length > 0">
+        <h3>Mis Listas</h3>
+        <ul>
+          <li *ngFor="let list of userLists">
+            <button (click)="addToExistingList(list.name)">{{ list.name }}</button>
+          </li>
+        </ul>
+      </div>
+  
+      <button (click)="closeModal()">Cerrar</button>
+    </div>
+  </div>
+  

@@ -2,19 +2,29 @@
 
 <div class="modal-container" *ngIf="showModal" (click)="$event.stopPropagation()">
   <div class="modal-content">
-    <button class="close-btn" (click)="close()">✖</button>
+    <button class="close-btn" (click)="close()"><i class="bi bi-x-square"></i></button>
     
     <h2>{{ isLoginMode ? 'Iniciar Sesión' : 'Registro' }}</h2>
 
     <form (submit)="onSubmit()">
-      <!-- Campo de nombre de usuario (solo en modo registro) -->
-      <input *ngIf="!isLoginMode" type="text" [(ngModel)]="user.username" name="username" placeholder="Nombre de usuario" required />
+
+      <input *ngIf="!isLoginMode" id="username" type="text" [(ngModel)]="user.username" name="username" placeholder="Nombre de usuario" required />
+      <div *ngIf="errors.username" class="error-message">{{ errors.username }}</div>
       
-      <input type="email" [(ngModel)]="user.email" name="email" placeholder="Correo" required />
-      <input type="password" [(ngModel)]="user.password" name="password" placeholder="Contraseña" required />
+      <input id="email" type="email" [(ngModel)]="user.email" name="email" placeholder="Correo" required />
+      <div *ngIf="errors.email" class="error-message">{{ errors.email }}</div>
+      
+      <div class="password-container">
+        <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="user.password" name="password" placeholder="Contraseña" required />
+        <button type="button" (click)="showPassword = !showPassword" class="toggle-password-btn">
+          <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+        </button>
+      </div>
+      <div *ngIf="errors.password" class="error-message">{{ errors.password }}</div>
       
       <button type="submit">{{ isLoginMode ? 'Entrar' : 'Registrarse' }}</button>
     </form>
+    
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
     </div>

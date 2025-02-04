@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -10,19 +10,28 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './auth-modal.component.html',
   styleUrl: './auth-modal.component.scss',
 })
-export class AuthModalComponent {
+export class AuthModalComponent implements OnInit{
   @Input() showModal: boolean = false;
   @Output() closeModal = new EventEmitter<void>();
 
   errorMessage: string = '';
   isLoginMode: boolean = true;
   user = { username: '', email: '', password: '' }; // Incluir username
+  isFormValid: boolean = false;
+  errors: any = {};
+  showPassword: boolean = false;
 
   constructor(private authService: AuthService) {}
+  ngOnInit(): void { 
+    this.errorMessage = '';
+    this.isFormValid = false;
+   }
 
   switchMode() {
     this.isLoginMode = !this.isLoginMode;
     this.user = { username: '', email: '', password: '' }; // Reinicia los campos
+    this.errorMessage = '';
+    this.errors = {};
   }
 
   close() {
@@ -30,6 +39,7 @@ export class AuthModalComponent {
   }
 
   onSubmit() {
+    if (!this.validateForm()) return;
     if (this.isLoginMode) {
       this.authService.login(this.user).subscribe(
         (response: any) => {
@@ -42,6 +52,7 @@ export class AuthModalComponent {
         },
         (error) => {
           console.error('Error al iniciar sesión', error);
+          this.errorMessage = 'Datos incorrectos';
         }
       );
     } else {
@@ -54,8 +65,8 @@ export class AuthModalComponent {
         },
         (error) => {
           console.error('Error al registrarse', error);
-          // Asumimos que el error contiene un mensaje indicando "email" o "username"
           if (error.error === 'email') {
+            document.getElementById("email")?.setAttribute("border-color","red")
             this.errorMessage = 'El correo electrónico ya está registrado.';
           } else if (error.error === 'username') {
             this.errorMessage = 'El nombre de usuario ya está registrado.';
@@ -66,4 +77,33 @@ export class AuthModalComponent {
       );
     }
   }
+
+  validateForm(): boolean {
+    this.errors = {};
+    let isValid = true;
+
+    if (!this.isLoginMode && this.user.username.trim().length < 4) {
+      document.getElementById("username")?.setAttribute("sytle"," background-color: red;");
+      this.errors.username = 'El nombre debe tener al menos 4 caracteres';
+      isValid = false;
+    }
+    if (!this.validateEmail(this.user.email)) {
+      this.errors.email = 'Correo inválido';
+      isValid = false;
+    }
+    if (!this.isLoginMode && !this.validatePassword(this.user.password)) {
+      this.errors.password = 'La contraseña debe incluir mayúsculas, minúsculas, números y símbolos';
+      isValid = false;
+    }
+    return isValid;
+  }
+
+  validateEmail(email: string): boolean {
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+  }
+
+  validatePassword(password: string): boolean {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password);
+  }
+
 }
