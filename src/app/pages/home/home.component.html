@@ -27,5 +27,10 @@
             [showModal]="showLoginModal"
             (closeModal)="showLoginModal = false">
         </app-auth-modal>
+        <app-add-list
+            [showModal]="showListModal"
+            [movieId]="selectedMovieAndTvId"
+            (showModalChange)="showListModal = $event">
+        </app-add-list>
     </div>
 </div>

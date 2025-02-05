@@ -9,11 +9,12 @@ import { RateChipComponent } from "../rate-chip/rate-chip.component";
   styleUrl: './movie-card.component.scss'
 })
 export class MovieCardComponent {
-  @Input() config!: any
-  @Output() addToList = new EventEmitter<number>(); // Evento para emitir el ID de la película
-
-  onAddClick(event: Event) {
+  @Input() config!: any 
+ 
+  onAddClick(event: Event) { 
     event.stopPropagation();  
-    this.addToList.emit(this.config.id); // Emitir el ID de la película al componente padre
-  }
+    if (this.config.onAddClick) { 
+      this.config.onAddClick(); 
+    } 
+  } 
 }

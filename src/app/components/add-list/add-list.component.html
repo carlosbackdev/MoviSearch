@@ -1,23 +1,27 @@
-<div class="modal" *ngIf="showModal">
-    <div class="modal-content">
-      <h2>Añadir Película a una Lista</h2>
-  
-      <div>
-        <input [(ngModel)]="newListName" placeholder="Nombre de la lista" />
-        <button (click)="createList()">Crear Lista</button>
-      </div>
-  
-      <!-- Listas existentes -->
-      <div *ngIf="userLists.length > 0">
-        <h3>Mis Listas</h3>
-        <ul>
-          <li *ngFor="let list of userLists">
-            <button (click)="addToExistingList(list.name)">{{ list.name }}</button>
-          </li>
-        </ul>
-      </div>
-  
-      <button (click)="closeModal()">Cerrar</button>
+<!-- Fondo oscuro para cerrar modal al hacer clic fuera -->
+<div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="closeModal()"><i class="bi bi-x-square"></i></button>
+    <h2>Añadir Película a una Lista</h2>
+
+    <!-- Input y botón en la misma línea -->
+    <div class="input-container">
+      <input [(ngModel)]="newListName" placeholder="Nombre de la lista nueva" />
+      <button (click)="createList()">Crear</button>
+    </div>
+
+    <!-- Listas existentes -->
+    <div class="list-container" *ngIf="userLists.length > 0">
+      <h3>Mis Listas<span> ¡guardala!</span></h3>
+      <ul>
+        <li *ngFor="let list of userLists">
+          <button (click)="addToExistingList(list.name)">{{ list.name }}</button>
+          <button id="delete" (click)="deleteList(list.name)"><i class="bi bi-trash3-fill"></i></button>
+        </li>
+      </ul>
+    </div>
+    <div class="success-message" [ngClass]="successClass" *ngIf="showSuccessMessage">
+      {{ successMessage }}
     </div>
   </div>
-  
+</div>

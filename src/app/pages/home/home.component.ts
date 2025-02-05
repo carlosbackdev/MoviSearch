@@ -18,12 +18,13 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { AuthModalComponent } from '../../components/auth-modal/auth-modal.component';
 import { FormsModule } from '@angular/forms';
+import { AddListComponent } from "../../components/add-list/add-list.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   providers: [GenericHttpService],
-  imports: [InputComponent, MovieCardComponent, HttpClientModule, SegmentedControlComponent,CommonModule, AuthModalComponent, FormsModule],
+  imports: [InputComponent, MovieCardComponent, HttpClientModule, SegmentedControlComponent, CommonModule, AuthModalComponent, FormsModule, AddListComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -38,6 +39,8 @@ export class HomeComponent implements OnInit{
   isCarouselStarted: boolean = false; 
   carouselInterval: any;
   showLoginModal: boolean = false;
+  showListModal: boolean = false;
+  selectedMovieAndTvId: number=0;
   
     segments: SegmentedControlConfig[] = [
       {
@@ -74,6 +77,7 @@ export class HomeComponent implements OnInit{
     ngOnDestroy(): void {
     this.stopCarousel();
   }
+  
   resetCarousel(): void {
     this.currentImageIndex = 0;
     this.isCarouselStarted = false;
@@ -176,7 +180,8 @@ export class HomeComponent implements OnInit{
                         }
                       },onAddClick: () => { 
                         if (this.authService.isAuthenticated()) {
-                          console.log("Película añadida:", item.id);
+                          this.selectedMovieAndTvId= item.id;
+                          this.showListModal=true;
                         } else {
                           console.log("Usuario no autenticado, mostrando modal de login");
                           this.showLoginModal = true;
