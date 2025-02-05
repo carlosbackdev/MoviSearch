@@ -247,7 +247,8 @@ export class HomeComponent implements OnInit{
                         this.router.navigateByUrl(`movie/${item.id}`);
                       },onAddClick: () => { 
                         if (this.authService.isAuthenticated()) {
-                          console.log("Película añadida:", item.id);
+                          this.selectedMovieAndTvId= item.id;
+                          this.showListModal=true;
                         } else {
                           console.log("Usuario no autenticado, mostrando modal de login");
                           this.showLoginModal = true;
@@ -307,7 +308,8 @@ export class HomeComponent implements OnInit{
                           this.router.navigateByUrl(`serie/${item.id}`);
                         },onAddClick: () => { 
                           if (this.authService.isAuthenticated()) {
-                            console.log("Película añadida:", item.id);
+                            this.selectedMovieAndTvId= item.id;
+                            this.showListModal=true;
                           } else {
                             console.log("Usuario no autenticado, mostrando modal de login");
                             this.showLoginModal = true;
@@ -337,6 +339,7 @@ export class HomeComponent implements OnInit{
   }
 
   onSearchInput(query: string): void {
+    this.title='Encontradas'
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
     }
@@ -374,7 +377,8 @@ export class HomeComponent implements OnInit{
                             this.router.navigateByUrl(`movie/${item.id}`);
                           },onAddClick: () => { 
                             if (this.authService.isAuthenticated()) {
-                              console.log("Película añadida:", item.id);
+                              this.selectedMovieAndTvId= item.id;
+                              this.showListModal=true;
                             } else {
                               console.log("Usuario no autenticado, mostrando modal de login");
                               this.showLoginModal = true;
@@ -425,12 +429,13 @@ export class HomeComponent implements OnInit{
                   this.router.navigateByUrl(`movie/${item.id}`);
                 },onAddClick: () => { 
                   if (this.authService.isAuthenticated()) {
-                    console.log("Película añadida:", item.id);
+                    this.selectedMovieAndTvId= item.id;
+                    this.showListModal=true;
                   } else {
                     console.log("Usuario no autenticado, mostrando modal de login");
                     this.showLoginModal = true;
                   }
-                }
+                } 
               } as MovieCardConfig));
               this.length=this.movieCards.length;
               this.title='recomendaciones'

@@ -64,4 +64,9 @@
         }
     </div>      
     </div>
+    <app-add-list
+        [showModal]="showListModal"
+        [movieId]="selectedMovieAndTvId"
+        (showModalChange)="showListModal = $event">
+    </app-add-list>
 </div>

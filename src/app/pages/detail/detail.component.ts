@@ -9,22 +9,31 @@ import { RateChipComponent } from "../../components/rate-chip/rate-chip.componen
 import { DetailConfig } from '../../interfaces/ui-config/detail-config.interfaces';
 import { Genre, Movie } from '../../interfaces/models/movie-detail.interface';
 import { ChangeDetectorRef } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { AddListComponent } from '../../components/add-list/add-list.component';
 
 @Component({
   selector: 'app-detail',
   standalone:true,
   providers:[GenericHttpService],
-  imports: [DetailBannerComponent, HttpClientModule, RateChipComponent],
+  imports: [DetailBannerComponent, HttpClientModule, RateChipComponent,FormsModule,AddListComponent],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss'
 })
 export class DetailComponent {
+
   BannerConfig!: DetailBannerConfig;
   config: any = {
     watchProviders: {}
   };
   movieId!: number;
+  selectedMovieAndTvId: number=0;
+  showListModal: boolean = false;
+  showLoginModal: boolean = false;
+
   constructor( private genericService: GenericHttpService,
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef) {}
   ngOnInit(): void{
@@ -49,6 +58,13 @@ export class DetailComponent {
 
 
   onAddClick(): void {
+    if (this.authService.isAuthenticated()) {
+      this.selectedMovieAndTvId= this.movieId;
+      this.showListModal=true;
+    } else {
+      console.log("Usuario no autenticado, mostrando modal de login");
+      this.showLoginModal = true;
+    }
     console.log('ID:', this.movieId); 
   }
 
