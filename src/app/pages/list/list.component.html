@@ -1,1 +1,9 @@
-<p>list works!</p>
+
+<div class="container">
+    <ul class="name-list-container">
+        <li *ngFor="let list of userLists">
+            <h2>{{ list.name }}</h2>
+            <button id="delete" (click)="deleteList(list.name)"><i class="bi bi-trash3-fill"></i></button>
+          </li>
+    </ul>
+</div>
