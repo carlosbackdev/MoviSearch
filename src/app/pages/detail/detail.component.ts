@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { DetailBannerComponent } from "../../components/detail-banner/detail-banner.component";
 import { ActivatedRoute } from '@angular/router';
 import { GenericHttpService } from '../../services/generic-http.service';
@@ -12,17 +12,20 @@ import { ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { AddListComponent } from '../../components/add-list/add-list.component';
+import { ProvidersComponent } from '../../components/providers/providers.component';
+import { AuthModalComponent } from '../../components/auth-modal/auth-modal.component';
 
 @Component({
   selector: 'app-detail',
   standalone:true,
   providers:[GenericHttpService],
-  imports: [DetailBannerComponent, HttpClientModule, RateChipComponent,FormsModule,AddListComponent],
+  imports: [DetailBannerComponent, HttpClientModule, RateChipComponent, FormsModule, AddListComponent, ProvidersComponent,AuthModalComponent ],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss'
 })
 export class DetailComponent {
 
+  @ViewChild(ProvidersComponent) ProvidersComponent!: ProvidersComponent;
   BannerConfig!: DetailBannerConfig;
   config: any = {
     watchProviders: {}
@@ -52,10 +55,6 @@ export class DetailComponent {
 
     }) 
   }
-  formatProviderName(name: string): string {
-    return name.replace(/\s+/g, '').toLowerCase();
-  }
-
 
   onAddClick(): void {
     if (this.authService.isAuthenticated()) {
@@ -129,7 +128,7 @@ export class DetailComponent {
               }],
               watchProviders: undefined
             };
-            this.getMovieWatchProviders(id);
+            this.ProvidersComponent.getMovieWatchProviders(id);
           },
           error: (err: any) => {
             console.error('Error al obtener la traducción de la película:', err);
@@ -200,7 +199,8 @@ export class DetailComponent {
                 title:'Géneros',
                 description: res.genres.map((genre: Genre) => genre.name).join(' | '),
               }],watchProviders: undefined
-            };this.getSerieWatchProviders(id);
+            };
+            this.ProvidersComponent.getSerieWatchProviders(id);
           },
           error: (err: any) => {
             console.error('Error al obtener la traducción de la serie:', err);
@@ -209,46 +209,6 @@ export class DetailComponent {
       },
       error: (err: any) => {
         console.error(err);
-      }
-    });
-  }
-
-  getMovieWatchProviders(movieId: string): void {
-    this.genericService.tmdbGet(Endpoints.movieWatchProviders(movieId)).subscribe({
-      next: (res: any) => {
-        console.log('Proveedores de la película:', res);
-        if (res.results?.ES || res.results?.US) {
-          const providers = res.results.ES || res.results?.US;
-          this.config.watchProviders = {
-            flatrate: providers.flatrate || [],
-            rent: providers.rent || [],
-            buy: providers.buy || [],
-          };
-          this.cdr.detectChanges(); 
-        }
-      },
-      error: (err: any) => {
-        console.error('Error al obtener los proveedores de la película:', err);
-      }
-    });
-  }
-  
-  getSerieWatchProviders(serieId: string): void {
-    this.genericService.tmdbGet(Endpoints.serieWatchProviders(serieId)).subscribe({
-      next: (res: any) => {
-        console.log('Proveedores de la serie:', res);
-        if (res.results?.ES || res.results?.US) {
-          const providers = res.results.ES || res.results?.US;
-          this.config.watchProviders = {
-            flatrate: providers.flatrate || [],
-            rent: providers.rent || [],
-            buy: providers.buy || [],
-          };
-          this.cdr.detectChanges(); 
-        }
-      },
-      error: (err: any) => {
-        console.error('Error al obtener los proveedores de la serie:', err);
       }
     });
   }

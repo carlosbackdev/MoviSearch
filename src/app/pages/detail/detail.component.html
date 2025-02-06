@@ -30,40 +30,12 @@
     
         </div>
     }
-    <div class="providers-section">
-        @if(config?.watchProviders && (config.watchProviders.flatrate?.length > 0 || config.watchProviders.rent?.length > 0)) {
-            <h3 class="providers-title">Disponible en:</h3>
-            <div class="provider-list">
-                @if(config.watchProviders.flatrate?.length > 0) {
-                    <div class="provider-category">
-                        <h4>Suscripción:</h4>
-                        <div class="provider-logos">
-                            @for (provider of config.watchProviders.flatrate; track $index){
-                                <a class="provider-link" [href]="'https://www.' + formatProviderName(provider.provider_name) +'.com'" target="_blank">
-                                    <img class="provider-logo" [src]="'https://image.tmdb.org/t/p/w500/' + provider.logo_path" [alt]="provider.provider_name" />
-                                </a>
-                            }
-                        </div>
-                    </div>
-                }
-                @if(config.watchProviders.rent?.length > 0) {
-                    <div class="provider-category">
-                        <h4>Alquiler:</h4>
-                        <div class="provider-logos">
-                            @for (provider of config.watchProviders.rent; track $index){
-                                <a class="provider-link" [href]="'https://www.' + formatProviderName(provider.provider_name) +'.com'" target="_blank">
-                                    <img class="provider-logo" [src]="'https://image.tmdb.org/t/p/w500/' + provider.logo_path" [alt]="provider.provider_name" />
-                                </a>
-                            }
-                        </div>
-                    </div>
-                }
-            </div>
-        } @else {
-            <p class="no-providers-message">No hay proveedores disponibles para este contenido.</p>
-        }
-    </div>      
+    <app-providers [config]="config"></app-providers>  
     </div>
+    <app-auth-modal
+        [showModal]="showLoginModal"
+        (closeModal)="showLoginModal = false">
+    </app-auth-modal>
     <app-add-list
         [showModal]="showListModal"
         [movieId]="selectedMovieAndTvId"

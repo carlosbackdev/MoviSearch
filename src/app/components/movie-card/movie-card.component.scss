@@ -7,8 +7,10 @@
     background: $black-20;
     border: 2px solid black;
     border-radius: 15px;
+    border-top: 2.5px solid rgb(0, 217, 255,0.5);
     cursor: pointer;
     &:hover{
+        border-top: 2.5px solid rgb(0, 217, 255,1);
         background: rgba($neon-purple, 0.6);
         transition: background 0.4s ease;
     }
@@ -39,6 +41,7 @@
         text-align: center;
         overflow-wrap: anywhere;
         font-family: $font-title;
+        
     }
 }
 @media (max-width: 768px) {

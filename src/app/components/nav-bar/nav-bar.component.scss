@@ -81,6 +81,35 @@
 
     }
 }
+@media (max-width: 1000px){
+    .nav-bar-container{
+        .nav-content{
+            padding: 13px;
+            .title{
+                span{
+                    font-size: 24px;
+                }
+               
+            }
+        }
+    
+        .logo-section{
+            width: 35px;
+            height: 35px;
+        }
+        ul{
+            gap: 20px;        
+            li{
+                font-size: 19px;                
+                i{
+                color: $app-secondary;
+                font-size: 0.8rem;
+                }
+            }    
+        }
+    }
+
+}
 @media (max-width: 768px){
     .nav-bar-container{
         .nav-content{

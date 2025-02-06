@@ -27,6 +27,10 @@ export class ListService {
     return this.http.get(`${this.apiUrl}/user`, { headers: this.getHeaders() });
   }
 
+  getMovieLists(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/movie`, { headers: this.getHeaders() });
+  }
+
   createList(listName: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/create`, { name: listName }, { headers: this.getHeaders() });
   }

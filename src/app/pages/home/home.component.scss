@@ -63,6 +63,7 @@
                 margin-bottom: 0px;
                 margin-top: 5px;
                 margin-left: 3px;
+                border-bottom: 3px solid rgb(0, 216, 255,0.8);
                 .results{
                     font-size: 20px;
                     color: $white;
@@ -94,8 +95,9 @@
                     font-size: 25px;
                     color: $white;
                     margin-bottom: 0px;
-                    margin-top: 0px;
+                    margin-top: 20px;
                     margin-left: 0px;
+                    border-bottom: none;
                     .results{
                         font-size: 11px;
                     }

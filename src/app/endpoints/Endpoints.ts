@@ -11,4 +11,5 @@ export class Endpoints{
     static searchProcesator = (query: string) => `api/text/process`
     static movieWatchProviders = (movie_id: string) => `movie/${movie_id}/watch/providers`;
     static serieWatchProviders = (series_id: string) => `tv/${series_id}/watch/providers`;
+    static listMovieId = (item_id: string) => `find/${item_id}`;
 }

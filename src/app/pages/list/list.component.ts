@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { GenericHttpService } from '../../services/generic-http.service';
 import { AuthService } from '../../services/auth.service';
 import { ListService } from '../../services/list.service';
+import { List, Movie } from '../../interfaces/ui-config/list-user-config.interfaces';
 
 @Component({
   selector: 'app-list',
@@ -13,7 +14,8 @@ import { ListService } from '../../services/list.service';
 })
 export class ListComponent {
 
-userLists: any[] = [];
+userLists: any [] =  [];
+movieIds: number [] =  [];
 
 constructor(private genericHttpService: GenericHttpService, private authService: AuthService, private listService: ListService) {}
 
@@ -22,9 +24,12 @@ ngOnInit(): void {
 }
 
 getUserLists(): void {
-    this.listService.getUserLists().subscribe(
-      (lists) => {
+    this.listService.getMovieLists().subscribe(
+      (lists: List[]) => {
         this.userLists = lists;
+        this.movieIds = lists.flatMap(list => list.movies.map(movie => movie.movieId));
+        console.log(lists);
+        console.log(this.movieIds);
       },
       (error) => {
         console.error('Error al obtener listas:', error);

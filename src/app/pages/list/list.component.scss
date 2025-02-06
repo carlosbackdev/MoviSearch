@@ -1,0 +1,104 @@
+@import '../../../themes/theme.scss';
+
+.container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 40px;
+
+    .name-list-container {
+        list-style: none;
+        padding: 0;
+        width: 85%;
+        margin: 0;
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.9));
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0px 8px 25px rgba(106, 93, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-bottom: 2.5px solid #00d8ff;
+            
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0px 12px 30px rgba(106, 93, 255, 0.5);
+            }
+
+            h2 {
+                font-family: $font-primary;
+                font-size: 20px;
+                color: $white;
+                margin: 0;
+                
+            }
+
+            button {
+                all: unset;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                transition: background 0.3s ease, transform 0.3s ease;
+
+                i {
+                    color: rgba($app-primary, 0.75);
+                    font-size: 20px;
+                    transition: color 0.3s ease, font-size 0.3s ease;
+                }
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.2);
+                    transform: scale(1.1);
+
+                    i {
+                        color: rgba($app-primary, 1);
+                        font-size: 22px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        .name-list-container {
+            width: 95%;
+
+            li {
+                padding: 15px;
+
+                h2 {
+                    font-size: 18px;
+                }
+
+                button {
+                    width: 35px;
+                    height: 35px;
+
+                    i {
+                        font-size: 18px;
+                    }
+
+                    &:hover {
+                        i {
+                            font-size: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

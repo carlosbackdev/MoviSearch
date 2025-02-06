@@ -41,6 +41,10 @@ export class NavBarComponent {
   },]
 
   constructor(private router: Router, private authService: AuthService){}
+  ngOnInit() {
+    this.username = localStorage.getItem('username');
+    this.updateNavItem();
+  }
   selectedItem(nav: NavItemConfig){
     if (nav.path === 'list' && !this.authService.isAuthenticated()) {
         this.showLoginModal = true;
