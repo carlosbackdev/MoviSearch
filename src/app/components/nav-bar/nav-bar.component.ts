@@ -67,8 +67,13 @@ export class NavBarComponent {
     this.router.navigateByUrl(nav.path);
   }
   
-  homePage(){
-    this.router.navigateByUrl('')
+ homePage() {
+  this.setActiveNavItem('home');
+  this.router.navigateByUrl('');
+  }
+
+  setActiveNavItem(path: string) {
+    this.navItems.forEach(item => item.active = (item.path === path));
   }
    // Método para obtener el nombre de usuario
    getUsername() {

@@ -1,0 +1,17 @@
+<div class="informacion-section">
+    @if(config?.info && config.info.section?.length > 0) {
+        <h3>Información de la Página</h3>
+        <div class="informacion-list">
+            @for(information of config.info.section; track $index) {
+                <div class="informacion-category">
+                    <h4>{{ information.title }}</h4>
+                    <div class="informacion-logos">
+                        <markdown class="text" [data]="information.description"></markdown>
+                    </div>
+                </div>
+            }
+        </div>
+    } @else {
+        <p class="no-informacion-message">Error al cargar la información</p>
+    }
+</div>

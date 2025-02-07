@@ -114,20 +114,20 @@
     .nav-bar-container{
         .nav-content{
             width: 100%;
-            padding: 13px;
+            padding: 10px;
             .title{
                 display: none;
             }
         }
     
         .logo-section{
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
         }
         ul{
-            gap: 20px;        
+            gap: 10px;        
             li{
-                font-size: 17px;                
+                font-size: 12px;                
                 i{
                 color: $app-secondary;
                 font-size: 0.8rem;

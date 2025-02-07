@@ -1,0 +1,23 @@
+{
+    "info": {
+      "section": [
+        {
+          "title": "Cómo descubrir películas",
+          "description": "#### 🎯 **Búsqueda Inteligente**\nSi no tienes un título en mente y realmente quieres descubrir películas, describe lo que buscas. Por ejemplo:\n- _\"Quiero una película para llorar\"_\n- _\"Algo divertido para ver en familia\"_\n- _\"Una película de acción con Tom Cruise\"_\n\nPresiona el botón **Recomendar** o presiona `Enter` y el sistema te sugerirá opciones basadas en tu descripción.\n\n#### 🔍 **Búsqueda Rápida**\nEscribe el título de una película en la barra de búsqueda para obtener resultados inmediatos."
+        },
+        {
+          "title": "Añadir películas a tus listas",
+          "description": "#### 📌 **Guarda tus películas favoritas**\n1. Inicia sesión en tu cuenta.\n2. Busca una película y haz clic en el botón `+` para agregarla a una lista.\n3. Puedes crear listas personalizadas como _'Mis Favoritas'_, _'Para ver después'_ o _'Películas de terror'_."
+        },
+        {
+          "title": "Gestión de listas y comentarios",
+          "description": "#### 📝 **Organiza y comenta**\n- Edita el nombre y orden de tus listas en tu perfil.\n- Agrega comentarios a películas que hayas guardado.\n- Comparte tus listas con amigos para recomendarles lo mejor del cine."
+        },
+        {
+          "title": "Cómo funciona la recomendación",
+          "description": "#### 🤖 **¿Cómo obtenemos recomendaciones?**\n- Analizamos las palabras clave en tu descripción.\n- Buscamos películas populares relacionadas con tu búsqueda.\n- Si mencionas actores o géneros específicos, ajustamos las recomendaciones.\n\n💡 Cuanto más detallada sea tu descripción, mejores serán las sugerencias."
+        }
+      ]
+    }
+  }
+  

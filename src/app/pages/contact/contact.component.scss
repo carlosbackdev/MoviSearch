@@ -1,0 +1,21 @@
+
+.container-info{
+    
+    .info{
+        display: block;
+        width: 85%;
+        margin: auto;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .container-info{
+    
+        .info{
+            width: 98%;
+        }
+    }
+    
+
+}
