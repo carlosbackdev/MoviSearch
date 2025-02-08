@@ -6,6 +6,12 @@
         width: 85%;
         margin: auto;
     }
+    .social{
+        display: block;
+        width: 85%;
+        margin: auto;
+        margin-bottom: 50px;
+    }
 }
 
 
@@ -13,6 +19,9 @@
     .container-info{
     
         .info{
+            width: 98%;
+        }
+        .social{
             width: 98%;
         }
     }

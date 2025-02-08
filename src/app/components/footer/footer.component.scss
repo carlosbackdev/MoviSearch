@@ -1,0 +1,36 @@
+/* Estilos del Footer */
+.footer {
+    background-color: #111; /* Fondo oscuro minimalista */
+    color: #ddd; /* Texto gris claro */
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 14px;
+    margin-top: 100px;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-text {
+    margin: 0;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 15px;
+}
+
+.social-link img {
+    width: 24px; 
+    height: 24px;
+    filter: brightness(0.8); /* Hace que los íconos sean más sutiles */
+    transition: 0.3s;
+}
+
+.social-link img:hover {
+    filter: brightness(1); /* Brillo al pasar el cursor */
+}

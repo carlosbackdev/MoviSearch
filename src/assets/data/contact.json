@@ -1,0 +1,27 @@
+{
+  "email": "contacto@miempresa.com",
+  "phone": "+34 600 123 456",
+  "address": "Calle Ejemplo 123, Ciudad, País",
+  "socials": [
+    {
+      "name": "LinkedIn",
+      "link": "https://www.linkedin.com/",
+      "icon": "assets/icons/linkedin.png"
+    },
+    {
+      "name": "GitHub",
+      "link": "https://github.com/",
+      "icon": "assets/icons/github.png"
+    },
+    {
+      "name": "Twitter",
+      "link": "https://twitter.com/",
+      "icon": "assets/icons/Bluesky.png"
+    },
+    {
+        "name": "Gmail",
+        "link": "https://twitter.com/",
+        "icon": "assets/icons/gmail.webp"
+      }
+  ]
+}
