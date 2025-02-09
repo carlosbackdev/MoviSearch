@@ -34,7 +34,8 @@
         font-size: 18px;
         background: transparent;
         border-bottom: 2px solid rgba($input, 0.3);
-        transition: border-color 0.3s ease;    
+        transition: border-color 0.3s ease;
+        color: $white;
         &:focus {
         border-color: $neon-purple;
         }

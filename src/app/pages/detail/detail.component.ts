@@ -45,7 +45,7 @@ export class DetailComponent {
       console.log("Params: ", paramMap);
       const movieId = paramMap.get('movie_id');
       const serieId = paramMap.get('serie_id');
-      this.movieId = movieId || '';
+      this.movieId = movieId || serieId || '';
 
       if (movieId){
         this.getMovieById(movieId);

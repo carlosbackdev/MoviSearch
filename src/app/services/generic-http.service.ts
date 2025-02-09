@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GenericHttpService {
-  baseUrl: string = 'https://api.themoviedb.org/3/';
+  baseUrl: string = 'https://api.themoviedb.org/3';
   apiKey: string = environment.tmdbApiKey;
   constructor(private httpClient: HttpClient) { }
 
