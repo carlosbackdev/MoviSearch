@@ -41,8 +41,6 @@ getUserLists(): void {
       this.movieIds = new Map(
         lists.map(list => [list.id, list.movies.map(movie => movie.movieId)])
       );
-
-      // Por cada lista, obtenemos los detalles de las películas
       lists.forEach(list => {
         list.movies.forEach(movie => {
           this.getMovieDetails(movie.movieId, list.id);
@@ -182,17 +180,38 @@ deleteList(listName: string): void {
       }
     );
   }
+
+  deleteMovieOrSerie(movieId: number, listId: number): void {
+    console.log(` lista: ${listId}: ID ${movieId}`);
+    this.listService.deleteMovieFromList(movieId, listId).subscribe({
+      next: () => {
+        console.log(`Eliminado correctamente de la lista ${listId}: ID ${movieId}`);
+        this.getUserLists();
+      },
+      error: (err) => {
+        console.error('Error al eliminar la película/serie:', err);
+      }
+    });
+  }
+  
+
   scrollLeft(container: HTMLElement): void {
+    const screenWidth = window.innerWidth;
+    const scrollAmount = screenWidth < 650 ? 300 : 800;  
+    
     container.scrollTo({
-      left: container.scrollLeft - 650,  // Desplazamiento a la izquierda
-      behavior: 'smooth'  // Desplazamiento suave
+      left: container.scrollLeft - scrollAmount,  
+      behavior: 'smooth'  
     });
   }
   
   scrollRight(container: HTMLElement): void {
+    const screenWidth = window.innerWidth;
+    const scrollAmount = screenWidth < 650 ? 300 : 800; 
+    
     container.scrollTo({
-      left: container.scrollLeft + 650,  // Desplazamiento a la derecha
-      behavior: 'smooth'  // Desplazamiento suave
+      left: container.scrollLeft + scrollAmount,  
+      behavior: 'smooth'  
     });
   }
   

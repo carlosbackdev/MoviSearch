@@ -88,7 +88,7 @@
                     display: flex;
                     font-family: $font-primary;
                     font-size: 35px;
-                    color: $white;
+                    color: rgba(255, 217, 0, 0.9);
                     margin: 0;
                     justify-content: center;
                     flex-direction: column;
@@ -167,9 +167,10 @@
                 .cards-wrapper {
                   display: flex;
                   gap: 10px;
-                  overflow-x: hidden;
+                  overflow-x: auto;
                   scroll-behavior: smooth;
                   width: 100%;
+                  scrollbar-width: none;  /* Para Firefox */
 
                     button{
                         all: unset;
@@ -206,7 +207,7 @@
                 .card {
                   all: unset;
                   display: block;
-                  min-width: 300px;
+                  width: 300px;
                   margin-bottom: 15px;
                   border-radius: 15px;
                   border-bottom: 2.5px solid rgba(0, 217, 255, 0.5);
@@ -263,7 +264,7 @@
                     .card {
                       all: unset;
                       display: block;
-                      min-width: 233px;
+                      width: 233px;
                       scale: 0.94;
                       
                       margin-bottom: 0px;
@@ -280,3 +281,6 @@
         
     }
 }
+.cards-wrapper::-webkit-scrollbar {
+    display: none;  /* Oculta la barra de desplazamiento */
+}  

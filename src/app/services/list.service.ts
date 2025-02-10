@@ -12,7 +12,6 @@ export class ListService {
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
-    console.log('Token:', token);
     if (!token) {
       throw new Error('No token found');
     }
@@ -42,13 +41,20 @@ export class ListService {
       { headers: this.getHeaders() }
     );
   }
-  deleteListUser(listName: string): Observable<any> {
-    console.log("Enviando JSON:", JSON.stringify({ name: listName })); // Depuración
-    console.log("Token que se enviará:", this.getHeaders());
-  
+  deleteListUser(listName: string): Observable<any> {  
     return this.http.delete(`${this.apiUrl}/delete`, {
       headers: this.getHeaders(),
       body: { name: listName } 
     });
   }
+  deleteMovieFromList(movieId: number, listId: number): Observable<any> {
+    console.log("Enviando JSON:", JSON.stringify); 
+    console.log("Token que se enviará:", this.getHeaders());
+    return this.http.delete(`${this.apiUrl}/delete/movie`, {
+      headers: this.getHeaders(),
+      body: { movieId, listId }
+    });
+  }
+  
+
 }

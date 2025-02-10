@@ -98,6 +98,11 @@ export class AddListComponent {
       },
       (error) => {
         console.error('Error al añadir la película a la lista:', error);
+        if(error.error?.message === 'La película ya está en la lista.'){
+          this.showSuccessMessage = true;
+          this.successMessage = `el elemento ya existe en: "${listName}"`;
+          this.successClass='success-red'; 
+        }
       }
     );
   }

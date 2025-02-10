@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {NavItemConfig} from '../../interfaces/ui-config/navi-item-config.interfaces';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -8,13 +9,14 @@ import { AuthModalComponent } from '../auth-modal/auth-modal.component';
 @Component({
   selector: 'app-nav-bar',
   standalone:true,
-  imports: [CommonModule, AuthModalComponent],
+  imports: [CommonModule, AuthModalComponent, FormsModule, CommonModule,],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent {
   showLoginModal: boolean = false;
   username: string | null = null;
+  showProfileMenu: boolean = false;
   navItems: NavItemConfig[] = [{
     name: 'Descubrir',
     path: 'home',
@@ -57,8 +59,12 @@ export class NavBarComponent {
     }
     
     if (nav.path === 'profile' && this.authService.isAuthenticated()) {
-         this.router.navigateByUrl(nav.path); 
-         return;
+      if (this.authService.isAuthenticated()) {
+        this.showProfileMenu = !this.showProfileMenu;
+      } else {
+        this.showLoginModal = true;
+      }
+      return;
     }
 
     this.navItems.forEach((item: NavItemConfig) => {
@@ -90,5 +96,19 @@ export class NavBarComponent {
   // Método para cerrar el modal
   onCloseModal() {
     this.showLoginModal = false;
+  }
+  logout() {
+    this.authService.logout();
+    this.showProfileMenu = false;
+    this.router.navigateByUrl('home');
+    window.location.reload();
+  }
+
+  deleteAccount() {
+
+  }
+
+  isAuthenticated() {
+    return this.authService.isAuthenticated();
   }
 }

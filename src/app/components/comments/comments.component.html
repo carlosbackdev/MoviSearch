@@ -1,0 +1,53 @@
+<div class="comment-section">
+    <h3 class="comment-title">Comentarios</h3>
+    <button class="comment-button" (click)="toggleCommentBox()">comentar</button>
+
+    <div *ngIf="showCommentBox" class="comment-box">
+        <textarea [(ngModel)]="newComment" placeholder="Escribe tu comentario aquí..." class="comment-textarea"></textarea>
+        <div class="markdown-buttons">
+            <button (click)="formatText('bold')"><strong>B</strong></button>
+            <button (click)="formatText('italic')"><em>I</em></button>
+            <button (click)="formatText('h1')">H1</button>
+            <button (click)="formatText('h2')">H2</button>
+            <button (click)="formatText('ul')">UL</button>
+            <button (click)="formatText('ol')">OL</button>
+            <button (click)="formatText('link')">🔗</button>
+            <button (click)="formatText('code')">Code</button>
+            <button (click)="formatText('quote')">Quote</button>
+        </div>
+        <button (click)="submitComment()" class="submit-button">Enviar</button>
+    </div>
+
+    <div *ngIf="loading" class="loading-message">Cargando comentarios...</div>
+
+    <div *ngIf="!loading && config && config.length > 0" class="comment-list">
+        <div *ngFor="let comment of config; trackBy: trackComment">
+            <div class="comment-container">
+                <div class="comment-username">
+                    <h4>{{ comment.user.username }}</h4>  
+                    <div *ngIf="comment.user.username === currentUser">
+                        <button class="comment-user-botton" (click)="deleteComment(comment.id)">
+                            <i class="bi bi-trash3-fill"></i></button>
+                    </div>                            
+                </div>
+                <markdown class="text" [data]="comment.comment"></markdown>
+                <div class="date">
+                    <span>{{comment.date}}</span>
+                    <span>{{comment.likesCount}}
+                        <button class="comment-user-botton" (click)="likeComment(comment.id)">
+                            <i class="bi bi-heart-fill"></i>
+                        </button>
+                    </span>     
+                </div>            
+            </div>
+        </div>
+    </div>
+ 
+    <div *ngIf="!loading && (!config || config.length === 0)" class="no-comments-message">
+        No hay comentarios, ¡sé el primero!
+    </div>
+</div>
+<app-auth-modal
+    [showModal]="showLoginModal"
+    (closeModal)="showLoginModal = false">
+</app-auth-modal>

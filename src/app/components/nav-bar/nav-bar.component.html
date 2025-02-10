@@ -10,10 +10,18 @@
                         <li [ngClass]="{'active-item': nav.active}" (click)="selectedItem(nav)">
                             <i class="{{nav.icon}}"></i>
                             {{nav.name}}
-                        </li>                        
+                        </li>        
                     }
+
                 </ul>
+                
             }
+            <div class="container-submenu">
+                <div *ngIf="isAuthenticated() && showProfileMenu" class="profile-menu">
+                    <button (click)="logout()">Cerrar sesión</button>
+                    <button (click)="deleteAccount()">Eliminar cuenta</button>
+                </div> 
+            </div>
     </div>
     
 </nav>

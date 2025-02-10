@@ -44,10 +44,10 @@ export class AuthModalComponent implements OnInit{
       this.authService.login(this.user).subscribe(
         (response: any) => {
           if (response && response.token) {
-            console.log(response);
+            console.log("respuest incio sesion",response);
             localStorage.setItem('token', response.token); 
             let nombreEmail= this.user.email.split('@')[0]
-            localStorage.setItem('username', nombreEmail);
+            localStorage.setItem('username', response.username);
             window.location.reload();
           } else {
             console.error('Token no recibido');
@@ -106,13 +106,7 @@ export class AuthModalComponent implements OnInit{
   }
 
   validatePassword(password: string): boolean {
-    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password);
-  }
-  logout() {
-    // Eliminar el token y el nombre de usuario de localStorage
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    window.location.reload();
+    return /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
   }
 
 }

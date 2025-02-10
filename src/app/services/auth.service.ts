@@ -22,10 +22,10 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  // Verificar si el usuario está autenticado
+  
   isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
-    return !!token;  // Retorna true si hay un token en localStorage
+    return !!token;  
   }
 
   // Guardar el token en localStorage
@@ -47,5 +47,6 @@ export class AuthService {
   // Eliminar el token de localStorage
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
   }
 }

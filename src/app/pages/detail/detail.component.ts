@@ -14,12 +14,13 @@ import { FormsModule } from '@angular/forms';
 import { AddListComponent } from '../../components/add-list/add-list.component';
 import { ProvidersComponent } from '../../components/providers/providers.component';
 import { AuthModalComponent } from '../../components/auth-modal/auth-modal.component';
+import { CommentsComponent } from '../../components/comments/comments.component';
 
 @Component({
   selector: 'app-detail',
   standalone:true,
   providers:[GenericHttpService],
-  imports: [DetailBannerComponent, HttpClientModule, RateChipComponent, FormsModule, AddListComponent, ProvidersComponent,AuthModalComponent ],
+  imports: [DetailBannerComponent, HttpClientModule, RateChipComponent, FormsModule, AddListComponent, ProvidersComponent,AuthModalComponent, CommentsComponent ],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss'
 })
