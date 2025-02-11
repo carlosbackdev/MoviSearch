@@ -81,9 +81,6 @@ export class NavBarComponent {
   setActiveNavItem(path: string) {
     this.navItems.forEach(item => item.active = (item.path === path));
   }
-   // Método para obtener el nombre de usuario
-   getUsername() {
-  }
 
   // Método para actualizar el ítem de navegación
   updateNavItem() {
@@ -105,7 +102,7 @@ export class NavBarComponent {
   }
 
   deleteAccount() {
-
+//falta la logica
   }
 
   isAuthenticated() {

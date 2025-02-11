@@ -1,0 +1,112 @@
+@import '../../../themes/theme.scss';
+
+.modal-backdrop-person {
+  all: unset;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modal-container-person {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.9));
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: $shadow-blue;
+  width: 50%;
+  height: 90%;
+  overflow: auto;
+  pointer-events: auto;
+  z-index: 3;
+
+  .modal-person {
+    display: block;
+    flex-direction: column;
+    align-items: center;
+
+    .close-person {
+      position: relative;
+      top: -8px;
+      display: flex;
+      flex-direction: row-reverse;
+      border: none;
+      background: transparent;
+      font-size: 22px;
+      width: 100%;
+      height: 0px;
+      cursor: pointer;
+      color: rgba(90, 172, 239, 1);;
+    }
+  }
+
+  .modal-content-p {
+    margin-top: 20px;
+
+    .modal-title-p {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: $white;
+      font-family: $font-title;
+    }
+
+    .cast-section,
+    .crew-section {
+      margin-bottom: 20px;
+
+      .section-title-p,
+      .section-title {
+        font-family: $font-secundary;
+        font-weight: bold;
+        font-size: 25px;
+        margin-bottom: 10px;
+        color: white;
+      }
+
+      .cast-list,
+      .crew-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        .cast-item,
+        .crew-item {
+          flex: 1 1 calc(33.333% - 10px);
+          text-align: center;
+          padding: 10px;
+          border: 1px solid black;
+          border-radius: 9px;
+          background: rgba(27, 26, 26, 1);
+          border-bottom: 2.5px solid #00d8ff;
+          img {
+            max-width: 120px;
+            border-radius: 48%;
+            margin-bottom: 10px;
+          }
+
+          p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: rgba(255, 217, 0, 0.85);
+          }
+
+          em {
+            font-size: 14px;
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+}

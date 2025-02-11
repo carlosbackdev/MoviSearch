@@ -1,0 +1,39 @@
+<div class="modal-backdrop-person" *ngIf="showModal" (click)="closeModalPerson()"></div>
+
+<div class="modal-container-person" *ngIf="showModal" (click)="$event.stopPropagation()">
+  <div class="modal-person">
+    <!-- Botón para cerrar el modal -->
+    <button class="close-person" (click)="closeModalPerson()">
+      <i class="bi bi-x-square"></i>
+    </button>
+
+    <!-- Contenido del modal -->
+    <div *ngIf="cast.length > 0 || crew.length > 0" class="modal-content-p">
+      <h3 class="modal-title-p">REPARTO DE ACTORES Y EQUIPO</h3>
+
+      <!-- Sección del elenco (cast) -->
+      <div class="cast-section">
+        <h4 class="section-title-p">Actores</h4>
+        <div class="cast-list">
+          <div *ngFor="let actor of cast" class="cast-item">
+            <img *ngIf="actor.profile_path" [src]="getProfileImageUrl(actor.profile_path)" alt="Actor's Profile">
+            <p>{{ actor.name }}</p>
+            <p><em>{{ actor.character }}</em></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección del equipo técnico (crew) -->
+      <div class="crew-section">
+        <h4 class="section-title">Director y Equipo</h4>
+        <div class="crew-list">
+          <div *ngFor="let crewMember of crew" class="crew-item">
+            <img *ngIf="crewMember.profile_path" [src]="getProfileImageUrl(crewMember.profile_path)" alt="Crew Member's Profile">
+            <p>{{ crewMember.name }}</p>
+            <p><em>{{ crewMember.job }}</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

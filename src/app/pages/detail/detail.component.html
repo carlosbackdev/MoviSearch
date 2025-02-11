@@ -24,7 +24,11 @@
                             <div class="box-title">{{item.title}}</div>
                             <div class="box-description">{{item.description}}</div>
                         </div>
-                    }
+                    }<div class="box-cast" (click)="castClick()">
+                        <button class="cast">
+                            <div class="cast-title"><h3>VER REPARTO</h3></div>
+                        </button>
+                    </div>
                 </div>
             </div>
     
@@ -42,4 +46,10 @@
         [movieId]="selectedMovieAndTvId"
         (showModalChange)="showListModal = $event">
     </app-add-list>
+    <app-person 
+    [showModal]="showPersonModal"
+    [movieId]="filmId"
+    [tvId]="tvId"
+    (showModalChange)="showPersonModal = $event">        
+    </app-person>
 </div>

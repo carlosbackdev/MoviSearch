@@ -147,6 +147,31 @@
                             line-height: 1.6;
                         }
                     }
+                    .box-cast {
+                        background: rgba(255, 255, 255, 0.05);
+                        border-radius: 12px; 
+                        padding: 20px;
+                        display: flex;
+                        text-align: center;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        border-top: 2.5px solid #00d8ff;
+                        border-bottom: 2.5px solid #00d8ff;
+                        &:hover{
+                            scale: 1.05;
+                            background: rgba(255, 255, 255, 0.1);
+                        }
+                        
+                        .cast{
+                            all: unset;
+                            .cast-title{
+                                font-family: $font-primary;
+                                color: rgba(255, 217, 0, 0.85);
+                                
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -7,7 +7,7 @@ import { Endpoints } from '../../endpoints/Endpoints';
 import { DetailBannerConfig } from '../../interfaces/ui-config/detail-banner-config.interfaces';
 import { RateChipComponent } from "../../components/rate-chip/rate-chip.component";
 import { DetailConfig } from '../../interfaces/ui-config/detail-config.interfaces';
-import { Genre, Movie } from '../../interfaces/models/movie-detail.interface';
+import { Genre, Movie, ProductionCountry } from '../../interfaces/models/movie-detail.interface';
 import { ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
@@ -15,12 +15,13 @@ import { AddListComponent } from '../../components/add-list/add-list.component';
 import { ProvidersComponent } from '../../components/providers/providers.component';
 import { AuthModalComponent } from '../../components/auth-modal/auth-modal.component';
 import { CommentsComponent } from '../../components/comments/comments.component';
+import { PersonComponent } from "../../components/person/person.component";
 
 @Component({
   selector: 'app-detail',
   standalone:true,
   providers:[GenericHttpService],
-  imports: [DetailBannerComponent, HttpClientModule, RateChipComponent, FormsModule, AddListComponent, ProvidersComponent,AuthModalComponent, CommentsComponent ],
+  imports: [DetailBannerComponent, HttpClientModule, RateChipComponent, FormsModule, AddListComponent, ProvidersComponent, AuthModalComponent, CommentsComponent, PersonComponent],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss'
 })
@@ -35,6 +36,9 @@ export class DetailComponent {
   selectedMovieAndTvId: number=0;
   showListModal: boolean = false;
   showLoginModal: boolean = false;
+  showPersonModal: boolean= false;
+  tvId: number =0;
+  filmId: number =0;
 
   constructor( private genericService: GenericHttpService,
     private authService: AuthService,
@@ -66,6 +70,9 @@ export class DetailComponent {
       this.showLoginModal = true;
     }
     console.log('ID:', this.movieId); 
+  }
+  castClick(): void {
+      this.showPersonModal=true;
   }
 
   getMovieById(id: string) {
@@ -107,6 +114,9 @@ export class DetailComponent {
             res.genres.map ((item: Genre, index: number) => {
               result += item.name + ' ' +(index === res.genres.length - 1  ? '' : ',')
             })
+            res.production_countries.map ((item: ProductionCountry, index: number) => {
+              result += item.name + ' ' +(index === res.production_countries.length - 1  ? '' : ',')
+            })
             this.config = {
               img: Endpoints.imagen + `/w500/${posterPath}`,
               subtitle: res.production_companies?.[0]?.name || 'Desconocido',
@@ -126,10 +136,14 @@ export class DetailComponent {
               },{
                 title:'Géneros',
                 description: res.genres.map((genre: Genre) => genre.name).join(' | '),
+              },{
+                title:'Producido en: ',
+                description: res.production_countries.map((production_countries: ProductionCountry) => production_countries.name).join(' | '),
               }],
               watchProviders: undefined
             };
             this.ProvidersComponent.getMovieWatchProviders(id);
+            this.filmId = Number(id);
           },
           error: (err: any) => {
             console.error('Error al obtener la traducción de la película:', err);
@@ -202,6 +216,7 @@ export class DetailComponent {
               }],watchProviders: undefined
             };
             this.ProvidersComponent.getSerieWatchProviders(id);
+            this.tvId = Number(id);
           },
           error: (err: any) => {
             console.error('Error al obtener la traducción de la serie:', err);
