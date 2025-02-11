@@ -10,6 +10,7 @@ export class Endpoints{
     static trends: string = 'trending/all/day?language=en-US'
     static imagen: string = 'https://image.tmdb.org/t/p/'
     static searchMovies = (query: string) => `search/movie?query=${encodeURIComponent(query)}`
+    static searchSeries = (query: string) => `search/tv?query=${encodeURIComponent(query)}`
     static searchProcesator = (query: string) => `api/text/process`
     static movieWatchProviders = (movie_id: string) => `movie/${movie_id}/watch/providers`;
     static serieWatchProviders = (series_id: string) => `tv/${series_id}/watch/providers`;

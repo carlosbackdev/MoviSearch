@@ -339,7 +339,8 @@ export class HomeComponent implements OnInit{
   }
 
   onSearchInput(query: string): void {
-    this.title='Encontradas'
+    this.title = 'Encontradas';
+    this.length=0;
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
     }
@@ -352,62 +353,154 @@ export class HomeComponent implements OnInit{
               console.log('Respuesta de la API:', res);
               if (res && res.results) {
                 console.log(res.results);
-    
+  
                 this.movieCards = [];
                 res.results.forEach((item: MovieResult) => {
-                  this.genericHttpService.tmdbGet(Endpoints.movieTranslate(item.id.toString()))
-                    .subscribe({
-                      next: (translationRes: MovieTranslationsResponse) => {
-                        const spanishTranslation = translationRes.translations.find(
-                          (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'ES'
-                        );
+                  // Verificar si el poster_path es null
+                  if (item.poster_path) {
+                    this.genericHttpService.tmdbGet(Endpoints.movieTranslate(item.id.toString()))
+                      .subscribe({
+                        next: (translationRes: MovieTranslationsResponse) => {
+                          const spanishTranslation = translationRes.translations.find(
+                            (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'ES'
+                          );
                           const mexicanTranslation = spanishTranslation || translationRes.translations.find(
-                          (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
-                        );
-      
-                        const movieName = spanishTranslation?.data.title || mexicanTranslation?.data.title || item.title;
-      
-                      
-                        this.movieCards.push({
-                          img: Endpoints.imagen + `/w500/${item.poster_path}`,
-                          movieName: movieName,
-                          rate: item.vote_average,
-                          id: item.id,  
-                          onClick: () => {
-                            this.router.navigateByUrl(`movie/${item.id}`);
-                          },onAddClick: () => { 
-                            if (this.authService.isAuthenticated()) {
-                              this.selectedMovieAndTvId= item.id;
-                              this.showListModal=true;
-                            } else {
-                              console.log("Usuario no autenticado, mostrando modal de login");
-                              this.showLoginModal = true;
+                            (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
+                          );
+  
+                          const movieName = spanishTranslation?.data.title || mexicanTranslation?.data.title || item.title;
+  
+                          this.movieCards.push({
+                            img: Endpoints.imagen + `/w500/${item.poster_path}`,
+                            movieName: movieName,
+                            rate: item.vote_average,
+                            id: item.id,
+                            onClick: () => {
+                              this.router.navigateByUrl(`movie/${item.id}`);
+                            },
+                            onAddClick: () => {
+                              if (this.authService.isAuthenticated()) {
+                                this.selectedMovieAndTvId = item.id;
+                                this.showListModal = true;
+                              } else {
+                                console.log("Usuario no autenticado, mostrando modal de login");
+                                this.showLoginModal = true;
+                              }
                             }
-                          } 
-                        } as MovieCardConfig);
-                        this.length=this.movieCards.length;
-                      },
-                      error: (err: any) => {
-                        console.error('Error al obtener la traducción de la película:', err);
-                      }
-                    });
+                          } as MovieCardConfig);
+                          this.length = this.movieCards.length;
+                          if (this.movieCards.length < 10) {
+                            this.onSearchInputTv(query);
+                          }
+                        },
+                        error: (err: any) => {
+                          console.error('Error al obtener la traducción de la película:', err);
+                        }
+                      });
+                  } else {
+                    console.log(`Película ${item.title} omitida por no tener poster.`);
+                  }
                 });
-      
+  
               } else {
                 console.error('La respuesta no contiene el campo result');
                 this.movieCards = [];
+                this.onSearchInputTv(query);
+                this.titulo();
+              }
+            },
+            error: (error: any) => {
+              console.error("Error en la búsqueda:", error);
+              this.movieCards = [];
+              this.onSearchInputTv(query);
+            }
+          });
+      } else {
+        this.getTrends();
+        this.title = 'Tendencias';
+      }    this.titulo();
+    }, 400);
+  }
+  
+  onSearchInputTv(query: string): void {
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
+    this.searchTimeout = setTimeout(() => {
+      if (query.length > 2) {
+        const lowerCaseQuery = query.toLowerCase();
+        this.genericHttpService.tmdbGet(Endpoints.searchSeries(lowerCaseQuery))
+          .subscribe({
+            next: (res: MoviesData) => {
+              console.log('Respuesta de la API:', res);
+              if (res && res.results) {
+                console.log(res.results);
+  
+                res.results.forEach((item: MovieResult) => {
+                  // Verificar si el poster_path es null
+                  if (item.poster_path) {
+                    this.genericHttpService.tmdbGet(Endpoints.serieTranslate(item.id.toString()))
+                      .subscribe({
+                        next: (translationRes: MovieTranslationsResponse) => {
+                          const spanishTranslation = translationRes.translations.find(
+                            (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'ES'
+                          );
+                          const mexicanTranslation = spanishTranslation || translationRes.translations.find(
+                            (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
+                          );
+  
+                          const movieName = spanishTranslation?.data.name || mexicanTranslation?.data.name || item.name;
+  
+                          this.movieCards.push({
+                            img: Endpoints.imagen + `/w500/${item.poster_path}`,
+                            movieName: movieName,
+                            rate: item.vote_average,
+                            id: item.id,
+                            onClick: () => {
+                              this.router.navigateByUrl(`serie/${item.id}`);
+                            },
+                            onAddClick: () => {
+                              if (this.authService.isAuthenticated()) {
+                                this.selectedMovieAndTvId = item.id;
+                                this.showListModal = true;
+                              } else {
+                                console.log("Usuario no autenticado, mostrando modal de login");
+                                this.showLoginModal = true;
+                              }
+                            }
+                          } as MovieCardConfig);
+                          this.length = this.movieCards.length;
+                        },
+                        error: (err: any) => {
+                          console.error('Error al obtener la traducción de la película:', err);
+                        }
+                      });
+                  } else {
+                    console.log(`Serie ${item.name} omitida por no tener poster.`);
+                  }
+                });
+  
+              } else {
+                console.error('La respuesta no contiene el campo result');
+                this.titulo();
               }
             },
             error: (error: any) => {
               console.error("Error en la búsqueda:", error);
             }
           });
-      }else{
+      } else {
         this.getTrends();
-        this.title='Tendencias'
+        this.title = 'Tendencias';
       }
-    }, 400); 
+    }, 400);
   }
+  titulo(){
+    if(this.length<1 || this.length ){
+      this.title = 'Sin resultados';
+    }
+  }
+
   searchProcesator(query: string): void {
     if (query.length > 0) {
       this.title='Buscando...'
@@ -417,6 +510,7 @@ export class HomeComponent implements OnInit{
         phrase: lowerCaseQuery
       };
       console.log("Procesando búsqueda:", lowerCaseQuery);
+      const isSeriesSearch = /(serie|series|tv|shows)/.test(lowerCaseQuery);
       this.genericHttpService.post('http://localhost:8080/api/text/process', body).subscribe({
           next: (res: MoviesData ) => {
             if (res && res.results  && res.results.length > 0) {
@@ -426,7 +520,11 @@ export class HomeComponent implements OnInit{
                 rate: item.vote_average,
                 id: item.id,
                 onClick: () => {
-                  this.router.navigateByUrl(`movie/${item.id}`);
+                  if (isSeriesSearch) {
+                    this.router.navigateByUrl(`serie/${item.id}`);
+                  } else {
+                    this.router.navigateByUrl(`movie/${item.id}`);
+                  }                  
                 },onAddClick: () => { 
                   if (this.authService.isAuthenticated()) {
                     this.selectedMovieAndTvId= item.id;
@@ -438,6 +536,9 @@ export class HomeComponent implements OnInit{
                 } 
               } as MovieCardConfig));
               this.length=this.movieCards.length;
+              if(this.movieCards.length===0){
+                this.onSearchInput(query);
+              }
               this.title='recomendaciones'
             } else {
               console.error("No se encontraron resultados.");

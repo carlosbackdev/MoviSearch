@@ -110,3 +110,64 @@
     }
   }
 }
+
+@media (max-width: 768px) {  
+  .modal-container-person {
+    width: 96%;
+    height: 88%;
+    padding: 12px;
+
+    .modal-person {
+
+      .close-person {
+        top: -4px;
+      }
+    }
+
+    .modal-content-p {
+      margin-top: 28px;
+
+      .modal-title-p {
+        margin-bottom: 12px;
+        font-size: 22px;
+      }
+
+      .cast-section,
+      .crew-section {
+        margin-bottom: 20px;
+
+        .section-title-p,
+        .section-title {
+          font-size: 17px;
+        }
+
+        .cast-list,
+        .crew-list {
+
+          gap: 8px;
+
+          .cast-item,
+          .crew-item {
+
+            img {
+              max-width: 70px;
+              margin-bottom: 10px;
+            }
+
+            p {
+              margin: 3px 0;
+              font-size: 13px;
+              color: rgba(255, 217, 0, 0.85);
+            }
+
+            em {
+              font-size: 11px;
+              color: $white;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
