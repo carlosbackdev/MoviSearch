@@ -7,9 +7,15 @@
                     </div>           
                 </div>       
             <app-input class="input" (searchEvent)="onSearchInput($event)"
-            (searchSubmit)="searchProcesator($event)">                
+            (searchSubmit)="searchProcesator($event)"
+            [chat]="chat">                
             </app-input>
-          </div>        
+          </div>
+          <div class="chat-dialog" *ngIf="chatLines.length > 0">
+            <div class="chat-line">
+              {{ chatLines.join('') }}
+            </div>
+          </div>
         <div class="segmented-control-section">
             <div class="title-container">
                 <p class="title">

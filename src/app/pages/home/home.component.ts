@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { forkJoin } from 'rxjs';
 import { InputComponent } from '../../components/input/input.component';
 import { MovieCardComponent } from '../../components/movie-card/movie-card.component';
 import { GenericHttpService } from '../../services/generic-http.service';
@@ -19,6 +20,7 @@ import { AuthService } from '../../services/auth.service';
 import { AuthModalComponent } from '../../components/auth-modal/auth-modal.component';
 import { FormsModule } from '@angular/forms';
 import { AddListComponent } from "../../components/add-list/add-list.component";
+import { OpenAiService } from '../../services/open-ai.service';
 
 @Component({
   selector: 'app-home',
@@ -41,6 +43,8 @@ export class HomeComponent implements OnInit{
   showLoginModal: boolean = false;
   showListModal: boolean = false;
   selectedMovieAndTvId: number=0;
+  chat: string ='';
+  chatLines: string[] = [];
   
     segments: SegmentedControlConfig[] = [
       {
@@ -56,7 +60,8 @@ export class HomeComponent implements OnInit{
         active: false,
       }]
   constructor (private genericHttpService: GenericHttpService, private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private openAiService: OpenAiService,
    ){}
   ngOnInit(): void { 
     this.resetCarousel();
@@ -502,55 +507,89 @@ export class HomeComponent implements OnInit{
   }
 
   searchProcesator(query: string): void {
-    if (query.length > 0) {
-      this.title='Buscando...'
-      this.length=0;
+    if (query.length > 2) {
+      this.title = 'Buscando...';
+      this.length = 0;
       const lowerCaseQuery = query.toLowerCase();
-      const body = {
-        phrase: lowerCaseQuery
-      };
+      const body = { phrase: lowerCaseQuery };
+
       console.log("Procesando búsqueda:", lowerCaseQuery);
       const isSeriesSearch = /(serie|series|tv|shows)/.test(lowerCaseQuery);
-      this.genericHttpService.post('http://localhost:8080/api/text/process', body).subscribe({
-          next: (res: MoviesData ) => {
-            if (res && res.results  && res.results.length > 0) {
-              this.movieCards = res.results.map((item: MovieResult) => ({
-                img: Endpoints.imagen + `/w500/${item.poster_path}`,
-                movieName: item.title ?? item.name ?? "Desconocido",
-                rate: item.vote_average,
-                id: item.id,
-                onClick: () => {
-                  if (isSeriesSearch) {
-                    this.router.navigateByUrl(`serie/${item.id}`);
-                  } else {
-                    this.router.navigateByUrl(`movie/${item.id}`);
-                  }                  
-                },onAddClick: () => { 
-                  if (this.authService.isAuthenticated()) {
-                    this.selectedMovieAndTvId= item.id;
-                    this.showListModal=true;
-                  } else {
-                    console.log("Usuario no autenticado, mostrando modal de login");
-                    this.showLoginModal = true;
-                  }
-                } 
-              } as MovieCardConfig));
-              this.length=this.movieCards.length;
-              if(this.movieCards.length===0){
-                this.onSearchInput(query);
+
+      forkJoin({
+        movieSearch: this.genericHttpService.post('http://localhost:8080/api/text/process', body),
+        chatbotResponse: this.openAiService.getChatbotResponse(query)
+      }).subscribe({
+        next: ({ movieSearch, chatbotResponse }) => {
+          if (movieSearch?.results?.length > 0) {
+            this.movieCards = movieSearch.results.map((item: any) => ({
+              img: Endpoints.imagen + `/w500/${item.poster_path}`,
+              movieName: item.title ?? item.name ?? "Desconocido",
+              rate: item.vote_average,
+              id: item.id,
+              onClick: () => {
+                if (isSeriesSearch) {
+                  this.router.navigateByUrl(`serie/${item.id}`);
+                } else {
+                  this.router.navigateByUrl(`movie/${item.id}`);
+                }
+              },
+              onAddClick: () => {
+                if (this.authService.isAuthenticated()) {
+                  this.selectedMovieAndTvId = item.id;
+                  this.showListModal = true;
+                } else {
+                  console.log("Usuario no autenticado, mostrando modal de login");
+                  this.showLoginModal = true;
+                }
               }
-              this.title='recomendaciones'
-            } else {
-              console.error("No se encontraron resultados.");
-              this.title='Sin Resultados'
+            }));
+            const movieIds = movieSearch.results.map((item: any) => item.id);            
+            this.saveQuery(movieIds, chatbotResponse.response);
+            console.log(chatbotResponse.response);
+            const numberMatch = chatbotResponse.response.match(/^(\d+):/);
+            let extractedText = chatbotResponse.response;              
+            if (numberMatch) {
+              extractedText = extractedText.replace(/^(\d+):\s*/, '');
+              this.chat=extractedText;
             }
-          },
-          error: (error: any) => {
-            console.error("Error en la búsqueda:", error);
-            this.title='Sin Resultados'
+            console.log("Texto sin el número:", this.chat);
+            console.log(movieSearch);
+            this.length = this.movieCards.length;
+            this.title = 'Recomendaciones';
+
+          } else {
+            console.error("No se encontraron resultados.");
+            this.title = 'Sin Resultados';
           }
-        });
+
+          console.log("Respuesta del chatbot:", chatbotResponse.response);
+        },
+        error: (error: any) => {
+          console.error("Error en la búsqueda o chatbot:", error);
+          this.title = 'Sin Resultados';
+        }
+      });
     }
   }
 
+  saveQuery(movieIds: number[], response: string): void {
+    const numberMatch = response.match(/^(\d+):/);
+
+    if (numberMatch) {
+      const number = parseInt(numberMatch[1], 10);
+      console.log(number);
+      this.openAiService.updateChatHistory(number, movieIds).subscribe({
+        next: (response) => {
+          console.log('Chat history updated successfully:', response);
+        },
+        error: (error) => {
+          console.error('Error updating chat history:', error);
+        }
+      });
+    } else {
+      console.error('No number found in response');
+    }
+  }
+  
 }
