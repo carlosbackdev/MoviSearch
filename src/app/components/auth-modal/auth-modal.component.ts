@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-auth-modal',
   standalone: true,
+  providers: [AuthService],
   imports: [CommonModule, FormsModule],
   templateUrl: './auth-modal.component.html',
   styleUrl: './auth-modal.component.scss',
@@ -20,6 +21,7 @@ export class AuthModalComponent implements OnInit{
   isFormValid: boolean = false;
   errors: any = {};
   showPassword: boolean = false;
+  submitGoogle: string ='Iniciar sesión con Google';
 
   constructor(private authService: AuthService) {}
   ngOnInit(): void { 
@@ -32,15 +34,24 @@ export class AuthModalComponent implements OnInit{
     this.user = { username: '', email: '', password: '' }; // Reinicia los campos
     this.errorMessage = '';
     this.errors = {};
+    if(!this.isLoginMode){
+      this.submitGoogle='Registrarse con Google';
+    }else{
+      this.submitGoogle='Iniciar sesión con Google';
+    }
   }
 
   close() {
+    this.errorMessage='';
+    this.isLoginMode=true;
+    this.showPassword=false;
     this.closeModal.emit();
   }
 
   onSubmit() {
     if (!this.validateForm()) return;
     if (this.isLoginMode) {
+
       this.authService.login(this.user).subscribe(
         (response: any) => {
           if (response && response.token) {
@@ -80,6 +91,17 @@ export class AuthModalComponent implements OnInit{
       );
     }
   }
+  loginWithGoogle() {
+    this.authService.loginWithGoogle().then((response: any) => {
+      if (response && response.token) {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('username', response.username);
+        window.location.reload();
+      }
+    }).catch(error => {
+      console.error('Error en Google Sign-In', error);
+    });
+  }  
 
   validateForm(): boolean {
     this.errors = {};

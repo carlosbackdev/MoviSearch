@@ -20,10 +20,12 @@
           <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
         </button>
       </div>
-      <div *ngIf="errors.password" class="error-message">{{ errors.password }}</div>
       
+      <div *ngIf="errors.password" class="error-message">{{ errors.password }}</div>
       <button type="submit">{{ isLoginMode ? 'Entrar' : 'Registrarse' }}</button>
+      <p class="or">o</p>
     </form>
+    <button class="google-btn" (click)="loginWithGoogle()"><i class="bi bi-google"></i><p class="textGoogle">{{submitGoogle}}</p></button>
     
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}

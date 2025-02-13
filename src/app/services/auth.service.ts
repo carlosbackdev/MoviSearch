@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Auth, signInWithPopup, GoogleAuthProvider, signOut } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private apiUrl = 'http://localhost:8080';  // Cambia esta URL si es necesario
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private auth: Auth) {}
 
   register(user: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/api/auth/register`, user);
@@ -42,6 +43,25 @@ export class AuthService {
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
+  }
+  async loginWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    const credential = await signInWithPopup(this.auth, provider);
+  
+    const idToken = await credential.user.getIdToken();
+  
+    try {
+      const response: any = await this.http.post(`${this.apiUrl}/api/auth/google-login`, { idToken }).toPromise();
+  
+      if (response && response.token) {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('username', response.username);
+  
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('Error en la autenticación de Google:', error);
+    }
   }
 
   // Eliminar el token de localStorage
