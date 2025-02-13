@@ -1,4 +1,4 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss' as theme;
 
 .input-container {
     position: relative;
@@ -7,9 +7,9 @@
     align-items: center;
     gap: 10px;
     border-radius: 8px 8px 0px 0px ;
-    background-color: $black-input;
+    background-color: theme.$black-input;
     margin-top: 6px;
-    border: 1.5px solid $black-20;
+    border: 1.5px solid theme.$black-20;
     width: 97%;
     &:focus-within{
         border-radius: 8px 8px 0px 0px ;
@@ -17,13 +17,13 @@
 
     i {
         font-size: 22px;
-        color: rgba($input, 0.9);
+        color: rgba(theme.$input, 0.9);
         transition: color 0.3s ease;
     }
 
     &:focus-within {
         i {
-            color: $neon-purple;
+            color: theme.$neon-purple;
         }
     }
 
@@ -39,29 +39,29 @@
         outline: none;
         font-size: 18px;
         background: transparent;
-        border-bottom: 2px solid rgba($input, 0.3);
+        border-bottom: 2px solid rgba(theme.$input, 0.3);
         transition: border-color 0.3s ease;
-        color: $white;
+        color: theme.$white;
         &:focus {
-            border-color: $neon-purple;
+            border-color: theme.$neon-purple;
         }
     }
 
     span {
         margin-right: 10px;
         font-size: 19px;
-        color: rgba($input, 0.9);
+        color: rgba(theme.$input, 0.9);
         transition: color 0.3s ease;
     }
 
     &:focus-within {
         span {
-            color: $neon-purple;
+            color: theme.$neon-purple;
         }
     }
 
     span:hover {
-        color: $neon-purple;
+        color: theme.$neon-purple;
     }
 
     .chat-dialog {
@@ -71,9 +71,9 @@
         width: 100%;
         padding: 10px;
         background-color: rgba(17, 7, 32, 0.75);
-        color: $white;
+        color: theme.$white;
         padding: 8px 10px;
-        border: 1.5px solid $black-20;
+        border: 1.5px solid theme.$black-20;
         border-radius: 0px 0px 8px 8px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
         max-height: 200px; 

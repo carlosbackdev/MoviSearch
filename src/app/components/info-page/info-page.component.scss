@@ -1,4 +1,4 @@
-@import '../../../themes/theme.scss'; 
+@use '../../../themes/theme.scss' as theme; 
 
 .informacion-section { 
     margin-top: 60px; 
@@ -10,9 +10,9 @@
 
 
     h3{ 
-        font-family: $font-primary; 
+        font-family: theme.$font-primary; 
         font-size: 32px; 
-        color: $white; 
+        color: theme.$white; 
         border-bottom: 2.5px solid rgba(0, 216, 255,0.95); 
         padding-bottom: 10px; 
         margin-bottom: 25apx; 
@@ -28,7 +28,7 @@
 
         .informacion-category { 
             h4 { 
-                font-family: $font-primary; 
+                font-family: theme.$font-primary; 
                 font-size: 28px; 
                 color: rgba(255, 217, 0, 0.9); 
                 margin-bottom: 20px; 
@@ -36,13 +36,13 @@
             } 
 
             .informacion-logos { 
-                font-family: $font-segement;
+                font-family: theme.$font-segement;
                 display: flex; 
                 flex-wrap: wrap; 
                 gap: 30px; 
                 margin-left: 30px; 
                 font-size: 15px;
-                color: $white;
+                color: theme.$white;
 
                 .informacion-link { 
                     text-decoration: none; 
