@@ -1,4 +1,4 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss'  as theme;
 
 .nav-bar-container{
     display: flex;
@@ -18,12 +18,12 @@
             margin: auto;
             margin-left: 15px;
             cursor: pointer;
-            font-family: $font-head;
+            font-family: theme.$font-head;
             .h2color1{
-                color: $neon-purple;
+                color: theme.$neon-purple;
             }
             .h2color2{
-                color:$app-primary;
+                color: theme.$app-primary;
             }
             .h2{
                 margin-bottom: 0px;
@@ -50,31 +50,31 @@
         li{
             display: flex;
             list-style: none;
-            color: $app-secondary;
+            color: theme.$app-secondary;
             font-size: 1.5rem;
             cursor: pointer;
             align-items: center;
             gap:6px;
             
             &:hover{
-                color: $app-primary;
+                color: theme.$app-primary;
                 transform: scale(1.05);
                 transition: all 0.1s linear;  
                 i{
-                    color: $app-primary;
+                    color: theme.$app-primary;
                     transform: scale(1.05);
                     transition: all 0.1s ease; 
                 }
             }
             i{
-            color: $app-secondary;
+            color: theme.$app-secondary;
             font-size: 1.15rem;
             }
         }
         .active-item{
-            color: $app-primary;
+            color: theme.$app-primary;
             i{
-                color: $app-primary;
+                color: theme.$app-primary;
             }
 
         }
@@ -136,7 +136,7 @@
             li{
                 font-size: 19px;                
                 i{
-                color: $app-secondary;
+                color: theme.$app-secondary;
                 font-size: 0.8rem;
                 }
             }    
@@ -178,7 +178,7 @@
             li{
                 font-size: 12px;                
                 i{
-                color: $app-secondary;
+                color: theme.$app-secondary;
                 font-size: 0.8rem;
                 }
             }    

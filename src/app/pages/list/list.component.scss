@@ -1,4 +1,4 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss' as theme;
 
 .container-list {
     display: block;
@@ -30,15 +30,15 @@
                 cursor: pointer;
                 margin-right: 10px;
                 font-size: 19px;
-                color:rgba($input, 0.9);
+                color:rgba(theme.$input, 0.9);
                 transition: color 0.3s ease; 
             }&:focus-within {
                 button{
-                    color: $neon-purple;
+                    color: theme.$neon-purple;
                 }
             }&
             button:hover{
-                color: $neon-purple;
+                color: theme.$neon-purple;
             }
             input {
                 flex: 1;
@@ -47,11 +47,11 @@
                 outline: none;
                 font-size: 18px;
                 background: transparent;
-                border-bottom: 2px solid rgba($input, 0.3);
+                border-bottom: 2px solid rgba(theme.$input, 0.3);
                 transition: border-color 0.3s ease;
-                color: $white;
+                color: theme.$white;
                 &:focus {
-                border-color: $neon-purple;
+                border-color: theme.$neon-purple;
                 }
                 
             } 
@@ -86,7 +86,7 @@
                 margin-bottom: 5px;
                 h2 {
                     display: flex;
-                    font-family: $font-primary;
+                    font-family: theme.$font-primary;
                     font-size: 35px;
                     color: rgba(255, 217, 0, 0.9);
                     margin: 0;
@@ -106,7 +106,7 @@
                     transition: background 0.1s ease, transform 0.1s ease;
     
                     i {
-                        color: rgba($app-primary, 0.75);
+                        color: rgba(theme.$app-primary, 0.75);
                         font-size: 25px;
                         transition: color 0.1s ease, font-size 0.1s ease;
                     }
@@ -116,7 +116,7 @@
                         transform: scale(1.1);
     
                         i {
-                            color: rgba($app-primary, 1);
+                            color: rgba(theme.$app-primary, 1);
                             font-size: 28px;
                         }
                     }
@@ -189,7 +189,7 @@
                         z-index: 2;
         
                         i {
-                            color: rgba($app-primary, 0.75);
+                            color: rgba(theme.$app-primary, 0.75);
                             font-size: 20px;
                             transition: color 0.1s ease, font-size 0.3s ease;
                         }
@@ -197,7 +197,7 @@
                         &:hover {                            
                             transform: scale(1.1);        
                             i {
-                                color: rgba($app-primary, 1);
+                                color: rgba(theme.$app-primary, 1);
                                 font-size: 22px;
                             }
                         }

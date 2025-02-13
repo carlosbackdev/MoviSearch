@@ -1,4 +1,4 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss' as theme ;
 
 .detail-banner-container{
     position: relative;
@@ -15,24 +15,24 @@
         position: absolute;
         width: 50%;
         bottom: -7%;
-        background: rgba($black-20,0.5);
+        background: rgba(theme.$black-20,0.5);
         backdrop-filter: blur(8px);
         border-radius: 20px;
         text-align: center;
-        border: 2.5px solid rgba($neon-purple,0.2);
+        border: 2.5px solid rgba(theme.$neon-purple,0.2);
         p{
-            color: $white;
+            color: theme.$white;
             font-size: 14px;
             cursor: pointer;
         }
         h1{
-            color: $text-blue;
-            font-family: $font-title;
+            color: theme.$text-blue;
+            font-family: theme.$font-title;
             text-shadow: 0px 4px 8px rgba(0, 216, 255, 0.70);
             font-size: 45px;   
         }
         p{            
-            font-family: $font-secundary;
+            font-family: theme.$font-secundary;
         }
     }
     

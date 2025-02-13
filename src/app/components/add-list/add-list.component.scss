@@ -1,4 +1,4 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss' as theme;
 
 .modal-backdrop {
   all: unset;
@@ -18,14 +18,14 @@
   background: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: $shadow-blue;
+  box-shadow: theme.$shadow-blue;
   width: 300px;
   pointer-events: auto;
   z-index: 2;
 }
 
 .modal-container h2 {
-  color: $black-input;
+  color: theme.$black-input;
   text-align: center;
   margin-top: 10px;
   margin-bottom: 30px;
@@ -70,11 +70,11 @@
 }
 .list-container{
     h3{
-        color: $black-input;
+        color: theme.$black-input;
         font-size: 24px;
         span{
             margin-left: 5px;
-            color: $black-20;
+            color: theme.$black-20;
             font-size: 14px;
         }
     }
@@ -104,7 +104,7 @@ ul li {
 
 ul li button {
   width: 100%;
-  background: $neon-purple;
+  background: theme.$neon-purple;
 }
 
 ul li button:hover {

@@ -1,4 +1,4 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss' as theme; 
 
 .contact-section {
     margin-top: 60px;
@@ -9,9 +9,9 @@
     box-shadow: 0px 8px 25px rgba(106, 93, 255, 0.3);
 
     .contact-title {
-        font-family: $font-primary;
+        font-family: theme.$font-primary;
         font-size: 32px;
-        color: $white;
+        color: theme.$white;
         border-bottom: 2.5px solid rgba(0, 216, 255, 0.95);
         padding-bottom: 10px;
         margin-bottom: 25px;
@@ -28,7 +28,7 @@
 
         .contact-category {
             h4 {
-                font-family: $font-primary;
+                font-family: theme.$font-primary;
                 font-size: 28px;
                 color: rgba(255, 217, 0, 0.9);
                 margin-bottom: 10px;
@@ -40,7 +40,7 @@
 
                 label {
                     font-size: 18px;
-                    color: $white;
+                    color: theme.$white;
                 }
 
                 input, textarea {
@@ -49,7 +49,7 @@
                     border: 1px solid rgba(255, 217, 0, 0.9);
                     border-radius: 10px;
                     background-color: transparent;
-                    color: $white;
+                    color: theme.$white;
                     font-size: 16px;
                 }
 
@@ -64,7 +64,7 @@
                 border: none;
                 padding: 10px 20px;
                 border-radius: 10px;
-                color: $white;
+                color: theme.$white;
                 font-size: 18px;
                 cursor: pointer;
                 transition: background-color 0.3s ease;

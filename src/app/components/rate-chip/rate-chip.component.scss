@@ -1,9 +1,9 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss' as theme; 
 
 .rate-chip-container{
     display: flex;
     column-gap: 5px;
-    background: $black-20;
+    background: theme.$black-20;
     padding: 5px 7px;
     border-radius: 8px;
     width: fit-content;
@@ -11,13 +11,13 @@
     border: 1px solid black;
     margin: 3px;
     i{
-        color: $app-primary;
+        color: theme.$app-primary;
         font-size: 14.75px;
     }
     span{
         font-size: 16px;
         font-weight: bold;
-        color: $app-primary;
+        color: theme.$app-primary;
         margin-right: 4px;
     }
 

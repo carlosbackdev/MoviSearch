@@ -1,4 +1,4 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss' as theme;
 .modal-backdrop {
     all:unset;
     position: fixed;
@@ -16,7 +16,7 @@
     background: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: $shadow-blue;
+    box-shadow: theme.$shadow-blue;
     width: 300px;
     pointer-events: auto;
     z-index: 1;
@@ -27,7 +27,7 @@
     flex-direction: column;
     align-items: center;
     h2{
-      color: $black-input;
+      color: theme.$black-input;
       border-bottom: 2.5px solid #00d8ff;
     }
     i{

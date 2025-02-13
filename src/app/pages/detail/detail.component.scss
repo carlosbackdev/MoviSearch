@@ -1,4 +1,4 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss' as theme;
 
 .detail-container {
     display: flex;
@@ -45,12 +45,12 @@
                 i{ 
                     margin-top: 10px;
                     margin-right: 8px;
-                    color: rgba($app-primary, 0.75); 
+                    color: rgba(theme.$app-primary, 0.75); 
                     font-size: 33px; 
                     padding: 0px 7px;
                     cursor: pointer;
                 }& :hover{ 
-                    color: rgba($app-primary, 1); 
+                    color: rgba(theme.$app-primary, 1); 
                     font-size: 35px; 
                 }     
             }
@@ -72,11 +72,11 @@
                 }
 
                 .title {
-                    font-family: $font-secundary;
+                    font-family: theme.$font-secundary;
                     font-size: 24px;
                     margin-top: 40px;
                     margin-bottom: 40px;
-                    color: $white;
+                    color: theme.$white;
                     border-bottom: 2.5px solid #00d8ff;
                 }
                 .container-overview{
@@ -92,14 +92,14 @@
                         border-radius: 5px;
                         border-left: 2px solid #00d8ff;
                         border-right: 2px solid #00d8ff;
-                        font-family: $font-segement;
+                        font-family: theme.$font-segement;
                         font-size: 19px;
                         font-weight: bold;
                     }
                 }
                     .overview {
                         font-size: 18px;
-                        font-family: $font-secundary;
+                        font-family: theme.$font-secundary;
                         line-height: 1.8; 
                         text-align: left; 
                         margin-bottom: 30px;
@@ -126,7 +126,7 @@
                         text-align: left; 
 
                         .box-title {
-                            font-family: $font-primary;
+                            font-family: theme.$font-primary;
                             font-size: 18px; 
                             margin-bottom: 10px;
                             color: rgb(255, 217, 0, 0.85);
@@ -141,7 +141,7 @@
                         }
 
                         .box-description {
-                            font-family: $font-secundary;
+                            font-family: theme.$font-secundary;
                             font-size: 17px; 
                             color: #ccc;
                             line-height: 1.6;
@@ -166,7 +166,7 @@
                         .cast{
                             all: unset;
                             .cast-title{
-                                font-family: $font-primary;
+                                font-family: theme.$font-primary;
                                 color: rgba(255, 217, 0, 0.85);
                                 
                             }
@@ -213,12 +213,12 @@
                     i{ 
                         margin-top: 10px;
                         margin-right: 8px;
-                        color: rgba($app-primary, 0.75); 
+                        color: rgba(theme.$app-primary, 0.75); 
                         font-size: 33px; 
                         padding: 0px 7px;
                         cursor: pointer;
                     }& :hover{ 
-                        color: rgba($app-primary, 1); 
+                        color: rgba(theme.$app-primary, 1); 
                         font-size: 35px; 
                     }     
                 }

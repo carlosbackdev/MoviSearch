@@ -1,4 +1,4 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss' as theme;
 
 .home-container{
     .home-content{
@@ -9,7 +9,7 @@
             height: 450px;
             margin-top: 40px;
             overflow: hidden;
-            background-color: $fondo-carousel;
+            background-color: theme.$fondo-carousel;
             border-radius: 7px;
             box-shadow: 3px 3px 12px 3px rgba(106, 93, 255, 0.30);
             .input{
@@ -58,7 +58,7 @@
             text-align: center;            
             .title{
                 font-size: 50px;
-                color: $white;
+                color: theme.$white;
                 font-weight: bold;
                 margin-bottom: 0px;
                 margin-top: 5px;
@@ -66,7 +66,7 @@
                 border-bottom: 3px solid rgb(0, 216, 255,0.8);
                 .results{
                     font-size: 20px;
-                    color: $white;
+                    color: theme.$white;
                     font-weight: lighter;
                 }
             }
@@ -130,7 +130,7 @@
             .title-container{          
                 .title{
                     font-size: 25px;
-                    color: $white;
+                    color: theme.$white;
                     margin-bottom: 0px;
                     margin-top: 20px;
                     margin-left: 0px;

@@ -1,17 +1,17 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss' as theme ;
 
 .movie-card-container{
     display: flex;
     flex-direction: column;
     padding: 8px;
-    background: $black-20;
+    background: theme.$black-20;
     border: 2px solid black;
     border-radius: 15px;
     border-top: 2.5px solid rgb(0, 217, 255,0.5);
     cursor: pointer;
     &:hover{
         border-top: 2.5px solid rgb(0, 217, 255,1);
-        background: rgba($neon-purple, 0.6);
+        background: rgba(theme.$neon-purple, 0.6);
         transition: background 0.4s ease;
     }
     .image-container{
@@ -24,11 +24,11 @@
         background-position: center; 
         background-repeat: no-repeat;
         i{ 
-            color: rgba($app-primary, 0.75); 
+            color: rgba(theme.$app-primary, 0.75); 
             font-size: 33px; 
             padding: 0px 7px;
         }& :hover{ 
-            color: rgba($app-primary, 1); 
+            color: rgba(theme.$app-primary, 1); 
             font-size: 35px; 
         } 
     }
@@ -40,7 +40,7 @@
         font-weight: bold;
         text-align: center;
         overflow-wrap: anywhere;
-        font-family: $font-title;
+        font-family: theme.$font-title;
         
     }
 }
@@ -55,7 +55,7 @@
             height: 356px;
         }
         .name{
-            color: $white;
+            color: theme.$white;
             font-size: 14px;
         }
     }

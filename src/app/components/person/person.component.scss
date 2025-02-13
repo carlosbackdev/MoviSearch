@@ -1,4 +1,4 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss' as theme ;
 
 .modal-backdrop-person {
   all: unset;
@@ -23,7 +23,7 @@
   background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.9));
   padding: 30px;
   border-radius: 20px;
-  box-shadow: $shadow-blue;
+  box-shadow: theme.$shadow-blue;
   width: 50%;
   height: 90%;
   overflow: auto;
@@ -57,8 +57,8 @@
       text-align: center;
       margin-bottom: 20px;
       font-size: 28px;
-      color: $white;
-      font-family: $font-title;
+      color: theme.$white;
+      font-family: theme.$font-title;
     }
 
     .cast-section,
@@ -67,7 +67,7 @@
 
       .section-title-p,
       .section-title {
-        font-family: $font-secundary;
+        font-family: theme.$font-secundary;
         font-weight: bold;
         font-size: 25px;
         margin-bottom: 10px;
@@ -103,7 +103,7 @@
 
           em {
             font-size: 14px;
-            color: $white;
+            color: theme.$white;
           }
         }
       }
@@ -162,7 +162,7 @@
 
             em {
               font-size: 11px;
-              color: $white;
+              color: theme.$white;
             }
           }
         }

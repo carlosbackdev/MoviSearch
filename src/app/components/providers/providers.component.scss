@@ -1,4 +1,5 @@
-@import '../../../themes/theme.scss';
+@use '../../../themes/theme.scss' as theme ;
+
 .providers-section {
     margin-top: 60px;
     width: 100%;
@@ -8,9 +9,9 @@
     box-shadow: 0px 8px 25px rgba(106, 93, 255, 0.3);
 
     .providers-title {
-        font-family: $font-secundary;
+        font-family: theme.$font-secundary;
         font-size: 23px;
-        color: $white;
+        color: theme.$white;
         border-bottom: 2.5px solid rgba(0, 216, 255,0.95);
         padding-bottom: 10px;
         margin-bottom: 25px;
@@ -24,7 +25,7 @@
 
         .provider-category {
             h4 {
-                font-family: $font-primary;
+                font-family: theme.$font-primary;
                 font-size: 21px;
                 color: rgba(255, 217, 0, 0.9);
                 margin-bottom: 20px;
