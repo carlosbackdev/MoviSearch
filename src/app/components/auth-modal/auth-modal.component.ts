@@ -116,8 +116,8 @@ export class AuthModalComponent implements OnInit{
       this.errors.email = 'Correo inválido';
       isValid = false;
     }
-    if (!this.isLoginMode && !this.validatePassword(this.user.password)) {
-      this.errors.password = 'La contraseña debe incluir mayúsculas, minúsculas, números y símbolos';
+    if (!this.isLoginMode && this.user.password.length>8) {
+      this.errors.password = 'La contraseña debe tener 8 caracteres minimo ';
       isValid = false;
     }
     return isValid;
@@ -127,8 +127,5 @@ export class AuthModalComponent implements OnInit{
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   }
 
-  validatePassword(password: string): boolean {
-    return /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
-  }
 
 }

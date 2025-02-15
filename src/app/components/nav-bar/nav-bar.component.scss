@@ -58,12 +58,9 @@
             
             &:hover{
                 color: theme.$app-primary;
-                transform: scale(1.05);
-                transition: all 0.1s linear;  
+
                 i{
-                    color: theme.$app-primary;
-                    transform: scale(1.05);
-                    transition: all 0.1s ease; 
+                    color: theme.$app-primary; 
                 }
             }
             i{
@@ -81,41 +78,108 @@
 
     }
 }
-.container-submenu{
-    position: relative;
-    width: auto;
-    top: 37px;
-    left: -274px;
+.container-submenu {
+    display: none; 
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    margin: auto;
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.85));
+    box-shadow: 0px 8px 25px rgba(106, 93, 255, 0.5);
+    border: 2px solid black;
+    border-radius: 15px;
+    
+    z-index: 10;
+
     .profile-menu {
-        position: absolute;
-        width: 150px;
-        z-index: 2;
-        background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.85));
-        box-shadow: 0px 8px 25px rgba(106, 93, 255, 0.5);
-        border: 2px solid black;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 100%;
+        padding: 10px;
         border-radius: 10px;
-        border-bottom: 2.5px solid rgba(0, 216, 255, 0.95);
+        border-bottom: 5px solid rgba(0, 216, 255, 0.95);
         button {
             all: unset;
-            text-align: center;
-            display: block;
-            width: 70%;
+            display: flex;
+            gap: 10px;
             margin: auto;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            padding: 8px;
+            width: 80%;
+            padding: 4px;
+            text-align: center;
             background-color: rgba(255, 217, 0, 0.95);
             color: black;
             border-radius: 5px;
             cursor: pointer;
+            margin-bottom: 5px;
+
             &:hover {
-              background-color: #ffe23c;
+                background-color: #ffe23c;
             }
         }
-      }
+    }
+}
+.container-submenu-discover {
+    display: none; 
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    margin: auto;
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.85));
+    box-shadow: 0px 8px 25px rgba(106, 93, 255, 0.5);
+    border: 2px solid black;
+    border-radius: 15px;
+    
+    z-index: 10;
+
+    .discover-menu {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        width: 100%;
+        padding: 10px;
+        border-radius: 10px;
+        border-bottom: 5px solid rgba(0, 216, 255, 0.95);
+        button {
+            all: unset;
+            display: flex;
+            gap: 10px;
+            margin: auto;
+            width: 80%;
+            padding: 4px;
+            text-align: center;
+            background-color: rgba(255, 217, 0, 0.95);
+            color: black;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 5px;
+            justify-content: center;
+
+            &:hover {
+                background-color: #ffe23c;
+            }
+        }
+    }
 }
 
-@media (max-width: 1000px){
+li.profile {
+    position: relative; 
+    &:hover .container-submenu {
+        display: block;
+    }
+}
+li.discover {
+    position: relative; 
+    &:hover .container-submenu-discover {
+        display: block;
+    }
+}
+
+
+
+
+@media (max-width: 1400px){
     .nav-bar-container{
         .nav-content{
             padding: 13px;
@@ -143,8 +207,6 @@
         }
     }
     .container-submenu{  
-        top: 28px;
-        left: -198px;
         .profile-menu {
             border-radius: 10px;
             width: 110px;
@@ -159,45 +221,160 @@
     }
 
 }
-@media (max-width: 768px){
+
+@media (max-width: 1100px){
     .nav-bar-container{
         .nav-content{
-            width: 100%;
-            padding: 10px;
+            width: 86%;
+            padding: 11px;
             .title{
                 display: none;
             }
         }
     
         .logo-section{
-            width: 25px;
-            height: 25px;
+            width: 27px;
+            height: 27px;
         }
         ul{
-            gap: 10px;        
+            gap: 14px;      
             li{
-                font-size: 12px;                
+                font-size: 15px;                
                 i{
                 color: theme.$app-secondary;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 }
             }    
         }
     }
     .container-submenu{  
-        top: 20px;
-        left: -49%;
         .profile-menu {
             border-radius: 7%;
             width: 80px;
             button {
-                font-size: 14px;
+                font-size: 16px;
                 margin-top: 8px;
-                margin-bottom: 8px;
-                padding: 2px;
+                margin-bottom: 9px;
+                padding: 3spx;
                 border-radius: 3px;
             }
           }
     }
 
+}
+@media (max-width: 768px) {
+    .nav-bar-container {
+        position: relative;
+        margin-bottom: 3px;
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 5px 15px;
+            .title{
+                margin: auto;
+                display: block;
+                .h2{
+                    span{                        
+                        text-align: center;
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+
+        ul {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 20;
+
+            li {
+                display: block;
+                padding: 12px;
+                text-align: center;
+                width: 100%;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: theme.$app-primary;
+                    color: white;
+                }
+            }
+        }
+
+        /* Mostrar menú cuando menuOpen es true */
+        ul.menu-open {
+            display: flex;
+        }
+
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 35px;
+            height: 25px;
+            cursor: pointer;
+
+            div {
+                width: 100%;
+                height: 4px;
+                background-color: theme.$app-primary;
+                border-radius: 5px;
+                transition: all 0.3s ease-in-out;
+            }
+        }
+    }
+    .container-submenu {
+        background: linear-gradient(145deg, rgba(0, 0, 0, 0.4), rgba(20, 20, 20, 0.45));
+
+        .profile-menu {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            margin: auto;
+            button {
+                display: flex;
+                justify-content: center;
+                margin: auto;
+                width: 80%;
+                text-align: center;
+                background-color: rgba(255, 217, 0, 1);
+    
+                &:hover {
+                    background-color: #ffe23c;
+                }
+            }
+        }
+    }
+    .container-submenu-discover {
+        background: linear-gradient(145deg, rgba(0, 0, 0, 0.4), rgba(20, 20, 20, 0.45));
+
+        .discover-menu {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            margin: auto;
+            button {
+                display: flex;
+                justify-content: center;
+                margin: auto;
+                width: 80%;
+                text-align: center;
+                background-color: rgba(255, 217, 0, 1);
+    
+                &:hover {
+                    background-color: #ffe23c;
+                }
+            }
+        }
+    }
 }

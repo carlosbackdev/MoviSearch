@@ -21,5 +21,9 @@ export class GenericHttpService {
   post(url: string, body: any): Observable<any> {
     return this.httpClient.post(url, body);
   }
+  
+  getChatData(): Observable<any> {
+    return this.httpClient.get<any>('../../../assets/data/chat.json');
+  }
 
 }

@@ -79,7 +79,7 @@ getMovieDetails(movieId: number, listId: number): void {
                 this.router.navigateByUrl(`movie/${movieDetails.id}`);              
             },
           };
-          if (!movieDetails.poster_path || movieDetails.popularity<1){
+          if (!movieDetails.poster_path || movieDetails.popularity<10 || !movieDetails.backdrop_path ){
             this.getSerieDetails(movieId, listId);
             return;
           };

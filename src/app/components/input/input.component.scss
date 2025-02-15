@@ -1,5 +1,11 @@
 @use '../../../themes/theme.scss' as theme;
 
+.input-chat-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%; /* Hace que ocupe todo el ancho disponible */
+}
+
 .input-container {
     position: relative;
     display: flex;
@@ -7,10 +13,10 @@
     align-items: center;
     gap: 10px;
     border-radius: 8px 8px 0px 0px ;
-    background-color: theme.$black-input;
+    background-color: rgba(17, 7, 32, 0.85);
     margin-top: 6px;
     border: 1.5px solid theme.$black-20;
-    width: 97%;
+    width: 100%; /* Asegura que el input ocupe todo el ancho disponible */
     &:focus-within{
         border-radius: 8px 8px 0px 0px ;
     }
@@ -63,35 +69,73 @@
     span:hover {
         color: theme.$neon-purple;
     }
+}
 
+.chat-dialog {
+    width: 100%; 
+    padding: 14px 10px 0px 25px;
+    background-color: rgba(17, 7, 32, 0.75);
+    color: theme.$white;
+    border: 1.5px solid theme.$black-20;
+    border-radius: 0px 0px 8px 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
+    max-height: 200px; 
+    overflow-y: auto; 
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0.9;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
+.input-chat-container .chat-dialog {
+    margin-top: 8px; /* Ajusta el espacio entre el input y el chat */
+}
+.input-container:focus-within + .chat-dialog {
+    background-color: rgba(17, 7, 32, 1);
+    border-bottom: 2px solid theme.$neon-purple;
+}
+
+.chat-line {
+    padding: 15px 15px 0px 15px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+  
+@media (max-width: 900px) {
+    .input-chat-container {
+        position: relative;
+        width: 95%; 
+        top: -50px;
+    }
+    
+    .input-container {
+        padding: 8px 8x;
+        i {
+            font-size: 18;
+        }
+    
+        input {
+            font-size: 12px;
+        }
+    
+        span {
+            margin-right: 9px;
+            font-size: 17px;
+
+        }
+    }
+    
     .chat-dialog {
-        position: absolute;
-        top: 114%; 
-        left: -1.45px;
-        width: 100%;
-        padding: 10px;
-        background-color: rgba(17, 7, 32, 0.75);
-        color: theme.$white;
-        padding: 8px 10px;
-        border: 1.5px solid theme.$black-20;
-        border-radius: 0px 0px 8px 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
-        max-height: 200px; 
-        overflow-y: auto; 
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        opacity: 0.5;
-        transform: translateY(-10px);
-        pointer-events: none; 
+        padding: 5px 5px 0px 5px;
     }
-
-    &:focus-within .chat-dialog {
-        opacity: 1;
-        pointer-events: auto; 
+    
+    .input-chat-container .chat-dialog {
+        margin-top: 5px; 
     }
-
+    
     .chat-line {
-        padding: 15px;
-        font-size: 16px;
-        line-height: 1.5;
+        padding: 8px 8px 0px 8px;
+        font-size: 11px;
     }
 }

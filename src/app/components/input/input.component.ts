@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MarkdownModule } from 'ngx-markdown';
+import { GenericHttpService } from '../../services/generic-http.service';
+
 
 @Component({
   selector: 'app-input',
@@ -16,6 +18,15 @@ export class InputComponent {
   chatLines: string[] = [];
   chatdata: string='';
 
+  constructor(private genericHttpService: GenericHttpService) {}
+  
+  ngOnInit() {
+    this.genericHttpService.getChatData().subscribe(data => {
+      this.chatdata = data.chatText;  
+      this.chat = this.chatdata;     
+      this.showChatDialog();       
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['chat']) {

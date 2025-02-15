@@ -16,6 +16,7 @@ import { ProvidersComponent } from '../../components/providers/providers.compone
 import { AuthModalComponent } from '../../components/auth-modal/auth-modal.component';
 import { CommentsComponent } from '../../components/comments/comments.component';
 import { PersonComponent } from "../../components/person/person.component";
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-detail',
@@ -42,6 +43,7 @@ export class DetailComponent {
 
   constructor( private genericService: GenericHttpService,
     private authService: AuthService,
+    private viewportScroller: ViewportScroller,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef) {}
   ngOnInit(): void{
@@ -59,6 +61,9 @@ export class DetailComponent {
       }
 
     }) 
+  }
+  ngAfterViewInit() {
+    this.viewportScroller.scrollToPosition([0, 0]);  // Esto restablecerá el scroll al principio
   }
 
   onAddClick(): void {

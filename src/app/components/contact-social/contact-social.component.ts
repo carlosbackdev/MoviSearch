@@ -19,6 +19,12 @@ export class ContactSocialComponent {
   contactInfo = contactData; 
   enviarFormulario() {
     console.log(this.formData);
+    
+    this.formData={
+      nombre: '',
+      email: '',
+      mensaje: ''
+    };
   }
 
   constructor() {}

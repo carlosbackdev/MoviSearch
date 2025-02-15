@@ -1,0 +1,291 @@
+@use '../../../themes/theme.scss' as theme;
+
+.container-list {
+    display: block;
+    width: 85%;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    .name-list-container {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        margin-top: 85px;
+        width: 100%;
+        .input-container{
+            position: relative;
+            display: flex;
+            padding: 10px 10px;
+            align-items: center;
+            gap: 10px; 
+            border-radius: 15px;
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.9));
+            box-shadow: 0px 8px 25px rgba(106, 93, 255, 0.3);
+            margin-top: 6px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 2.5px solid #00d8ff;
+            button{
+                all: unset;
+                cursor: pointer;
+                margin-right: 10px;
+                font-size: 19px;
+                color:rgba(theme.$input, 0.9);
+                transition: color 0.3s ease; 
+            }&:focus-within {
+                button{
+                    color: theme.$neon-purple;
+                }
+            }&
+            button:hover{
+                color: theme.$neon-purple;
+            }
+            input {
+                flex: 1;
+                padding: 8px 0;
+                border: none;
+                outline: none;
+                font-size: 18px;
+                background: transparent;
+                border-bottom: 2px solid rgba(theme.$input, 0.3);
+                transition: border-color 0.3s ease;
+                color: theme.$white;
+                &:focus {
+                border-color: theme.$neon-purple;
+                }
+                
+            } 
+        }
+
+        li {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.9));
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 95px;
+            box-shadow: 0px 8px 25px rgba(106, 93, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-bottom: 2.5px solid #00d8ff;
+            
+
+            &:hover {
+                
+                box-shadow: 0px 12px 30px rgba(106, 93, 255, 0.5);
+            }
+            .container-name{
+                display: flex;
+                width: 100%;
+                height: auto;
+                justify-content: center;
+                gap: 5%;
+                border-bottom: 2.5px solid #00d8ff;
+                margin-bottom: 22px;
+                h2 {
+                    display: flex;
+                    font-family: theme.$font-primary;
+                    font-size: 35px;
+                    color: rgba(255, 217, 0, 0.9);
+                    margin: 0;
+                    justify-content: center;
+                    flex-direction: column;
+                }
+    
+                button {
+                    all: unset;
+                    cursor: pointer;
+                    display: inline-grid;
+                    justify-content: center;
+                    background: rgba(255, 255, 255, 0.1);
+                    border-radius: 5px;
+                    width: 35px;
+                    height: 35px;
+                    transition: background 0.1s ease, transform 0.1s ease;
+    
+                    i {
+                        color: rgba(theme.$app-primary, 0.75);
+                        font-size: 25px;
+                        transition: color 0.1s ease, font-size 0.1s ease;
+                    }
+    
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.2);
+                        transform: scale(1.1);
+    
+                        i {
+                            color: rgba(theme.$app-primary, 1);
+                            font-size: 28px;
+                        }
+                    }
+                }
+
+            }
+            .movies-cards-container {
+                display: flex;
+                width: 100%;
+                overflow: hidden;
+                gap: 10px;
+                margin-bottom: 20px;
+                position: relative;
+              
+                .scroll-button {
+                  all: unset;
+                  cursor: pointer;
+                  position: absolute;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  background: rgba(255, 217, 0, 0.9);
+                  color: white;
+                  font-size: 24px;
+                  width: 35px;
+                  height: 35px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 50%;
+                  border: 2px solid rgb(255, 230, 0);
+                  z-index: 1;
+                  transition: background 0.3s ease, transform 0.3s ease;
+              
+                  &:hover {
+                    background: rgba(255, 217, 0, 1);
+                    transform: translateY(-50%) scale(1.1);
+                  }
+              
+                  &.left {
+                    left: 10px;
+                  }
+              
+                  &.right {
+                    right: 10px;
+                  }
+                }
+              
+                .cards-wrapper {
+                  display: flex;
+                  gap: 10px;
+                  overflow-x: auto;
+                  scroll-behavior: smooth;
+                  width: 100%;
+                  scrollbar-width: none;  /* Para Firefox */
+
+                    button{
+                        all: unset;
+                        position: relative;
+                        top: 51px;
+                        left: 248px;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: rgba(17, 7, 32, 0.9);
+                        border-radius: 6px;
+                        width: 37px;
+                        height: 37px;
+                        transition: background 0.3s ease, transform 0.3s ease;
+                        z-index: 2;
+        
+                        i {
+                            color: rgba(theme.$app-primary, 0.75);
+                            font-size: 20px;
+                            transition: color 0.1s ease, font-size 0.3s ease;
+                        }
+        
+                        &:hover {                            
+                            transform: scale(1.1);        
+                            i {
+                                color: rgba(theme.$app-primary, 1);
+                                font-size: 22px;
+                            }
+                        }
+                    }
+                }
+              
+                .card {
+                  all: unset;
+                  display: block;
+                  width: 300px;
+                  margin-bottom: 15px;
+                  border-radius: 15px;
+                  border-bottom: 2.5px solid rgba(0, 217, 255, 0.5);
+              
+                  &:hover {
+                    border-bottom: 2.5px solid rgba(0, 217, 255, 1);
+                  }
+                }
+              }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .container-list {
+        width: 98%;
+        .name-list-container {
+            width: 100%;
+            margin-top: 35px;
+
+            li {
+                padding: 8px;
+                margin-bottom: 55px;
+                .container-name{
+                    margin-bottom: -5px;
+                 
+                h2 {
+                    font-size: 24px;
+                    margin-bottom: 5px;
+                }   
+            }
+
+            button {
+                    width: 35px;
+                    height: 35px;
+
+                    i {
+                        font-size: 18px;
+                    }
+
+                    &:hover {
+                        i {
+                            font-size: 20px;
+                        }
+                    }
+                }
+                .movies-cards-container {
+                    gap: 0px;
+                    
+                    margin-bottom: 15px;
+                    height: 100%;
+                    margin-bottom: 0px;   
+                    margin-top: 25px;                 
+                  
+                    .scroll-button {
+                      width: 30px;
+                      height: 30px;
+                    }
+                    .card {
+                      all: unset;
+                      display: block;
+                      width: 233px;
+                      scale: 0.94;
+                      
+                      margin-bottom: 0px;
+                      border-radius: 15px;
+                      border-bottom: 2.5px solid rgba(0, 217, 255, 0.5);
+                  
+                      &:hover {
+                        border-bottom: 2.5px solid rgba(0, 217, 255, 1);
+                      }
+                    }
+                  }
+            }
+        }
+        
+    }
+}
+.cards-wrapper::-webkit-scrollbar {
+    display: none;  /* Oculta la barra de desplazamiento */
+}  

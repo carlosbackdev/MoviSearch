@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, HostListener, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {NavItemConfig} from '../../interfaces/ui-config/navi-item-config.interfaces';
 import { CommonModule } from '@angular/common';
@@ -15,8 +15,8 @@ import { AuthModalComponent } from '../auth-modal/auth-modal.component';
 })
 export class NavBarComponent {
   showLoginModal: boolean = false;
+  menuOpen: boolean = false;
   username: string | null = null;
-  showProfileMenu: boolean = false;
   navItems: NavItemConfig[] = [{
     name: 'Descubrir',
     path: 'home',
@@ -24,9 +24,15 @@ export class NavBarComponent {
     active: true
   },
   {
-    name: 'Listas',
-    path: 'list',
+    name: 'Nuestras Selecciones',
+    path: 'discover',
     icon:'bi bi-bar-chart-fill',
+    active: false
+  },
+  {
+    name: 'Tus Listas',
+    path: 'list',
+    icon:'bi bi-bookmark-plus-fill',
     active: false
   },
   {
@@ -52,19 +58,13 @@ export class NavBarComponent {
         this.showLoginModal = true;
         return; 
     }
-
     if (nav.name === 'Conectarse' && !this.authService.isAuthenticated()) {
         this.showLoginModal = true; 
         return; 
     }
     
     if (nav.path === 'profile' && this.authService.isAuthenticated()) {
-      if (this.authService.isAuthenticated()) {
-        this.showProfileMenu = !this.showProfileMenu;
-      } else {
-        this.showLoginModal = true;
-      }
-      return;
+
     }
 
     this.navItems.forEach((item: NavItemConfig) => {
@@ -89,6 +89,7 @@ export class NavBarComponent {
       connectItem.name = this.username || 'Conectarse'; // Cambia el nombre al nombre de usuario
     }
   }
+  
 
   // Método para cerrar el modal
   onCloseModal() {
@@ -96,7 +97,6 @@ export class NavBarComponent {
   }
   logout() {
     this.authService.logout();
-    this.showProfileMenu = false;
     this.router.navigateByUrl('home');
     window.location.reload();
   }
@@ -108,4 +108,34 @@ export class NavBarComponent {
   isAuthenticated() {
     return this.authService.isAuthenticated();
   }
+  
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+    }
+    peliculas() {
+      this.router.navigate(['/discover', 'peliculas']);
+    }
+    
+    series() {
+      this.router.navigate(['/discover', 'series']);
+    }
+
+    @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const menu = document.querySelector('.nav-bar-container ul');
+    const menuIcon = document.querySelector('.menu-icon');
+
+    if (menu && menuIcon) {
+      const isClickInsideMenu = menu.contains(target);
+      const isClickOnMenuIcon = menuIcon.contains(target);
+
+      if (!isClickInsideMenu && !isClickOnMenuIcon) {
+        this.menuOpen = false;
+      }
+    }
+  }
+    
+  
+  
 }

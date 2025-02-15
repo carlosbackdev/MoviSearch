@@ -5,6 +5,9 @@ import { DetailComponent } from './pages/detail/detail.component';
 import { ListComponent } from './pages/list/list.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { authGuard } from './guards/auth.guard';
+import { ConfirmComponent } from './pages/confirm/confirm.component';
+import { DiscoverComponent } from './pages/discover/discover.component';
+
 
 
 export const routes: Routes = [
@@ -16,7 +19,11 @@ export const routes: Routes = [
     {
         path: 'home', 
         component: HomeComponent,
-    }, 
+    },
+    {
+        path: 'discover/:category', 
+        component: DiscoverComponent,
+    },
     {
         path: 'list', 
         component: ListComponent,
@@ -35,6 +42,10 @@ export const routes: Routes = [
     },{
         path: 'serie/:serie_id',
         component: DetailComponent
+    },{
+        path: 'auth/:id',
+        component: ConfirmComponent
     }
 
 ];
+

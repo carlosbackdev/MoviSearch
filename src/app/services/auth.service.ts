@@ -19,6 +19,11 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/api/auth/login`, user);
   }
 
+  confirm(user_id: number): Observable<any> {
+    const body = { id: user_id };
+    return this.http.post(`${this.apiUrl}/api/auth/confirm`, body);
+  }
+
   getToken(): string | null {
     return localStorage.getItem('token');
   }
@@ -44,6 +49,7 @@ export class AuthService {
       'Authorization': `Bearer ${token}`
     });
   }
+
   async loginWithGoogle() {
     const provider = new GoogleAuthProvider();
     const credential = await signInWithPopup(this.auth, provider);

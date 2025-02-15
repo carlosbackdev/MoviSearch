@@ -1,0 +1,57 @@
+@use '../../../themes/theme.scss' as theme; 
+
+.banner-title{
+    display: flex;
+    position: relative;
+
+    .imagen-film{
+        position: relative;
+        width: 99.8%;
+        margin: auto;
+        height: 67vh;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        box-shadow: 5px 4px 15px 4px rgba(106, 93, 255, 0.4);
+        .title-container{
+            position: absolute;
+            top: 40%;
+            width: 70%;
+            background: rgba(0, 0, 0, 0.7);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            text-align: center;
+            border: 2.5px solid rgba(106, 93, 255, 0.2);
+            .title-film-selection{
+                margin: 20px;
+                padding-bottom: 6px;
+                border-bottom: 2.5px solid #00d8ff;
+                font-family: theme.$font-head ;
+                color: theme.$white;
+            }
+        }
+
+    }    
+}
+
+@media (max-width: 768px) {
+    .banner-title{
+        margin-bottom: 60px;
+        .imagen-film{
+            height: 60vh;
+
+            .title-container{
+                width: 90%;
+                .title-film-selection{
+
+                    font-size: 19px;
+                }
+            }
+    
+        }    
+    }
+}

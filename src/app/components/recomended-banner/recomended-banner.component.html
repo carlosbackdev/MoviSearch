@@ -1,0 +1,10 @@
+@if(config){
+    <div class="banner-title">
+        <div [style.background-image]="'url('+config.img+')'" class="imagen-film">
+            <div class="title-container">
+                <h1 class="title-film-selection" [innerHTML]="config.data">
+                </h1>
+            </div>
+        </div>    
+    </div> 
+}

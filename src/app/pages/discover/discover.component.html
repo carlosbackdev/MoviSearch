@@ -1,0 +1,28 @@
+<div class="container-list">
+    <app-recomended-banner [config]="recomendedBanner"></app-recomended-banner>
+    <ul class="name-list-container">
+        <li *ngFor="let list of movieLists; let i = index">
+            <div class="container-name">
+                <h2>{{ list.name }}</h2>
+            </div>
+            <div class="movies-cards-container">
+                <button *ngIf="list.movieCards.length > 1" class="scroll-button left" (click)="scrollLeft(cardWrapper)">‹</button>
+            <div class="cards-wrapper" #cardWrapper>
+                    <div *ngFor="let movieCard of list.movieCards">
+                        <app-movie-card class="card" [config]="movieCard"></app-movie-card>
+                    </div>
+                </div>
+                <button *ngIf="list.movieCards.length > 1" class="scroll-button right" (click)="scrollRight(cardWrapper)">›</button>
+            </div>
+        </li>
+    </ul>
+    <app-auth-modal
+        [showModal]="showLoginModal"
+        (closeModal)="showLoginModal = false">
+    </app-auth-modal>
+    <app-add-list
+        [showModal]="showListModal"
+        [movieId]="selectedMovieAndTvId"
+        (showModalChange)="showListModal = $event">
+</app-add-list>
+</div>

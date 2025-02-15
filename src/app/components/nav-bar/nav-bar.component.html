@@ -4,24 +4,36 @@
         <div (click)="homePage()" class="logo-section">
         </div>
         <div (click)="homePage()" class="title"><h2 class="h2"><span class="h2color1">Movie</span><span class="h2color2">Search</span></h2></div>
+        <div class="menu-icon" (click)="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
             @if (navItems && navItems.length >0) {
-                <ul>
+                <ul [ngClass]="{ 'menu-open': menuOpen }">
                     @for (nav of navItems; track $index) {
-                        <li [ngClass]="{'active-item': nav.active}" (click)="selectedItem(nav)">
+                        <li [ngClass]="{'active-item': nav.active}" class="{{nav.path}}" (click)="selectedItem(nav)">
                             <i class="{{nav.icon}}"></i>
                             {{nav.name}}
-                        </li>        
+                            <div *ngIf="nav.path === 'profile'" class="container-submenu">
+                                <div *ngIf="isAuthenticated() " class="profile-menu">
+                                    <button (click)="logout()">Cerrar sesión</button>
+                                    <button (click)="deleteAccount()">Eliminar cuenta</button>
+                                </div> 
+                            </div>
+                            <div *ngIf="nav.path === 'discover'" class="container-submenu-discover">
+                                <div class="discover-menu">
+                                    <button (click)="peliculas()">Peliculas</button>
+                                    <button (click)="series()">Series</button>
+                                </div> 
+                            </div>  
+                        </li>      
                     }
 
                 </ul>
                 
             }
-            <div class="container-submenu">
-                <div *ngIf="isAuthenticated() && showProfileMenu" class="profile-menu">
-                    <button (click)="logout()">Cerrar sesión</button>
-                    <button (click)="deleteAccount()">Eliminar cuenta</button>
-                </div> 
-            </div>
+
     </div>
     
 </nav>
