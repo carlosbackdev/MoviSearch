@@ -35,7 +35,7 @@
     .logo-section{
         width: 45px;
         height: 45px;
-        background-image: url(../../../assets/images/letra-m.png);       
+        background-image: url('http://localhost:4200/assets/images/letra-m.png');
         background-size: cover;
         cursor: pointer;
     }
@@ -81,6 +81,7 @@
 .container-submenu {
     display: none; 
     position: absolute;
+    justify-content: center;
     top: 100%;
     width: 100%;
     margin: auto;
@@ -88,6 +89,7 @@
     box-shadow: 0px 8px 25px rgba(106, 93, 255, 0.5);
     border: 2px solid black;
     border-radius: 15px;
+    
     
     z-index: 10;
 
@@ -166,7 +168,7 @@
 li.profile {
     position: relative; 
     &:hover .container-submenu {
-        display: block;
+        display: flex;
     }
 }
 li.discover {
@@ -208,10 +210,11 @@ li.discover {
     }
     .container-submenu{  
         .profile-menu {
+            padding: 10px;
             border-radius: 10px;
-            width: 110px;
+            width: 100%;
             button {
-                font-size: 16px;
+                font-size: 17px;
                 margin-top: 10px;
                 margin-bottom: 10px;
                 padding: 3px;
@@ -250,7 +253,8 @@ li.discover {
     .container-submenu{  
         .profile-menu {
             border-radius: 7%;
-            width: 80px;
+            padding: 5px;
+            width: 100%;
             button {
                 font-size: 16px;
                 margin-top: 8px;

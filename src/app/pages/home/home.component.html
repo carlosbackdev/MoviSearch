@@ -3,7 +3,7 @@
         <div class="search-section">
             <div class="imagen-container">
                     <div class="carousel-item" *ngFor="let image of carouselImages">
-                      <img [src]="image" alt="" />
+                      <img  @img [src]="image" alt="" />
                     </div>           
                 </div>       
             <app-input class="input" (searchEvent)="onSearchInput($event)"
@@ -22,6 +22,9 @@
                     {{title}} <span class="results">{{length}} Resultados</span>
                 </p>
             </div>
+            <div class="spinner-container" *ngIf="isLoading">
+                <div class="spinner"></div>
+              </div>              
             <app-segmented-control [config]="segments"></app-segmented-control>
         </div>
         <div class="movies-cards-section">

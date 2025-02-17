@@ -1,7 +1,7 @@
-<div class="modal-backdrop" *ngIf="showModal" (click)="close()"></div>
+<div class="modal-backdrop" *ngIf="showModal" (click)="close()" [@modalAnimation]></div>
 
 <div class="modal-container" *ngIf="showModal" (click)="$event.stopPropagation()">
-  <div class="modal-content">
+  <div class="modal-content" [@modalAnimation]>
     <button class="close-btn" (click)="close()"><i class="bi bi-x-square"></i></button>
     
     <h2>{{ isLoginMode ? 'Iniciar Sesión' : 'Registro' }}</h2>

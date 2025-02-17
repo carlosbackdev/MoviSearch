@@ -6,6 +6,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { firebaseConfig } from '../environments/fira';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 
 export const appConfig: ApplicationConfig = {
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(), 
     provideFirebaseApp(() => initializeApp(firebaseConfig.firebaseConfig)),
     provideAuth(() => getAuth()),
-    importProvidersFrom(MarkdownModule.forRoot())  
+    importProvidersFrom(MarkdownModule.forRoot()),
+    provideAnimations()
   ],
 };

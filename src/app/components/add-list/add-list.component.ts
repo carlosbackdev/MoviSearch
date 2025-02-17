@@ -4,6 +4,8 @@ import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ListService } from '../../services/list.service';
+import { trigger, transition, style, animate } from '@angular/animations';
+
 
 @Component({
   selector: 'app-add-list',
@@ -11,7 +13,21 @@ import { ListService } from '../../services/list.service';
   providers: [GenericHttpService],
   imports: [FormsModule, CommonModule],
   templateUrl: './add-list.component.html',
-  styleUrl: './add-list.component.scss'
+  styleUrl: './add-list.component.scss',
+   animations: [
+      trigger('modalAnimation', [
+        // Animación para la entrada
+        transition(':enter', [
+          style({ opacity: 0, transform: 'scale(0.8)' }),  
+          animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)', 
+            style({ opacity: 1, transform: 'scale(1)' }))  
+        ]),
+        transition(':leave', [
+          animate('0.3s cubic-bezier(0.25, 0.8, 0.25, 1)', 
+            style({ opacity: 0, transform: 'scale(0.8)' }))  
+        ])
+      ])    
+    ]
 })
 export class AddListComponent {
   @Input() showModal: boolean = false;  

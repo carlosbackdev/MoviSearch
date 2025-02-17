@@ -21,6 +21,8 @@ import { AuthModalComponent } from '../../components/auth-modal/auth-modal.compo
 import { FormsModule } from '@angular/forms';
 import { AddListComponent } from "../../components/add-list/add-list.component";
 import { OpenAiService } from '../../services/open-ai.service';
+import { animate, style, transition, trigger } from '@angular/animations';
+
 
 @Component({
   selector: 'app-home',
@@ -28,7 +30,15 @@ import { OpenAiService } from '../../services/open-ai.service';
   providers: [GenericHttpService],
   imports: [InputComponent, MovieCardComponent, HttpClientModule, SegmentedControlComponent, CommonModule, AuthModalComponent, FormsModule, AddListComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
+     animations: [
+      trigger('img', [
+        transition(':enter', [
+          style({ opacity: 0, filter: 'blur(10px)' }),
+          animate('1.3s ease-out', style({ opacity: 1, filter: 'blur(0)' }))
+        ])
+      ]),
+    ]
 })
 export class HomeComponent implements OnInit{
   private searchTimeout: any;
@@ -45,6 +55,7 @@ export class HomeComponent implements OnInit{
   selectedMovieAndTvId: number=0;
   chat: string ='';
   chatLines: string[] = [];
+  isLoading: boolean = false;
   
     segments: SegmentedControlConfig[] = [
       {
@@ -169,7 +180,7 @@ export class HomeComponent implements OnInit{
                     } else {
                       console.log('Imagen de fondo no disponible para el item:', item);
                     }
-  
+                    
                     this.movieCards.push({
                       img: Endpoints.imagen + `/w500/${item.poster_path}`,
                       tipo: item.media_type,
@@ -200,7 +211,7 @@ export class HomeComponent implements OnInit{
                         this.startCarousel(); 
                       }
                       this.isTrendsLoaded = true; 
-                    }
+                    }                   
                   },
                   error: (err: any) => {
                     console.error('Error al obtener la traducción de la película/serie:', err);
@@ -229,7 +240,7 @@ export class HomeComponent implements OnInit{
             console.log(res.results);
 
             this.movieCards = [];
-            res.results.forEach((item: MovieResult) => {
+            res.results.forEach((item: MovieResult, index: number) => {
               this.genericHttpService.tmdbGet(Endpoints.movieTranslate(item.id.toString()))
                 .subscribe({
                   next: (translationRes: MovieTranslationsResponse) => {
@@ -242,7 +253,7 @@ export class HomeComponent implements OnInit{
   
                     const movieName = spanishTranslation?.data.title || mexicanTranslation?.data.title || item.title;
   
-                  
+                    setTimeout(() => {
                     this.movieCards.push({
                       img: Endpoints.imagen + `/w500/${item.poster_path}`,
                       movieName: movieName,
@@ -259,8 +270,9 @@ export class HomeComponent implements OnInit{
                           this.showLoginModal = true;
                         }
                       } 
-                    } as MovieCardConfig);
+                    } as MovieCardConfig); 
                     this.length=this.movieCards.length;
+                   }, index * 50);
                   },
                   error: (err: any) => {
                     console.error('Error al obtener la traducción de la película:', err);
@@ -288,7 +300,7 @@ export class HomeComponent implements OnInit{
           if (res && res.results) {
             console.log(res.results);
             this.movieCards = [];
-            res.results.forEach((item: SerieResult) => {
+            res.results.forEach((item: SerieResult, index: number) => {
               this.genericHttpService.tmdbGet(Endpoints.serieTranslate(item.id.toString()))
                 .subscribe({
                   next: (translationRes: any) => { 
@@ -302,7 +314,7 @@ export class HomeComponent implements OnInit{
                       );
   
                       const seriesName = spanishTranslation?.data.name || mexicanTranslation?.data.name || item.name;
-  
+                      setTimeout(() => {
                       this.movieCards.push({
                         img: Endpoints.imagen + `/w500/${item.poster_path}`,
                         movieName: seriesName,
@@ -321,7 +333,8 @@ export class HomeComponent implements OnInit{
                           }
                         } 
                       } as MovieCardConfig);
-                      this.length=this.movieCards.length;
+                      this.length=this.movieCards.length; 
+                     }, index * 50);                      
                     } else {
                       console.error('No se encontraron traducciones para la serie:', item.name);
                     }
@@ -360,7 +373,7 @@ export class HomeComponent implements OnInit{
                 console.log(res.results);
   
                 this.movieCards = [];
-                res.results.forEach((item: MovieResult) => {
+                res.results.forEach((item: MovieResult, index: number) => {
                   // Verificar si el poster_path es null
                   if (item.poster_path) {
                     this.genericHttpService.tmdbGet(Endpoints.movieTranslate(item.id.toString()))
@@ -374,7 +387,7 @@ export class HomeComponent implements OnInit{
                           );
   
                           const movieName = spanishTranslation?.data.title || mexicanTranslation?.data.title || item.title;
-  
+                          setTimeout(() => {
                           this.movieCards.push({
                             img: Endpoints.imagen + `/w500/${item.poster_path}`,
                             movieName: movieName,
@@ -394,6 +407,7 @@ export class HomeComponent implements OnInit{
                             }
                           } as MovieCardConfig);
                           this.length = this.movieCards.length;
+                          }, index * 250);
                           if (this.movieCards.length < 10) {
                             this.onSearchInputTv(query);
                           }
@@ -441,7 +455,7 @@ export class HomeComponent implements OnInit{
               if (res && res.results) {
                 console.log(res.results);
   
-                res.results.forEach((item: MovieResult) => {
+                res.results.forEach((item: MovieResult , index: number) => {
                   // Verificar si el poster_path es null
                   if (item.poster_path) {
                     this.genericHttpService.tmdbGet(Endpoints.serieTranslate(item.id.toString()))
@@ -507,6 +521,7 @@ export class HomeComponent implements OnInit{
   }
 
   searchProcesator(query: string): void {
+    this.isLoading = true;
     if (query.length > 2) {
       this.title = 'Buscando...';
       this.length = 0;
@@ -522,28 +537,43 @@ export class HomeComponent implements OnInit{
       }).subscribe({
         next: ({ movieSearch, chatbotResponse }) => {
           if (movieSearch?.results?.length > 0) {
-            this.movieCards = movieSearch.results.map((item: any) => ({
-              img: Endpoints.imagen + `/w500/${item.poster_path}`,
-              movieName: item.title ?? item.name ?? "Desconocido",
-              rate: item.vote_average,
-              id: item.id,
-              onClick: () => {
-                if (isSeriesSearch) {
-                  this.router.navigateByUrl(`serie/${item.id}`);
-                } else {
-                  this.router.navigateByUrl(`movie/${item.id}`);
+            this.movieCards = [];
+
+             movieSearch.results.forEach((item: any, index: number) => {
+            setTimeout(() => {
+              this.movieCards.push({
+                img: Endpoints.imagen + `/w500/${item.poster_path}`,
+                movieName: item.title ?? item.name ?? "Desconocido",
+                rate: item.vote_average,
+                id: item.id,
+                onClick: () => {
+                  if (isSeriesSearch) {
+                    this.router.navigateByUrl(`serie/${item.id}`);
+                  } else {
+                    this.router.navigateByUrl(`movie/${item.id}`);
+                  }
+                },
+                onAddClick: () => {
+                  if (this.authService.isAuthenticated()) {
+                    this.selectedMovieAndTvId = item.id;
+                    this.showListModal = true;
+                  } else {
+                    console.log("Usuario no autenticado, mostrando modal de login");
+                    this.showLoginModal = true;
+                  }
                 }
-              },
-              onAddClick: () => {
-                if (this.authService.isAuthenticated()) {
-                  this.selectedMovieAndTvId = item.id;
-                  this.showListModal = true;
-                } else {
-                  console.log("Usuario no autenticado, mostrando modal de login");
-                  this.showLoginModal = true;
-                }
+              });
+
+              // Actualizar la longitud de las tarjetas después de agregar cada una
+              this.length = this.movieCards.length;
+
+              // Mostrar el texto después de un pequeño retraso
+              if (index === movieSearch.results.length - 1) {
+                this.title = 'Recomendaciones';
+                this.isLoading = false;
               }
-            }));
+            }, index * 250); 
+          });
             const movieIds = movieSearch.results.map((item: any) => item.id);            
             this.saveQuery(movieIds, chatbotResponse.response);
             console.log(chatbotResponse.response);
@@ -557,10 +587,13 @@ export class HomeComponent implements OnInit{
             console.log(movieSearch);
             this.length = this.movieCards.length;
             this.title = 'Recomendaciones';
+            this.isLoading = false;
 
           } else {
             console.error("No se encontraron resultados.");
             this.title = 'Sin Resultados';
+            this.isLoading = false;
+
           }
 
           console.log("Respuesta del chatbot:", chatbotResponse.response);
@@ -568,6 +601,7 @@ export class HomeComponent implements OnInit{
         error: (error: any) => {
           console.error("Error en la búsqueda o chatbot:", error);
           this.title = 'Sin Resultados';
+          this.isLoading = false;
         }
       });
     }

@@ -26,6 +26,10 @@ export class ListService {
     return this.http.get(`${this.apiUrl}/user`, { headers: this.getHeaders() });
   }
 
+  getList(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/share/${id}`, { headers: this.getHeaders() });
+  }
+
   getMovieLists(): Observable<any> {
     return this.http.get(`${this.apiUrl}/movie`, { headers: this.getHeaders() });
   }
@@ -55,6 +59,12 @@ export class ListService {
       body: { movieId, listId }
     });
   }
-  
+  copyList(listId: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/copy`,
+      { listId: listId }, 
+      { headers: this.getHeaders() }
+    );
+  }
 
 }

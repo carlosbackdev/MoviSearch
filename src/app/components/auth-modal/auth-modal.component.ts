@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-auth-modal',
@@ -10,6 +11,20 @@ import { AuthService } from '../../services/auth.service';
   imports: [CommonModule, FormsModule],
   templateUrl: './auth-modal.component.html',
   styleUrl: './auth-modal.component.scss',
+  animations: [
+    trigger('modalAnimation', [
+      // Animación para la entrada
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.8)' }),  
+        animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)', 
+          style({ opacity: 1, transform: 'scale(1)' }))  
+      ]),
+      transition(':leave', [
+        animate('0.3s cubic-bezier(0.25, 0.8, 0.25, 1)', 
+          style({ opacity: 0, transform: 'scale(0.8)' }))  
+      ])
+    ])    
+  ]
 })
 export class AuthModalComponent implements OnInit{
   @Input() showModal: boolean = false;

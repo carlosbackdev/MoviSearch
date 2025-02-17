@@ -1,0 +1,17 @@
+<div class="modal-overlay" *ngIf="showModal" (click)="closeModal()"  [@modalAnimation]>
+    <div class="modal-content" (click)="$event.stopPropagation()" >
+        <button class="close-btn" (click)="closeModal()"><i class="bi bi-x-square"></i></button>
+      <h2>Compartir Lista</h2>
+      <p>Comparte tu lista usando el siguiente enlace:</p>
+      
+      <input type="text" [value]="shareUrl" readonly class="url-box">
+      <button (click)="copyToClipboard()">Copiar</button>
+  
+      <div class="share-buttons">
+        <button class="what" (click)="shareViaWhatsApp()"><i class="bi bi-whatsapp"></i></button>
+        <button class="mail" (click)="shareViaEmail()"><i class="bi bi-envelope"></i></button>
+        <button class="telegram" (click)="shareViaTelegram()"><i class="bi bi-telegram"></i></button>
+    </div>     
+    </div>
+  </div>
+  

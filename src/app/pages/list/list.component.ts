@@ -9,13 +9,24 @@ import { MovieCardConfig } from '../../interfaces/ui-config/movie-card-config.in
 import { Endpoints } from '../../endpoints/Endpoints';
 import { MovieCardComponent } from '../../components/movie-card/movie-card.component';
 import { Router } from '@angular/router';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { AddListComponent } from "../../components/add-list/add-list.component";
+import { ShareListComponent } from "../../components/share-list/share-list.component";
 
 type MovieCardWithId = MovieCardConfig & { id: number };
 @Component({
   selector: 'app-list',
-  imports: [FormsModule, CommonModule, MovieCardComponent],
+  imports: [FormsModule, CommonModule, MovieCardComponent, ShareListComponent],
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrl: './list.component.scss',
+  animations: [
+    trigger('fadeIn', [
+      transition('void => *', [
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate('1s ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
 })
 
 export class ListComponent {
@@ -25,6 +36,8 @@ movieIds: Map<number, number[]> = new Map();
 movieCards: MovieCardWithId[] = [];
 newListName: string = '';
 id:number =0;
+Idlist:number=0;
+showListModal:boolean=false;
 
 
 constructor(private genericHttpService: GenericHttpService,private router: Router,
@@ -179,6 +192,11 @@ deleteList(listName: string): void {
         console.error('Error al eleminar la lista:', error);
       }
     );
+  }
+
+  shareList(listId: number): void {
+    this.Idlist=listId;
+    this.showListModal=true;
   }
 
   deleteMovieOrSerie(movieId: number, listId: number): void {

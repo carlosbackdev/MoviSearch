@@ -1,7 +1,8 @@
 <div class="container-list">
-    <app-recomended-banner [config]="recomendedBanner"></app-recomended-banner>
+    <div *ngIf="animationState">
+    <app-recomended-banner [config]="recomendedBanner"  [@fadeBlur]="animationState ? 'visible' : 'hidden'"></app-recomended-banner>
     <ul class="name-list-container">
-        <li *ngFor="let list of movieLists; let i = index">
+        <li *ngFor="let list of movieLists; let i = index" [@fadeInOnScroll]>
             <div class="container-name">
                 <h2>{{ list.name }}</h2>
             </div>
@@ -25,4 +26,5 @@
         [movieId]="selectedMovieAndTvId"
         (showModalChange)="showListModal = $event">
 </app-add-list>
+    </div>
 </div>

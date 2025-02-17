@@ -7,6 +7,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { authGuard } from './guards/auth.guard';
 import { ConfirmComponent } from './pages/confirm/confirm.component';
 import { DiscoverComponent } from './pages/discover/discover.component';
+import { ViewListComponent } from './pages/view-list/view-list.component';
 
 
 
@@ -28,6 +29,10 @@ export const routes: Routes = [
         path: 'list', 
         component: ListComponent,
         canActivate: [authGuard],
+    },
+    {
+        path: 'share/list/:id', 
+        component: ViewListComponent,
     }, 
     {
         path: 'contact', 

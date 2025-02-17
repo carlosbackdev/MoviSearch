@@ -1,24 +1,24 @@
+<div class="page-header">
+    <h1>Esta lista ha sido compartida por: {{ username }}</h1>
+    <p>¡Ahora puedes guardarla o compartirla tu también!</p>
+  </div>
+  <div *ngIf="showSuccessMessage" class="success-message">
+    Lista copiada con éxito.
+  </div>
 <div class="container-list"  @fadeIn>
     <ul class="name-list-container">
-        <div class="input-container">
-            <input [(ngModel)]="newListName" placeholder="Nombre de la lista nueva" />
-            <button class="delete-list" (click)="createList()">Crear</button>
-        </div>
         <li *ngFor="let list of userLists; let i = index">
             <div class="container-name">
-                <h2>{{ list.name }}</h2>
+                <h2> {{ list.name }} </h2>
                 <div class="buttons-list">
                     <button id="compartir" (click)="shareList(list.id)"><i class="bi bi-share-fill"></i></button>    
-                    <button id="delete" (click)="deleteList(list.name)"><i class="bi bi-trash3-fill"></i></button>        
+                    <button id="añadir" (click)="addList()"><i class="bi bi-plus-circle-fill"></i></button>        
                 </div>
              </div>
             <div class="movies-cards-container">
                 <button *ngIf="list.movies.length > 1" class="scroll-button left" (click)="scrollLeft(cardWrapper)">‹</button>
                 <div class="cards-wrapper" #cardWrapper>
                     <div *ngFor="let movieCard of list.movieCards">
-                        <button (click)="deleteMovieOrSerie(movieCard.id, list.id)">
-                            <i class="bi bi-trash3-fill"></i>
-                          </button>
                         <app-movie-card class="card" [config]="movieCard"></app-movie-card>
                     </div>
                 </div>
@@ -28,8 +28,18 @@
     </ul>
 </div>
 
+
 <app-share-list 
 [showModal]="showListModal"
 [ListId]="Idlist"
 (showModalChange)="showListModal = $event">
 </app-share-list>
+<app-auth-modal
+    [showModal]="showLoginModal"
+    (closeModal)="showLoginModal = false">
+</app-auth-modal>
+<app-add-list
+    [showModal]="showListMovieModal"
+    [movieId]="selectedMovieAndTvId"
+    (showModalChange)="showListMovieModal = $event">
+</app-add-list>

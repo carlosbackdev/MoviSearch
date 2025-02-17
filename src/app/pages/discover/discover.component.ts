@@ -14,6 +14,7 @@ import { MovieTranslationsResponse } from '../../interfaces/models/movieTranslat
 import { AuthModalComponent } from '../../components/auth-modal/auth-modal.component';
 import { RecomendedBannerComponent } from "../../components/recomended-banner/recomended-banner.component";
 import { AddListComponent } from '../../components/add-list/add-list.component';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 type MovieCardWithId = MovieCardConfig & { id: number };
 
@@ -23,7 +24,21 @@ type MovieCardWithId = MovieCardConfig & { id: number };
   providers: [GenericHttpService],
   imports: [FormsModule, CommonModule, AddListComponent , MovieCardComponent, AuthModalComponent, RecomendedBannerComponent],
   templateUrl: './discover.component.html',
-  styleUrl: './discover.component.scss'
+  styleUrl: './discover.component.scss',
+  animations: [
+    trigger('fadeBlur', [
+      transition(':enter', [
+        style({ opacity: 0, filter: 'blur(10px)' }),
+        animate('1.5s ease-out', style({ opacity: 1, filter: 'blur(0)' }))
+      ])
+    ]),
+    trigger('fadeInOnScroll', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(200px)' }),
+        animate('0.8s ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
 })
 export class DiscoverComponent {
 
@@ -37,7 +52,9 @@ showLoginModal: boolean = false;
 imagen: string='';
 recomendedBanner ={img:'',data:'',}
 showListModal:boolean=false;
-  
+animationState = false;
+Idlist:number=0;
+showShareModal:boolean=false;
 
 
 constructor(private genericHttpService: GenericHttpService,private router: Router,
@@ -52,6 +69,10 @@ ngOnInit(): void {
   });
 }
 updateContent(category: string | null) {
+this.animationState = false; // Desactiva la animación
+  setTimeout(() => {
+    this.animationState = true; // Reactiva la animación
+  }, 10);
   if (category === 'series') {
     this.movieLists = [
       { id: 1, name: 'Nuestras Recomendaciones', movieCards: [] },
@@ -73,6 +94,7 @@ updateContent(category: string | null) {
       data: 'Nuestra Selección de Películas <br> ¡Siempre actualizadas!',
     };
   }
+  
 }
 
 loadMoviesForLists(): void {

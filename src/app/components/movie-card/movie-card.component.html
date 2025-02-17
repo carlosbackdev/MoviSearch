@@ -1,5 +1,5 @@
 @if(config){ 
-    <div (click)="config.onClick ? config.onClick() : null" class="movie-card-container">
+    <div (click)="config.onClick ? config.onClick() : null" class="movie-card-container" @fadeInScale>
         <div [style.background-image]="'url('+config.img+')'" class="image-container">
           <app-rate-chip [rate]="config.rate" [placeDecimals]="1"></app-rate-chip>
           <button class="button" title="Añadir a lista" type="button"><i class="bi bi-plus-square-fill" (click)="onAddClick($event)"></i></button>

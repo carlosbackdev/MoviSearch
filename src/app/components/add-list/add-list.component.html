@@ -1,6 +1,6 @@
 <!-- Fondo oscuro para cerrar modal al hacer clic fuera -->
-<div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
-  <div class="modal-container" (click)="$event.stopPropagation()">
+<div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()" [@modalAnimation]>
+  <div class="modal-container" (click)="$event.stopPropagation()" [@modalAnimation]>
     <button class="close-btn" (click)="closeModal()"><i class="bi bi-x-square"></i></button>
     <h2>Añadir Película a una Lista</h2>
 

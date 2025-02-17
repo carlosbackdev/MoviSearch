@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from "./components/nav-bar/nav-bar.component";
 import { FooterComponent } from "./components/footer/footer.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @Component({
