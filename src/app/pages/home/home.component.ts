@@ -542,7 +542,7 @@ export class HomeComponent implements OnInit{
       const isSeriesSearch = /(serie|series|tv|shows)/.test(lowerCaseQuery);
 
       forkJoin({
-        movieSearch: this.genericHttpService.post('http://localhost:8080/api/text/process', body),
+        movieSearch: this.genericHttpService.post('http://movisearchapi-production.up.railway.app/api/text/process', body),
         chatbotResponse: this.openAiService.getChatbotResponse(query)
       }).subscribe({
         next: ({ movieSearch, chatbotResponse }) => {

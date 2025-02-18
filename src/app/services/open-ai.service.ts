@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OpenAiService {
-  private apiUrl = 'http://localhost:8080/api/chatbot';
+  private apiUrl = 'http://movisearchapi-production.up.railway.app/api/chatbot';
 
   constructor(private http: HttpClient) { }
 

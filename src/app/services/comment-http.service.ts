@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CommentHttpService {
-  private apiUrl = 'http://localhost:8080/api/comments';
+  private apiUrl = 'http://movisearchapi-production.up.railway.app/api/comments';
 
   constructor(private http: HttpClient) {}
 
