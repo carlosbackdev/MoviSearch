@@ -65,6 +65,8 @@ getUserLists(): void {
     },
     (error) => {
       console.error('Error al obtener listas:', error);
+      localStorage.clear();
+      window.location.reload();
     }
   );
 }

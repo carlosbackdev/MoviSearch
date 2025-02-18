@@ -5,22 +5,22 @@
   "socials": [
     {
       "name": "LinkedIn",
-      "link": "https://www.linkedin.com/",
+      "link": "www.linkedin.com/in/carlos-arroyo-dev",
       "icon": "assets/icons/linkedin.png"
     },
     {
       "name": "GitHub",
-      "link": "https://github.com/",
+      "link": "https://github.com/carlosbackdev",
       "icon": "assets/icons/github.png"
     },
     {
       "name": "Twitter",
-      "link": "https://twitter.com/",
+      "link": "https://bsky.app/profile/carlosbackdev.com",
       "icon": "assets/icons/Bluesky.png"
     },
     {
         "name": "Gmail",
-        "link": "https://twitter.com/",
+        "link": "mailto:carlosbackdev@gmail.com?subject=Consulta&body=¡Me encanta tu Web!",
         "icon": "assets/icons/gmail.webp"
       }
   ]

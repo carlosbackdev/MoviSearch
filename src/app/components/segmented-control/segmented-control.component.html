@@ -2,7 +2,7 @@
 @if(config && config.length > 0) {
     <div class="segmented-control-component">
         @for (segment of config; track $index) {
-            <div (click)="selectedItem(segment)" [ngClass]="{'active-item':segment.active}" class="segment">
+            <div [title]="'ir a'+segment.name" (click)="selectedItem(segment)" [ngClass]="{'active-item':segment.active}" class="segment">
                 {{segment.name}}
             </div>
         }

@@ -25,6 +25,12 @@
             .h2color2{
                 color: theme.$app-primary;
             }
+            .h2color12{
+                color: theme.$neon-purple;               
+            }
+            .h2color22{
+                color: theme.$app-primary;                
+            }
             .h2{
                 margin-bottom: 0px;
                 font-weight: bold;
@@ -42,6 +48,8 @@
     ul{
         display: flex;
         flex-direction: row;
+        position: relative;
+        top:5.5px;
         gap: 40px;
         margin: 0px;
         padding: 0px;

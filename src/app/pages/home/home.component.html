@@ -16,15 +16,19 @@
               {{ chatLines.join('') }}
             </div>
           </div>
-        <div class="segmented-control-section">
+        <div class="segmented-control-section" @navbar>
             <div class="title-container">
                 <p class="title">
                     {{title}} <span class="results">{{length}} Resultados</span>
                 </p>
             </div>
-            <div class="spinner-container" *ngIf="isLoading">
-                <div class="spinner"></div>
-              </div>              
+            <div class="buttons-container">
+                <div class="spinner-container" *ngIf="isLoading"  @navbar>
+                    <div class="spinner"></div>
+                </div>  
+                <button (click)="random()" alt="Aleatorias" title="busqueda Aleatoria" *ngIf="!isLoading" class="custom-button"  @navbar><p>Aleatorias</p></button>
+                <button (click)="moreSearch()" alt="Otras" title="busqueda de Otras" *ngIf="!isLoading && length > 18 && isSearch" class="custom-button"  @navbar ><p>Otras</p></button>
+            </div>                        
             <app-segmented-control [config]="segments"></app-segmented-control>
         </div>
         <div class="movies-cards-section">

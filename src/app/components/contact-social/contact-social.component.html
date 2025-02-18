@@ -2,10 +2,9 @@
     <h3 class="contact-title">Formulario de Contacto</h3>
     
     <div class="contact-list">
-        <!-- Formulario de contacto -->
         <div class="contact-category">
             <h4>Envíanos un mensaje</h4>
-            <form (submit)="enviarFormulario()">
+            <form (ngSubmit)="enviarFormulario()">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input type="text" id="nombre" name="nombre" [(ngModel)]="formData.nombre" required />
@@ -18,16 +17,16 @@
                     <label for="mensaje">Mensaje</label>
                     <textarea id="mensaje" name="mensaje" [(ngModel)]="formData.mensaje" required></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Enviar</button>
+                <button alt="enviar formulario" title="enviar formulario" type="submit" class="submit-btn">Enviar</button>
             </form>
         </div>
 
-        <!-- Redes Sociales -->
+
         <div class="contact-category">
             <h4>Redes Sociales</h4>
             <div class="social-logos">
-                <a *ngFor="let social of contactInfo.socials" class="social-link" [href]="social.link" target="_blank">
-                    <div class="logo-container"><img class="social-logo" [src]="social.icon" [alt]="social.name"></div>
+                <a *ngFor="let social of contactInfo.socials" rel="nofollow" class="social-link" [title]="'ir a '+social.name" [href]="social.link" target="_blank">
+                    <div class="logo-container"><img class="social-logo" [src]="social.icon" [title]="'icono de '+social.name" [alt]="social.name"></div>
                 </a>
             </div>
         </div>

@@ -1,16 +1,15 @@
 <footer class="footer">
     <div class="footer-container">
         <p class="footer-text">© 2025 Carlos BackDev - MovieSearch</p>
-        <p class="footer-text">base de datos de tmdb</p>
+        <p class="footer-text">base de datos de 
+            <span><a rel="nofollow" title="ir a tmdb" target="_blank" href="https://www.themoviedb.org/">
+                tmdb
+                </a>
+            </span>
+        </p>
         <div class="footer-socials">
-            <a href="https://www.linkedin.com/in/tuusuario" target="_blank" class="social-link">
-                <img src="assets/icons/linkedin.png" alt="LinkedIn">
-            </a>
-            <a href="https://github.com/tuusuario" target="_blank" class="social-link">
-                <img src="assets/icons/github.png" alt="GitHub">
-            </a>
-            <a href="https://twitter.com/tuusuario" target="_blank" class="social-link">
-                <img src="assets/icons/gmail.webp" alt="Twitter">
+            <a *ngFor="let social of contactInfo.socials" rel="nofollow" class="social-link" [title]="'ir a '+social.name" [href]="social.link" target="_blank">
+                <div class="logo-container"><img class="social-logo" [src]="social.icon" [title]="'icono de '+social.name" [alt]="social.name"></div>
             </a>
         </div>
     </div>

@@ -1,6 +1,6 @@
 
 @if(config){
-    <div [style.background-image]="'url('+config.img+')'" class="detail-banner-container">
+    <div [title]="config.title"  [style.background-image]="'url('+config.img+')'" class="detail-banner-container">
         <div class="title-container">
             <h1 class="title">{{config.title}}</h1>
             <p><span (click)="open(config.path)">{{config.tagline}}</span></p>

@@ -3,7 +3,7 @@
 <div class="modal-container-person" *ngIf="showModal" (click)="$event.stopPropagation()">
   <div class="modal-person">
     <!-- Botón para cerrar el modal -->
-    <button class="close-person" (click)="closeModalPerson()">
+    <button alt="Cerrar Casting" title="Cerrar Casting" class="close-person" (click)="closeModalPerson()">
       <i class="bi bi-x-square"></i>
     </button>
 
@@ -16,7 +16,7 @@
         <h4 class="section-title-p">Actores</h4>
         <div class="cast-list">
           <div *ngFor="let actor of cast" class="cast-item">
-            <img *ngIf="actor.profile_path" [src]="getProfileImageUrl(actor.profile_path)" alt="Actor's Profile">
+            <img *ngIf="actor.profile_path" [alt]="actor.name" [title]="actor.name" [src]="getProfileImageUrl(actor.profile_path)" >
             <p>{{ actor.name }}</p>
             <p><em>{{ actor.character }}</em></p>
           </div>
@@ -28,7 +28,7 @@
         <h4 class="section-title">Director y Equipo</h4>
         <div class="crew-list">
           <div *ngFor="let crewMember of crew" class="crew-item">
-            <img *ngIf="crewMember.profile_path" [src]="getProfileImageUrl(crewMember.profile_path)" alt="Crew Member's Profile">
+            <img *ngIf="crewMember.profile_path" [alt]="crewMember.name" [title]="crewMember.name" [src]="getProfileImageUrl(crewMember.profile_path)" alt="Crew Member's Profile">
             <p>{{ crewMember.name }}</p>
             <p><em>{{ crewMember.job }}</em></p>
           </div>

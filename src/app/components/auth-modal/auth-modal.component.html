@@ -2,7 +2,7 @@
 
 <div class="modal-container" *ngIf="showModal" (click)="$event.stopPropagation()">
   <div class="modal-content" [@modalAnimation]>
-    <button class="close-btn" (click)="close()"><i class="bi bi-x-square"></i></button>
+    <button class="close-btn" alt="cerrar inicio de sesión" title="cerrar inicio de sesión" (click)="close()"><i class="bi bi-x-square"></i></button>
     
     <h2>{{ isLoginMode ? 'Iniciar Sesión' : 'Registro' }}</h2>
 
@@ -22,10 +22,10 @@
       </div>
       
       <div *ngIf="errors.password" class="error-message">{{ errors.password }}</div>
-      <button type="submit">{{ isLoginMode ? 'Entrar' : 'Registrarse' }}</button>
+      <button alt="Registrar Datos" title="Registrarse" type="submit">{{ isLoginMode ? 'Entrar' : 'Registrarse' }}</button>
       <p class="or">o</p>
     </form>
-    <button class="google-btn" (click)="loginWithGoogle()"><i class="bi bi-google"></i><p class="textGoogle">{{submitGoogle}}</p></button>
+    <button class="google-btn" alt="Iniciar sesion con Google" title="Inicio de sesion Google" (click)="loginWithGoogle()"><i class="bi bi-google"></i><p class="textGoogle">{{submitGoogle}}</p></button>
     
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}

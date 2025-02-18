@@ -71,6 +71,8 @@ export class AddListComponent {
       },
       (error) => {
         console.error('Error al obtener listas:', error);
+        localStorage.clear();
+        window.location.reload();
       }
     );
   }
@@ -118,6 +120,8 @@ export class AddListComponent {
           this.showSuccessMessage = true;
           this.successMessage = `el elemento ya existe en: "${listName}"`;
           this.successClass='success-red'; 
+          localStorage.clear();
+          window.location.reload();
         }
       }
     );

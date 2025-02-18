@@ -24,6 +24,15 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/api/auth/confirm`, body);
   }
 
+  form(name: string,mail:string,message: string){
+    const body = { 
+      nombre: name,
+      email: mail,
+      mensaje: message
+    };
+    return this.http.post(`${this.apiUrl}/api/form`, body);
+  }
+
   getToken(): string | null {
     return localStorage.getItem('token');
   }

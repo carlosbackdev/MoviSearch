@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { AddListComponent } from "../../components/add-list/add-list.component";
 import { OpenAiService } from '../../services/open-ai.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { EndpointsDiscover } from '../../endpoints/Endpoints-discover';
 
 
 @Component({
@@ -36,6 +37,12 @@ import { animate, style, transition, trigger } from '@angular/animations';
         transition(':enter', [
           style({ opacity: 0, filter: 'blur(10px)' }),
           animate('1.3s ease-out', style({ opacity: 1, filter: 'blur(0)' }))
+        ])
+      ]),
+      trigger('navbar', [
+        transition(':enter', [
+          style({ opacity: 0, filter: 'blur(0px)' }),
+          animate('1s ease-in', style({ opacity: 1, filter: 'blur(0)' }))
         ])
       ]),
     ]
@@ -56,6 +63,8 @@ export class HomeComponent implements OnInit{
   chat: string ='';
   chatLines: string[] = [];
   isLoading: boolean = false;
+  isSearch: boolean = false;
+  queryRepeat: string='';
   
     segments: SegmentedControlConfig[] = [
       {
@@ -230,7 +239,6 @@ export class HomeComponent implements OnInit{
       });
   }
   
-
   getMovies() {
     this.genericHttpService.tmdbGet(Endpoints.movies)
       .subscribe({
@@ -521,6 +529,8 @@ export class HomeComponent implements OnInit{
   }
 
   searchProcesator(query: string): void {
+    this.queryRepeat=query;
+    this.isSearch=true;
     this.isLoading = true;
     if (query.length > 2) {
       this.title = 'Buscando...';
@@ -572,7 +582,7 @@ export class HomeComponent implements OnInit{
                 this.title = 'Recomendaciones';
                 this.isLoading = false;
               }
-            }, index * 250); 
+            }, index * 100); 
           });
             const movieIds = movieSearch.results.map((item: any) => item.id);            
             this.saveQuery(movieIds, chatbotResponse.response);
@@ -607,6 +617,10 @@ export class HomeComponent implements OnInit{
     }
   }
 
+  moreSearch():void{
+    this.searchProcesator(this.queryRepeat);
+  }
+
   saveQuery(movieIds: number[], response: string): void {
     const numberMatch = response.match(/^(\d+):/);
 
@@ -626,4 +640,80 @@ export class HomeComponent implements OnInit{
     }
   }
   
+  
+  
+  random(): void{
+    function getRandomInt(min: number, max: number): number {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    const randomInt = getRandomInt(1, 50);
+    let endpoint = '';
+    if(randomInt % 2 === 0){
+      endpoint = EndpointsDiscover.moviePopular+'?page='+(randomInt+1)+'&language=es-ES';
+    }else{
+      endpoint = EndpointsDiscover.serieTop+'?page='+(randomInt+1)+'&language=es-ES';
+    }
+    this.getMovieAzar(endpoint);   
+  }
+  getMovieAzar(endpoint: string) {
+    this.genericHttpService.tmdbGet(endpoint)
+      .subscribe({
+        next: (res: MoviesData) => {
+          console.log('Respuesta de la API:', res);
+          if (res && res.results) {
+            console.log(res.results);
+
+            this.movieCards = [];
+            res.results.forEach((item: MovieResult, index: number) => {
+              this.genericHttpService.tmdbGet(Endpoints.movieTranslate(item.id.toString()))
+                .subscribe({
+                  next: (translationRes: MovieTranslationsResponse) => {
+                    const spanishTranslation = translationRes.translations.find(
+                      (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'ES'
+                    );
+                      const mexicanTranslation = spanishTranslation || translationRes.translations.find(
+                      (t) => t.iso_639_1 === 'es' && t.iso_3166_1 === 'MX'
+                    );
+  
+                    const movieName = spanishTranslation?.data.title || mexicanTranslation?.data.title || item.title;
+  
+                    setTimeout(() => {
+                    this.movieCards.push({
+                      img: Endpoints.imagen + `/w500/${item.poster_path}`,
+                      movieName: movieName,
+                      rate: item.vote_average,
+                      id: item.id,  
+                      onClick: () => {
+                        this.router.navigateByUrl(`movie/${item.id}`);
+                      },onAddClick: () => { 
+                        if (this.authService.isAuthenticated()) {
+                          this.selectedMovieAndTvId= item.id;
+                          this.showListModal=true;
+                        } else {
+                          console.log("Usuario no autenticado, mostrando modal de login");
+                          this.showLoginModal = true;
+                        }
+                      } 
+                    } as MovieCardConfig); 
+                    this.length=this.movieCards.length;
+                   }, index * 50);
+                  },
+                  error: (err: any) => {
+                    console.error('Error al obtener la traducción de la película:', err);
+                  }
+                });
+            });
+  
+          } else {
+            console.error('La respuesta no contiene el campo result');
+            this.movieCards = [];
+          }
+        },
+        error: (error: any) => {
+          console.error('Error al obtener las películas:', error);
+        }
+      });
+  }
+
 }

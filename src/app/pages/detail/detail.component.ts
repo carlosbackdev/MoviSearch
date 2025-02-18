@@ -127,6 +127,7 @@ export class DetailComponent {
               subtitle: res.production_companies?.[0]?.name || 'Desconocido',
               description: translatedOverview,
               titleDescription: 'Resumen',
+              name:res.title,
               rate: res.vote_average,
               logo: Endpoints.imagen + `/w500/${res.production_companies?.[0]?.logo_path || ''}`,
               detailCards: [{
@@ -201,6 +202,7 @@ export class DetailComponent {
               subtitle: res.production_companies?.[0]?.name || 'Desconocido',
               description: translatedOverview,
               titleDescription: 'Resumen',
+              name:res.name,
               rate: res.vote_average,
               logo: Endpoints.imagen + `/w500/${res.production_companies?.[0]?.logo_path || ''}`,
               detailCards: [{

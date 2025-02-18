@@ -201,6 +201,8 @@ export class ViewListComponent implements OnInit{
         error => {
           console.error('Error al copiar la lista:', error);
           this.showSuccessMessage = true; 
+          localStorage.clear();
+          window.location.reload();
         }
       );
     } else {

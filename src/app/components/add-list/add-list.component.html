@@ -1,13 +1,13 @@
 <!-- Fondo oscuro para cerrar modal al hacer clic fuera -->
 <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()" [@modalAnimation]>
   <div class="modal-container" (click)="$event.stopPropagation()" [@modalAnimation]>
-    <button class="close-btn" (click)="closeModal()"><i class="bi bi-x-square"></i></button>
+    <button class="close-btn" alt="Cerrar listas" title="Cerrar listas" (click)="closeModal()"><i class="bi bi-x-square"></i></button>
     <h2>Añadir Película a una Lista</h2>
 
     <!-- Input y botón en la misma línea -->
     <div class="input-container">
-      <input [(ngModel)]="newListName" placeholder="Nombre de la lista nueva" />
-      <button (click)="createList()">Crear</button>
+      <input [(ngModel)]="newListName" type="text" placeholder="Nombre de la lista nueva" />
+      <button alt="Crear listas" title="Crear listas" (click)="createList()">Crear</button>
     </div>
 
     <!-- Listas existentes -->
@@ -15,8 +15,8 @@
       <h3>Mis Listas<span> ¡guardala!</span></h3>
       <ul>
         <li *ngFor="let list of userLists">
-          <button (click)="addToExistingList(list.name)">{{ list.name }}</button>
-          <button id="delete" (click)="deleteList(list.name)"><i class="bi bi-trash3-fill"></i></button>
+          <button alt="Añadir pelicula a listas" title="Añadir pelicula a listas" (click)="addToExistingList(list.name)">{{ list.name }}</button>
+          <button id="delete" alt="eliminar lista" title="eliminar lista" (click)="deleteList(list.name)"><i class="bi bi-trash3-fill"></i></button>
         </li>
       </ul>
     </div>

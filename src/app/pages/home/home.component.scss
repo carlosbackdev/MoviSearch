@@ -83,6 +83,42 @@
         }
     } 
 }
+.segmented-control-section{
+  .buttons-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    
+}
+
+.custom-button {
+    all: unset;
+    margin: auto;
+    width: 110px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: rgb(106, 93, 255);
+    color: theme.$white;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    font-family: theme.$font-segement;
+
+    p{
+      all: unset;
+    }
+  }
+
+  .custom-button:hover {
+      color: white;
+      background-color: rgb(94, 80, 252);
+      p{
+        border-bottom: 3px solid rgba(0, 216, 255, 0.8);
+      }
+  }
+
+}
 .chat-dialog {
     position: absolute;
     top: 60px; /* Ajusta la posición dependiendo de tu diseño */
@@ -120,7 +156,80 @@
     width: 97%;
   }
   
-@media (max-width: 768px) {
+  @media (max-width: 1300px){
+
+    .home-container{
+      .home-content{
+              width: 98%;
+              .search-section{
+                  margin-top: 12px;
+              }
+              .title-container{          
+                  .title{
+                      font-size: 37px;
+                      color: theme.$white;
+                      margin-bottom: 0px;
+                      margin-top: 20px;
+                      margin-left: 0px;
+                      border-bottom: none;
+                      .results{
+                          font-size: 11px;
+                      }
+                  }
+              }
+              .movies-cards-section {
+                  margin-top: 10px;
+                  grid-template-columns: 1fr 1fr;
+                  grid-template-rows: 1fr 1fr;
+                  column-gap: 3px;
+                  row-gap: 8px;
+              }
+          }
+      }
+      .segmented-control-section{
+        padding: 15px;
+        padding-bottom: 15px;
+        padding-top: 15px;
+        .buttons-container {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          margin-top: 10px;
+          
+      }
+      
+      .custom-button {
+          all: unset;
+          margin: auto;
+          width: 100px;
+          height: 40px;
+          font-size: 16px;
+          font-weight: bold;
+          background-color: rgb(106, 93, 255);
+          color: theme.$white;
+          border-radius: 8px;
+          cursor: pointer;
+          text-align: center;
+          font-family: theme.$font-segement;
+      
+          p{
+            all: unset;
+          }
+        }
+      
+        .custom-button:hover {
+            color: white;
+            background-color: rgb(94, 80, 252);
+            p{
+              border-bottom: 3px solid rgba(0, 216, 255, 0.8);
+            }
+        }
+      
+      }
+
+  }
+
+@media (max-width: 850px) {
 .home-container{
     .home-content{
             width: 98%;
@@ -149,13 +258,52 @@
             }
         }
     }
+    .segmented-control-section{
+      padding: 0px;
+      padding-bottom: 5px;
+      .buttons-container {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        margin-top: 10px;
+        justify-content: center;
+        
+    }
+    
+    .custom-button {
+        margin: initial;
+        width: 80px;
+        height: 32px;
+        font-size: 13px;
+        font-weight: bold;
+        background-color: rgb(106, 93, 255);
+        color: theme.$white;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: center;
+        font-family: theme.$font-segement;
+    
+        p{
+          all: unset;
+        }
+      }
+    
+      .custom-button:hover {
+          color: white;
+          background-color: rgb(94, 80, 252);
+          p{
+            border-bottom: 3px solid rgba(0, 216, 255, 0.8);
+          }
+      }
+    
+    }
 }
 .segmented-control-section{
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
 }
-@media (max-width: 768px) {
+@media (max-width: 850px) {
     .segmented-control-section{
         display: block;
         margin-top: 5px;

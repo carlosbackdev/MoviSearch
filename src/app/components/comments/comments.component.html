@@ -1,21 +1,21 @@
 <div class="comment-section">
     <h3 class="comment-title">Comentarios</h3>
-    <button class="comment-button" (click)="toggleCommentBox()">comentar</button>
+    <button class="comment-button" alt="Comentar pelicula" title="Comentar pelicula" (click)="toggleCommentBox()">comentar</button>
 
     <div *ngIf="showCommentBox" class="comment-box">
         <textarea [(ngModel)]="newComment" placeholder="Escribe tu comentario aquí..." class="comment-textarea"></textarea>
         <div class="markdown-buttons">
-            <button (click)="formatText('bold')"><strong>B</strong></button>
-            <button (click)="formatText('italic')"><em>I</em></button>
-            <button (click)="formatText('h1')">H1</button>
-            <button (click)="formatText('h2')">H2</button>
-            <button (click)="formatText('ul')">UL</button>
-            <button (click)="formatText('ol')">OL</button>
-            <button (click)="formatText('link')">🔗</button>
-            <button (click)="formatText('code')">Code</button>
-            <button (click)="formatText('quote')">Quote</button>
+            <button alt="Texto en negrita" (click)="formatText('bold')"><strong>B</strong></button>
+            <button alt="Texto en cursiva" (click)="formatText('italic')"><em>I</em></button>
+            <button alt="Titulo 1" (click)="formatText('h1')">H1</button>
+            <button alt="Titulo 2" (click)="formatText('h2')">H2</button>
+            <button alt="Lista sin ordenar" (click)="formatText('ul')">UL</button>
+            <button alt="Lista ordenada" (click)="formatText('ol')">OL</button>
+            <button alt="Añadir Link" (click)="formatText('link')">🔗</button>
+            <button alt="Añadir código" (click)="formatText('code')">Code</button>
+            <button alt="Texto" (click)="formatText('quote')">Quote</button>
         </div>
-        <button (click)="submitComment()" class="submit-button">Enviar</button>
+        <button alt="Añadir comentario" title="Añadir comentario" (click)="submitComment()" class="submit-button">Enviar</button>
     </div>
 
     <div *ngIf="loading" class="loading-message">Cargando comentarios...</div>
@@ -26,7 +26,7 @@
                 <div class="comment-username">
                     <h4>{{ comment.user.username }}</h4>  
                     <div *ngIf="comment.user.username === currentUser">
-                        <button class="comment-user-botton" (click)="deleteComment(comment.id)">
+                        <button alt="Eliminar comentario" class="comment-user-botton" (click)="deleteComment(comment.id)">
                             <i class="bi bi-trash3-fill"></i></button>
                     </div>                            
                 </div>
@@ -34,7 +34,7 @@
                 <div class="date">
                     <span>{{comment.date}}</span>
                     <span>{{comment.likesCount}}
-                        <button class="comment-user-botton" (click)="likeComment(comment.id)">
+                        <button alt="Me gusta" title="Me gusta el comentario" class="comment-user-botton" (click)="likeComment(comment.id)">
                             <i class="bi bi-heart-fill"></i>
                         </button>
                     </span>     

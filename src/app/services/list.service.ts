@@ -12,16 +12,18 @@ export class ListService {
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
-    if (!token) {
-      throw new Error('No token found');
-    }
-
-    return new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-  }
 
+    // Solo agregar la cabecera Authorization si el token existe
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return headers;
+  }
+  
   getUserLists(): Observable<any> {
     return this.http.get(`${this.apiUrl}/user`, { headers: this.getHeaders() });
   }

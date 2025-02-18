@@ -7,8 +7,8 @@
                     <h4>Suscripción:</h4>
                     <div class="provider-logos">
                         @for (provider of config.watchProviders.flatrate; track $index){
-                            <a class="provider-link" [href]="'https://www.' + formatProviderName(provider.provider_name) +'.com'" target="_blank">
-                                <img class="provider-logo" [src]="'https://image.tmdb.org/t/p/w500/' + provider.logo_path" [alt]="provider.provider_name" />
+                            <a class="provider-link" [title]="provider.provider_name" rel="nofollow" [href]="'https://www.' + formatProviderName(provider.provider_name) +'.com'" target="_blank">
+                                <img class="provider-logo" [title]="provider.provider_name" [src]="'https://image.tmdb.org/t/p/w500/' + provider.logo_path" [alt]="provider.provider_name" />
                             </a>
                         }
                     </div>
@@ -19,7 +19,7 @@
                     <h4>Alquiler:</h4>
                     <div class="provider-logos">
                         @for (provider of config.watchProviders.rent; track $index){
-                            <a class="provider-link" [href]="'https://www.' + formatProviderName(provider.provider_name) +'.com'" target="_blank">
+                            <a class="provider-link" [title]="provider.provider_name" rel="nofollow"   [href]="'https://www.' + formatProviderName(provider.provider_name) +'.com'" target="_blank">
                                 <img class="provider-logo" [src]="'https://image.tmdb.org/t/p/w500/' + provider.logo_path" [alt]="provider.provider_name" />
                             </a>
                         }
