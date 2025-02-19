@@ -29,7 +29,7 @@ export class ShareListComponent {
   @Output() showModalChange = new EventEmitter<boolean>();
 
   get shareUrl(): string {
-    return `http://localhost:4200/share/list/${this.ListId}`; //cambiar por la real
+    return `http://moviesearch.es/share/list/${this.ListId}`; //cambiar por la real
   }
 
   closeModal() {

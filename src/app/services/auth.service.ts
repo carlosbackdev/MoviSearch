@@ -7,7 +7,7 @@ import { Auth, signInWithPopup, GoogleAuthProvider, signOut } from '@angular/fir
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://movisearchapi-production.up.railway.app';  // Cambia esta URL si es necesario
+  private apiUrl = 'https://movisearchapi-production.up.railway.app';  // Cambia esta URL si es necesario
 
   constructor(private http: HttpClient, private auth: Auth) {}
 

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ListService {
-  private apiUrl = 'http://movisearchapi-production.up.railway.app/api/lists';
+  private apiUrl = 'https://movisearchapi-production.up.railway.app/api/lists';
 
   constructor(private http: HttpClient) {}
 
