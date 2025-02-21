@@ -91,7 +91,10 @@ export class HomeComponent implements OnInit{
     this.movieCards = this.movieStateService.movieCards;
     this.carouselImages = this.movieStateService.carouselImages;
     this.length=this.movieStateService.length;
-  
+    if(this.movieStateService.length>1){
+      this.title='resultados';
+    }
+
     if (!this.movieStateService.isInitialized || this.carouselImages.length === 0) {
       this.resetCarousel();
       this.getTrends();
