@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit{
     this.movieCards = this.movieStateService.movieCards;
     this.carouselImages = this.movieStateService.carouselImages;
     this.length=this.movieStateService.length;
-    if(this.movieStateService.length>1){
+    if(this.movieStateService.length>1 && this.title === 'Sin resultados'){
       this.title='resultados';
     }
 
