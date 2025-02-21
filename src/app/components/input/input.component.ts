@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/
 import { FormsModule } from '@angular/forms';
 import { MarkdownModule } from 'ngx-markdown';
 import { GenericHttpService } from '../../services/generic-http.service';
+import { ChatStateService } from '../../services/chat-state.service';
 
 
 @Component({
@@ -18,25 +19,40 @@ export class InputComponent {
   chatLines: string[] = [];
   chatdata: string='';
 
-  constructor(private genericHttpService: GenericHttpService) {}
+  constructor(private genericHttpService: GenericHttpService,
+    private chatStateService: ChatStateService
+  ) {}
   
   ngOnInit() {
-    this.genericHttpService.getChatData().subscribe(data => {
-      this.chatdata = data.chatText;  
-      this.chat = this.chatdata;     
-      this.showChatDialog();       
-    });
+    // Verificamos si ya hay texto guardado en el servicio
+    if (this.chatStateService.chatText) {
+      this.chat = this.chatStateService.chatText;
+      this.chatLines = [this.chat];  
+    } else {
+      // Si no hay texto guardado, hacemos la llamada al servicio
+      this.genericHttpService.getChatData().subscribe((data) => {
+        this.chatdata = data.chatText;
+        this.chat = this.chatdata;
+        this.chatStateService.chatText = this.chat;  
+        this.showChatDialog();  
+      });
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['chat']) {
-      this.showChatDialog(); // Llamamos al método cuando chat cambia
+      this.showChatDialog(); 
+    }
+  }
+  ngOnDestroy() {
+    if (this.chatLines.length > 0) {
+      this.chatStateService.chatText = this.chatLines.join('');
     }
   }
 
   showChatDialog(): void {
     let i = 0;
-    this.chatLines = []; // Limpiar las líneas previas
+    this.chatLines = []; 
     const chatLength = this.chat.length;
 
     const interval = setInterval(() => {
@@ -45,9 +61,9 @@ export class InputComponent {
       i++;
 
       if (i >= chatLength) {
-        clearInterval(interval); // Detener el intervalo cuando se haya mostrado todo el texto
+        clearInterval(interval); 
       }
-    }, 10); // Mostrar una letra cada 50ms (ajustable)
+    }, 10); 
   }
 
   onInputChange(event: any): void {

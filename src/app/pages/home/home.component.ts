@@ -23,6 +23,7 @@ import { AddListComponent } from "../../components/add-list/add-list.component";
 import { OpenAiService } from '../../services/open-ai.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { EndpointsDiscover } from '../../endpoints/Endpoints-discover';
+import { MovieStateService } from '../../services/movie-state.service';
 
 
 @Component({
@@ -82,24 +83,45 @@ export class HomeComponent implements OnInit{
   constructor (private genericHttpService: GenericHttpService, private router: Router,
     private authService: AuthService,
     private openAiService: OpenAiService,
+    private movieStateService: MovieStateService
    ){}
-  ngOnInit(): void { 
-    this.resetCarousel();
-    this.getTrends();
+   ngOnInit(): void { 
+
+    this.title = this.movieStateService.title;
+    this.movieCards = this.movieStateService.movieCards;
+    this.carouselImages = this.movieStateService.carouselImages;
+    this.length=this.movieStateService.length;
+  
+    if (!this.movieStateService.isInitialized || this.carouselImages.length === 0) {
+      this.resetCarousel();
+      this.getTrends();
+      this.movieStateService.setInitialized();
+    } else {
+      setTimeout(() => { 
+        this.startCarousel();
+      }, 500);
+    }
+  
     this.segments.map((item: SegmentedControlConfig) => {
-          item.onClick = () => {
-            this.title= item.name
-            if (item.name.toLowerCase().includes('películas')){
-              this.getMovies();
-            }else if (item.name.toLowerCase().includes('series')){
-              this.getSeries();
-            }else if (item.name.toLowerCase().includes('todas')){
-              this.getTrends();
-            }
-          }
-        })
+      item.onClick = () => {
+        this.title = item.name;
+        this.movieStateService.title = item.name; 
+  
+        if (item.name.toLowerCase().includes('películas')) {
+          this.getMovies();
+        } else if (item.name.toLowerCase().includes('series')) {
+          this.getSeries();
+        } else if (item.name.toLowerCase().includes('todas')) {
+          this.getTrends();
+        }
+      };
+    });
   }
     ngOnDestroy(): void {
+    this.movieStateService.movieCards = this.movieCards;
+    this.movieStateService.carouselImages = [...this.carouselImages];
+    this.movieStateService.title=this.title;
+    this.movieStateService.length=this.length;
     this.stopCarousel();
   }
   
@@ -107,7 +129,11 @@ export class HomeComponent implements OnInit{
     this.currentImageIndex = 0;
     this.isCarouselStarted = false;
     this.isTrendsLoaded = false;
-    this.carouselImages = [];
+
+    if (this.carouselImages.length === 0) {
+      this.carouselImages = [];
+    }
+    
     this.stopCarousel(); 
   }
 
@@ -129,6 +155,7 @@ export class HomeComponent implements OnInit{
       this.updateCarouselImages();
     }, 4500);
   }
+  
   updateCarouselImages(): void {
     const images = document.querySelectorAll('.carousel-item');
     images.forEach((image, index) => {
@@ -148,6 +175,7 @@ export class HomeComponent implements OnInit{
   itemsProcessed: number = 0;
 
   getTrends() {
+    this.stopCarousel();
     this.genericHttpService.tmdbGet(Endpoints.trends)
       .subscribe({
         next: (res: TrendData) => {
