@@ -1,7 +1,7 @@
 <div class="input-chat-container">
     <div class="input-container">
         <i class="bi bi-search"></i>
-        <input type="text" placeholder="¿cómo te sientes hoy? ¡Yo te recomiendo!" (input)="onInputChange($event)" (keypress)="onKeyPress($event)" #searchInput>
+        <input type="text" placeholder="¿Que te apetece ver hoy? ¡Yo te recomiendo!" (input)="onInputChange($event)" (keypress)="onKeyPress($event)" #searchInput>
         <button alt="Enviar texto" title="Enviar texto para recomendar película" (click)="onButtonClick($event, searchInput)"><span>Recomendar</span><i class="bi bi-box-arrow-in-left"></i></button>
     </div>
     <div *ngIf="chatLines.length > 0" class="chat-dialog">
