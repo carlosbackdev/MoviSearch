@@ -1,0 +1,16 @@
+<div class="download-container">
+      <h3 class="download-title">Torrents Disponibles</h3>
+      <div class="flex-container">
+        <div *ngFor="let torrent of torrents" class="download-item">
+            <a [href]="torrent.magnetUrl" target="_blank" class="download-link">
+              <div class="download-info">
+                <h4 class="download-name">Descarga - {{ torrent.quality }}</h4>
+                <p class="download-size">{{ torrent.size }}</p>
+              </div>
+              <div class="download-action">
+                <i class="bi bi-arrow-down-circle-fill"></i>
+              </div>
+            </a>
+          </div>
+      </div>
+  </div>

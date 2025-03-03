@@ -17,12 +17,13 @@ import { AuthModalComponent } from '../../components/auth-modal/auth-modal.compo
 import { CommentsComponent } from '../../components/comments/comments.component';
 import { PersonComponent } from "../../components/person/person.component";
 import { ViewportScroller } from '@angular/common';
+import { DownloadComponent } from "../../components/download/download.component";
 
 @Component({
   selector: 'app-detail',
   standalone:true,
   providers:[GenericHttpService],
-  imports: [DetailBannerComponent, HttpClientModule, RateChipComponent, FormsModule, AddListComponent, ProvidersComponent, AuthModalComponent, CommentsComponent, PersonComponent],
+  imports: [DetailBannerComponent, HttpClientModule, RateChipComponent, FormsModule, AddListComponent, ProvidersComponent, AuthModalComponent, CommentsComponent, PersonComponent, DownloadComponent],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss'
 })
@@ -40,6 +41,7 @@ export class DetailComponent {
   showPersonModal: boolean= false;
   tvId: number =0;
   filmId: number =0;
+  imdbId: string = '';
 
   constructor( private genericService: GenericHttpService,
     private authService: AuthService,
@@ -148,6 +150,7 @@ export class DetailComponent {
               }],
               watchProviders: undefined
             };
+            this.imdbId = res.imdb_id || '';
             this.ProvidersComponent.getMovieWatchProviders(id);
             this.filmId = Number(id);
           },
@@ -222,6 +225,7 @@ export class DetailComponent {
                 description: res.genres.map((genre: Genre) => genre.name).join(' | '),
               }],watchProviders: undefined
             };
+            this.imdbId = res.imdb_id || '';
             this.ProvidersComponent.getSerieWatchProviders(id);
             this.tvId = Number(id);
           },
@@ -234,7 +238,6 @@ export class DetailComponent {
         console.error(err);
       }
     });
-  }
-  
+  }  
 
 }
