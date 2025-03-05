@@ -16,6 +16,10 @@
         {
           "title": "Cómo funciona la recomendación",
           "description": "#### 🤖 **¿Cómo obtenemos recomendaciones?**\n- Analizamos las palabras clave en tu descripción.\n- Buscamos películas populares relacionadas con tu búsqueda.\n- Si mencionas actores o géneros específicos, ajustamos las recomendaciones.\n\n💡 Cuanto más detallada sea tu descripción, mejores serán las sugerencias."
+        },
+        {
+          "title": "Descagar películas",
+          "description": "#### 📥 **Descarga tus películas**\n- Algunas películas tienen la opción de descarga via torrrent.\n- Haz clic en el botón `Descargar` para abrir tu proveedor torrent e iniciar la descarga.\n- **Nota:** No todas las películas ni series están disponibles para descarga."
         }
       ]
     }

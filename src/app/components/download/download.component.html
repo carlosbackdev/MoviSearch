@@ -6,6 +6,7 @@
               <div class="download-info">
                 <h4 class="download-name">Descarga - {{ torrent.quality }}</h4>
                 <p class="download-size">{{ torrent.size }}</p>
+                <p *ngIf="torrent.is_repack == 1">repack</p>
               </div>
               <div class="download-action">
                 <i class="bi bi-arrow-down-circle-fill"></i>
